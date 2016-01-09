@@ -6,8 +6,10 @@ namespace Famoser.BeerCompanion.Common.Services
     {
         Task<string> GetCachedData();
         Task<string> GetUserInformations();
+        Task<string> GetUserBeers();
 
-        Task<bool> SetUserInformations(string info);
         Task<bool> SetCachedData(string data);
+        Task<bool> SetUserInformations(string info);
+        Task<bool> SetUserBeers(string info);
     }
 }

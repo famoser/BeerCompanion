@@ -14,44 +14,35 @@ namespace Famoser.BeerCompanion.Data
 {
     public class DataService : SingletonBase<DataService>, IDataService
     {
-        private const string ApiUrl = "http://beercompanionserverapi.azurewebsites.net";
-        public async Task<string> GetDrinkerCycle(Guid ownId)
+        private const string ApiUrl = "http://api.beercompanion.famoser.ch/";
+        public Task<string> GetDrinkerCycle(Guid ownId)
         {
-            try
-            {
-                return await DownloadString(new Uri(ApiUrl + "cycles/" + ownId));
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Instance.Log(LogLevel.Error, this, "GetDrinkerCycle failed for Owner " + ownId, ex);
-            }
-            return null;
+            return DownloadString(new Uri(ApiUrl + "cycles/" + ownId));
         }
 
-        public async Task<bool> PostBeers(string json)
+        public Task<bool> PostDrinkerCycle(string json)
         {
-            try
-            {
-                return await Post(new Uri(ApiUrl + "beers/add"), json);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Instance.Log(LogLevel.Error, this, "PostBeers failed", ex);
-            }
-            return false;
+            return Post(new Uri(ApiUrl + "cycles/act"), json);
         }
 
-        public async Task<bool> RemoveLastBeers(string json)
+        public Task<string> GetBeers(Guid ownId)
         {
-            try
-            {
-                return await Post(new Uri(ApiUrl + "beers/remove"), json);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Instance.Log(LogLevel.Error, this, "RemoveLastBeers failed", ex);
-            }
-            return false;
+            return DownloadString(new Uri(ApiUrl + "beers/" + ownId));
+        }
+
+        public Task<bool> PostBeers(string json)
+        {
+            return Post(new Uri(ApiUrl + "beers/add"), json);
+        }
+
+        public Task<bool> DeleteBeers(string json)
+        {
+            return Delete(new Uri(ApiUrl + "beers/delete"), json);
+        }
+
+        public Task<bool> UpdateDrinker(string json)
+        {
+            return Post(new Uri(ApiUrl + "drinkers/update"), json);
         }
 
         private async Task<string> DownloadString(Uri url)
@@ -98,6 +89,14 @@ namespace Famoser.BeerCompanion.Data
             {
                 LogHelper.Instance.Log(LogLevel.Error, this, "Post failed for url " + url, ex);
             }
+            return false;
+        }
+
+        private async Task<bool> Delete(Uri url, string content)
+        {
+            var res = await Post(url, content);
+            if (res)
+                return true;
             return false;
         }
     }

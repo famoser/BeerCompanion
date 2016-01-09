@@ -10,14 +10,14 @@ namespace Famoser.BeerCompanion.Common.Services
     {
         Task<string> GetDrinkerCycle(Guid ownId);
 
-        Task<bool> PostDrinkeCycle(string json);
+        Task<bool> PostDrinkerCycle(string json);
 
-        Task<bool> DeleteDrinkeCycle(string json);
-        
+        Task<string> GetBeers(Guid ownId);
+
         Task<bool> PostBeers(string json);
 
         Task<bool> DeleteBeers(string json);
 
-        Task<bool> GetBeers(Guid ownId);
+        Task<bool> UpdateDrinker(string json);
     }
 }

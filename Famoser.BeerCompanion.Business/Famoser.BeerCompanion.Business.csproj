@@ -45,7 +45,9 @@
     <Compile Include="Models\UserInformations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BeerRepository.cs" />
+    <Compile Include="Repository\DrinkerCycleRepository.cs" />
     <Compile Include="Repository\Interfaces\IBeerRepository.cs" />
+    <Compile Include="Repository\Interfaces\IDrinkerCycleRepository.cs" />
     <Compile Include="Repository\Interfaces\ISettingsRepository.cs" />
     <Compile Include="Repository\SettingsRepository.cs" />
   </ItemGroup>

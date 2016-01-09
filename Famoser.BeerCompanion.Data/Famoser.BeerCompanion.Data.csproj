@@ -42,6 +42,8 @@
     <Compile Include="Entities\BeerCollectionEntity.cs" />
     <Compile Include="Entities\BeerEntity.cs" />
     <Compile Include="Entities\BeerRemoveEntity.cs" />
+    <Compile Include="Entities\DrinkerCommunication.cs" />
+    <Compile Include="Entities\DrinkerCycleCommunication.cs" />
     <Compile Include="Entities\DrinkerEntity.cs" />
     <Compile Include="Entities\DrinkerCycleEntity.cs" />
     <Compile Include="Entities\ResponseCollectionEntity.cs" />

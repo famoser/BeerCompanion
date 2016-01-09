@@ -11,18 +11,20 @@ namespace Famoser.BeerCompanion.View.ViewModels
     {
         private IBeerRepository _beerRepository;
         private ISettingsRepository _settingsRepository;
+        private IDrinkerCycleRepository _drinkerCycleRepository;
         private IPermissionService _permissionService;
 
-        public MainPageViewModel(ISettingsRepository settingsRepository, IBeerRepository beerRepository, IPermissionService permissionService)
+        public MainPageViewModel(ISettingsRepository settingsRepository, IBeerRepository beerRepository, IPermissionService permissionService, IDrinkerCycleRepository drinkerCycleRepository)
         {
             _settingsRepository = settingsRepository;
             _beerRepository = beerRepository;
             _permissionService = permissionService;
+            _drinkerCycleRepository = drinkerCycleRepository;
 
             if (IsInDesignMode)
             {
-                DrinkerCycle = beerRepository.GetSampleCycles();
-                Beers = settingsRepository.GetSampleUserInformations().Beers;
+                DrinkerCycle = _drinkerCycleRepository.GetSampleCycles();
+                UserInformation = settingsRepository.GetSampleUserInformations();
             }
             else
             {
@@ -32,7 +34,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
 
         private async void Initialize()
         {
-            DrinkerCycle = await _beerRepository.GetSavedCycles();
+            DrinkerCycle = await _drinkerCycleRepository.GetSavedCycles();
             var usrInfo = (await _settingsRepository.GetUserInformations());
             usrInfo.Beers = new ObservableCollection<Beer>(usrInfo.Beers.Where(b => !b.DeletePending));
             UserInformation = usrInfo;
@@ -43,14 +45,14 @@ namespace Famoser.BeerCompanion.View.ViewModels
                 if (beers != null)
                 {
                     UserInformation.Beers = beers;
-                    await _settingsRepository.SaveUserInformations(UserInformation);
+                    await _settingsRepository.SaveUserInformations(UserInformation, true);
                 }
 
-                var newCylces = await _beerRepository.AktualizeCycles();
+                var newCylces = await _drinkerCycleRepository.AktualizeCycles();
                 if (newCylces != null)
                 {
                     DrinkerCycle = newCylces;
-                    await _beerRepository.SaveCycles(DrinkerCycle);
+                    await _drinkerCycleRepository.SaveCycles(DrinkerCycle);
                 }
             }
         }

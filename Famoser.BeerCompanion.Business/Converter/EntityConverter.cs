@@ -20,7 +20,7 @@ namespace Famoser.BeerCompanion.Business.Converter
             };
             foreach (var beer in beers)
             {
-                coll.BeerEntity.Add(new BeerEntity() { DateTime = beer.Time, Guid = beer.Guid });
+                coll.BeerEntity.Add(new BeerEntity() { DrinkTime = beer.DrinkTime, Guid = beer.Guid });
             }
             return coll;
         }
