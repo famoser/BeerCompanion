@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Famoser.BeerCompanion.Data.Entities.Communication.Base;
+using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
+using Famoser.BeerCompanion.Data.Enums;
 
 namespace Famoser.BeerCompanion.Data.Entities.Communication
 {
-    public class DrinkerRequest
+    public class DrinkerRequest : BaseRequest
     {
-        public Guid Guid { get; set; }
-        public string Name { get; set; }
-        public string Color { get; set; }
+        public DrinkerRequest(PossibleActions action, Guid guid) : base(action, guid)
+        {
+        }
+
+        public UserInformationEntity UserInformations { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using Famoser.BeerCompanion.Common.Framework.Logging;
 using Famoser.BeerCompanion.Data;
 using Famoser.BeerCompanion.Data.Entities;
 using Famoser.BeerCompanion.Data.Entities.Communication;
+using Famoser.BeerCompanion.Data.Enums;
 using Famoser.BeerCompanion.Data.Services;
 using GalaSoft.MvvmLight.Ioc;
 using Newtonsoft.Json;
@@ -35,8 +36,12 @@ namespace Famoser.BeerCompanion.Business.Repository
             try
             {
                 var str = await _storageService.GetCachedData();
+
                 if (!string.IsNullOrEmpty(str))
-                    return JsonConvert.DeserializeObject<ObservableCollection<DrinkerCycle>>(str);
+                {
+                    var obj = JsonConvert.DeserializeObject<CycleSaveModel>(str);
+                    return ConstructBusinessModel(obj.Drinkers.ToList(), obj.DrinkerCycles.ToList());
+                }
             }
             catch (Exception ex)
             {
@@ -174,34 +179,34 @@ namespace Famoser.BeerCompanion.Business.Repository
 
         public Task<bool> DoesExists(string name)
         {
-            return MakeRequest(name, Guid.Empty, "exist");
+            return MakeRequest(name, Guid.Empty, PossibleActions.Exists);
         }
 
         public Task<bool> AddSelf(string name, Guid onwGuid)
         {
-            return MakeRequest(name, onwGuid, "add");
+            return MakeRequest(name, onwGuid, PossibleActions.Add);
         }
 
         public Task<bool> RemoveSelf(string name, Guid onwGuid)
         {
-            return MakeRequest(name, onwGuid, "remove");
+            return MakeRequest(name, onwGuid,PossibleActions.Remove);
         }
 
         public Task<bool> AuthenticateUser(string name, Guid userGuid)
         {
-            return MakeRequest(name, userGuid, "authenticate");
+            return MakeRequest(name, userGuid, PossibleActions.Autheticate);
         }
 
         public Task<bool> DeAuthenticateUser(string name, Guid userGuid)
         {
-            return MakeRequest(name, userGuid, "deauthenticate");
+            return MakeRequest(name, userGuid,PossibleActions.Deautheticate);
         }
 
-        private async Task<bool> MakeRequest(string name, Guid userGuid, string actionName)
+        private async Task<bool> MakeRequest(string name, Guid userGuid, PossibleActions actionName)
         {
             try
             {
-                return await _dataService.PostDrinkerCycle(RequestConverter.Instance.ConvertToDrinkerCycleRequest(name,userGuid,actionName));
+                return (await _dataService.PostDrinkerCycle(RequestConverter.Instance.ConvertToDrinkerCycleRequest(userGuid, actionName,name))).IsSuccessfull;
             }
             catch (Exception ex)
             {

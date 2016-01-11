@@ -9,6 +9,7 @@ using Famoser.BeerCompanion.Common.Framework.Logging;
 using Famoser.BeerCompanion.Common.Framework.Singleton;
 using Famoser.BeerCompanion.Data.Entities;
 using Famoser.BeerCompanion.Data.Entities.Communication;
+using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
 using Famoser.BeerCompanion.Data.Services;
 using Newtonsoft.Json;
 
@@ -20,18 +21,28 @@ namespace Famoser.BeerCompanion.Data
         public async Task<DrinkerCycleResponse> GetDrinkerCycle(Guid ownId)
         {
             var resp = await DownloadString(new Uri(ApiUrl + "cycles/" + ownId));
-            try
+            if (resp.IsSuccessfull)
             {
-                return JsonConvert.DeserializeObject<DrinkerCycleResponse>(resp);
+                try
+                {
+                    return JsonConvert.DeserializeObject<DrinkerCycleResponse>(resp.Response);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Instance.Log(LogLevel.ApiError, this, "GetBeers failed with response: " + resp, ex);
+                    return new DrinkerCycleResponse()
+                    {
+                        ErrorMessage = "Unserialisation failed for Content " + resp.Response
+                    };
+                }
             }
-            catch (Exception ex)
+            return new DrinkerCycleResponse()
             {
-                LogHelper.Instance.Log(LogLevel.ApiError, this, "GetBeers failed with response: " + resp, ex);
-            }
-            return null;
+                ErrorMessage = resp.ErrorMessage
+            };
         }
 
-        public Task<bool> PostDrinkerCycle(DrinkerCycleRequest request)
+        public Task<BooleanResponse> PostDrinkerCycle(DrinkerCycleRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             return Post(new Uri(ApiUrl + "cycles/act"), json);
@@ -40,30 +51,64 @@ namespace Famoser.BeerCompanion.Data
         public async Task<BeerResponse> GetBeers(Guid ownId)
         {
             var resp = await DownloadString(new Uri(ApiUrl + "beers/" + ownId));
-            try
+            if (resp.IsSuccessfull)
             {
-                return JsonConvert.DeserializeObject<BeerResponse>(resp);
+                try
+                {
+                    return JsonConvert.DeserializeObject<BeerResponse>(resp.Response);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Instance.Log(LogLevel.ApiError, this, "GetBeers failed with response: " + resp, ex);
+                    return new BeerResponse()
+                    {
+                        ErrorMessage = "Unserialisation failed for Content " + resp.Response
+                    };
+                }
             }
-            catch (Exception ex)
-            { 
-                LogHelper.Instance.Log(LogLevel.ApiError, this,"GetBeers failed with response: " + resp, ex);
-            }
-            return null;
+            return new BeerResponse()
+            {
+                ErrorMessage = resp.ErrorMessage
+            };
         }
 
-        public Task<bool> PostBeers(BeerRequest request)
+        public Task<BooleanResponse> PostBeer(BeerRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             return Post(new Uri(ApiUrl + "beers/act"), json);
         }
 
-        public Task<bool> UpdateDrinker(DrinkerRequest request)
+        public Task<BooleanResponse> PostDrinker(DrinkerRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
-            return Delete(new Uri(ApiUrl + "beers/delete"), json);
+            return Post(new Uri(ApiUrl + "drinkers/act"), json);
         }
-        
-        private async Task<string> DownloadString(Uri url)
+
+        public async Task<DrinkerResponse> GetDrinker(Guid ownId)
+        {
+            var resp = await DownloadString(new Uri(ApiUrl + "drinkers/" + ownId));
+            if (resp.IsSuccessfull)
+            {
+                try
+                {
+                    return JsonConvert.DeserializeObject<DrinkerResponse>(resp.Response);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Instance.Log(LogLevel.ApiError, this, "GetDrinker failed with response: " + resp.Response, ex);
+                    return new DrinkerResponse()
+                    {
+                        ErrorMessage = "Unserialisation failed for Content " + resp.Response
+                    };
+                }
+            }
+            return new DrinkerResponse()
+            {
+                ErrorMessage = resp.ErrorMessage
+            };
+        }
+
+        private async Task<StringReponse> DownloadString(Uri url)
         {
             try
             {
@@ -75,19 +120,30 @@ namespace Famoser.BeerCompanion.Data
                     }))
                 {
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
-
-                    return await client.GetStringAsync(url);
+                    var resp = await client.GetAsync(url);
+                    var res = new StringReponse()
+                    {
+                        Response = await resp.Content.ReadAsStringAsync()
+                    };
+                    if (resp.IsSuccessStatusCode)
+                        return res;
+                    res.ErrorMessage = "Request not successfull: Status Code " + resp.StatusCode + " returned";
+                    return res;
                 }
             }
             catch (Exception ex)
             {
                 LogHelper.Instance.Log(LogLevel.Error, this, "DownloadStringAsync failed for url " + url, ex);
+                return new StringReponse()
+                {
+                    ErrorMessage = "Request failed for url " + url
+                };
             }
-            return null;
         }
 
-        private async Task<bool> Post(Uri url, string content)
+        private async Task<BooleanResponse> Post(Uri url, string content)
         {
+            BooleanResponse resp = null;
             try
             {
                 using (var client = new HttpClient(
@@ -102,23 +158,21 @@ namespace Famoser.BeerCompanion.Data
                     var res = await client.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
                     var respo = await res.Content.ReadAsStringAsync();
                     if (respo == "1")
-                        return true;
-                    LogHelper.Instance.Log(LogLevel.ApiError, this, "Post failed for url " + url + " with json " + content + " Reponse recieved: " + respo);
+                        resp = new BooleanResponse() { Response = true };
+                    else
+                    {
+                        resp = new BooleanResponse() { ErrorMessage = respo };
+                        LogHelper.Instance.Log(LogLevel.ApiError, this,
+                            "Post failed for url " + url + " with json " + content + " Reponse recieved: " + respo);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 LogHelper.Instance.Log(LogLevel.Error, this, "Post failed for url " + url, ex);
+                resp = new BooleanResponse() { ErrorMessage = "Post failed for url " + url };
             }
-            return false;
-        }
-
-        private async Task<bool> Delete(Uri url, string content)
-        {
-            var res = await Post(url, content);
-            if (res)
-                return true;
-            return false;
+            return resp;
         }
     }
 }

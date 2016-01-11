@@ -1,12 +1,16 @@
 ﻿using System;
+using Famoser.BeerCompanion.Data.Entities.Communication.Base;
+using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
+using Famoser.BeerCompanion.Data.Enums;
 
 namespace Famoser.BeerCompanion.Data.Entities.Communication
 {
-    public class DrinkerCycleRequest
+    public class DrinkerCycleRequest : BaseRequest
     {
-        public string Name { get; set; }
-        public Guid Guid { get; set; }
+        public DrinkerCycleRequest(PossibleActions action, Guid guid) : base(action, guid)
+        {
+        }
 
-        public string Action { get; set; }
+        public string Name { get; set; }
     }
 }

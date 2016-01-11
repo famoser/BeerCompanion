@@ -9,6 +9,7 @@ using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Common.Framework.Logging;
 using Famoser.BeerCompanion.Data;
 using Famoser.BeerCompanion.Data.Entities;
+using Famoser.BeerCompanion.Data.Enums;
 using Famoser.BeerCompanion.Data.Services;
 using GalaSoft.MvvmLight.Ioc;
 using Newtonsoft.Json;
@@ -39,8 +40,8 @@ namespace Famoser.BeerCompanion.Business.Repository
                 var deleted = beers.Where(b => b.DeletePending).ToList();
                 if (deleted.Any())
                 {
-                    var obj = RequestConverter.Instance.ConvertToBeerRemoveRequest(userGuid, deleted);
-                    if (await _dataService.PostBeers(obj))
+                    var obj = RequestConverter.Instance.ConvertToBeerRequest(userGuid,PossibleActions.Remove, deleted);
+                    if ((await _dataService.PostBeer(obj)).IsSuccessfull)
                     {
                         foreach (var beer in deleted)
                         {
@@ -53,8 +54,8 @@ namespace Famoser.BeerCompanion.Business.Repository
                 var add = beers.Where(b => !b.Posted).ToList();
                 if (add.Any())
                 {
-                    var obj = RequestConverter.Instance.ConvertToBeerAddRequest(userGuid, add);
-                    if (await _dataService.PostBeers(obj))
+                    var obj = RequestConverter.Instance.ConvertToBeerRequest(userGuid, PossibleActions.Add, add);
+                    if ((await _dataService.PostBeer(obj)).IsSuccessfull)
                     {
                         foreach (var beer in beers)
                         {

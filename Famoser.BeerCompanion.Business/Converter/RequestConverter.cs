@@ -7,30 +7,16 @@ using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Common.Framework.Singleton;
 using Famoser.BeerCompanion.Data.Entities;
 using Famoser.BeerCompanion.Data.Entities.Communication;
+using Famoser.BeerCompanion.Data.Enums;
 
 namespace Famoser.BeerCompanion.Business.Converter
 {
     public class RequestConverter : SingletonBase<RequestConverter>
     {
-        public BeerRequest ConvertToBeerAddRequest(Guid userId, List<Beer> beers)
+        public BeerRequest ConvertToBeerRequest(Guid userId, PossibleActions actionName, List<Beer> beers)
         {
-            var requ = ConstructRequest(userId, beers);
-            requ.Action = "add";
-            return requ;
-        }
-
-        public BeerRequest ConvertToBeerRemoveRequest(Guid userId, List<Beer> beers)
-        {
-            var requ = ConstructRequest(userId, beers);
-            requ.Action = "remove";
-            return requ;
-        }
-
-        private BeerRequest ConstructRequest(Guid userId, List<Beer> beers)
-        {
-            var coll = new BeerRequest
+            var coll = new BeerRequest(actionName, userId)
             {
-                Guid = userId,
                 Beers = new List<BeerEntity>()
             };
             foreach (var beer in beers)
@@ -40,9 +26,21 @@ namespace Famoser.BeerCompanion.Business.Converter
             return coll;
         }
 
-        public DrinkerCycleRequest ConvertToDrinkerCycleRequest(string name, Guid userGuid, string actionName)
+        public DrinkerCycleRequest ConvertToDrinkerCycleRequest(Guid userGuid, PossibleActions actionName, string name)
         {
-            return new DrinkerCycleRequest() { Action = actionName, Guid = userGuid, Name = name };
+            return new DrinkerCycleRequest(actionName,userGuid) { Name = name };
+        }
+
+        public DrinkerRequest ConvertToDrinkerRequest(Guid userGuid, PossibleActions actionName, UserInformations ui)
+        {
+            return new DrinkerRequest(actionName, userGuid)
+            {
+                UserInformations = new UserInformationEntity()
+                {
+                    Name = ui.Name,
+                    Color = ui.Color
+                }
+            };
         }
     }
 }

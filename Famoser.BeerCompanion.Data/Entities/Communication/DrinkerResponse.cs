@@ -8,8 +8,8 @@ using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
 
 namespace Famoser.BeerCompanion.Data.Entities.Communication
 {
-    public class BeerResponse : BaseResponse
+    public class DrinkerResponse : BaseResponse
     {
-        public List<BeerEntity> Beers { get; set; }
+        public DrinkerEntity Drinker { get; set; }
     }
 }

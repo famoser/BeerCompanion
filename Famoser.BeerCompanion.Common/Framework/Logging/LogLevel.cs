@@ -26,5 +26,10 @@
         /// Api failed, on same status like FatalError
         /// </summary>
         ApiError = 4,
+
+        /// <summary>
+        /// A very very serious programming mistake
+        /// </summary>
+        WtfAreYouDoingError = 10,
     }
 }

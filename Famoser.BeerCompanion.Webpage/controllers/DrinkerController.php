@@ -16,15 +16,27 @@ class DrinkerController implements iController
 {
     function execute($param, $post)
     {
-        if (count($param) > 0 && ($param[0] == "update")) {
+        if (count($param) > 0 && ($param[0] == "act")) {
             $obj = json_decode($post);
             $user = GetByGuid("Drinker", $post->Guid);
-            if ($user instanceof Drinker) {
-                $user->Guid = $obj->Guid;
-                $user->Name = $obj->Name;
-                return Update("Drinkers", $user);
-            } else {
-                return Insert("Drinkers", $user);
+            if ($obj->Action == "exists") {
+                return $user != null;
+            }
+            else if ($obj->Action == "update") {
+                if ($user instanceof Drinker) {
+                    $user->Name = $obj->UserInformations->Name;
+                    $user->Color = $obj->UserInformations->Color;
+                    return Update("Drinkers", $user);
+                } else {
+                    return Insert("Drinkers", $user);
+                }
+            } else if ($obj->Action == "remove") {
+                if ($user instanceof Drinker) {
+                    //remove all DrinkerCycleRelations
+                    $relations = GetAllByCondition("DrinkerCyclesDrinkerRelations",array("DrinkerId" => $user->Id));
+                    if (DeleteAll($relations))
+                        return Delete("Drinkers",$user);
+                }
             }
         }
         return LINK_INVALID;

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Famoser.BeerCompanion.Business.Converter;
 using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Common.Framework.Logging;
 using Famoser.BeerCompanion.Data.Entities;
 using Famoser.BeerCompanion.Data.Entities.Communication;
+using Famoser.BeerCompanion.Data.Enums;
 using Famoser.BeerCompanion.Data.Services;
 using Newtonsoft.Json;
 using IStorageService = Famoser.BeerCompanion.Business.Services.IStorageService;
@@ -33,7 +35,7 @@ namespace Famoser.BeerCompanion.Business.Repository
 
                     var res = await _storageService.GetUserInformations();
                     if (!string.IsNullOrEmpty(res))
-                    { 
+                    {
                         var ui = JsonConvert.DeserializeObject<UserInformations>(res);
                         var beers = await _storageService.GetUserBeers();
                         if (!string.IsNullOrEmpty(beers))
@@ -87,13 +89,8 @@ namespace Famoser.BeerCompanion.Business.Repository
 
             try
             {
-                var drinkerInfo = new DrinkerRequest()
-                {
-                    Guid = userInformations.Guid,
-                    Name = userInformations.Name,
-                    Color = userInformations.Color
-                };
-                return await _dataService.UpdateDrinker(drinkerInfo);
+                var drinkerInfo = RequestConverter.Instance.ConvertToDrinkerRequest(userInformations.Guid, PossibleActions.Update, userInformations);
+                return (await _dataService.PostDrinker(drinkerInfo)).IsSuccessfull;
             }
             catch (Exception ex)
             {
