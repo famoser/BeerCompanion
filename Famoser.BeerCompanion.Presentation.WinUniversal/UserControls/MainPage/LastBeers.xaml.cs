@@ -17,21 +17,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.MainPage
 {
-    public sealed partial class UserSettings : UserControl
+    public sealed partial class LastBeers : UserControl
     {
-        public UserSettings()
+        public LastBeers()
         {
             this.InitializeComponent();
-        }
-
-        private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
-        {
-            ColorGridView.Visibility = Visibility.Visible;
-        }
-
-        private void ColorGridView_OnItemClick(object sender, ItemClickEventArgs e)
-        {
-            ColorGridView.Visibility = Visibility.Collapsed;
         }
     }
 }

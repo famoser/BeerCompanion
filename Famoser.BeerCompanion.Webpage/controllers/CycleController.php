@@ -39,12 +39,17 @@ class CycleController implements iController
                 } else if ($obj->Action == "add") {
                     $drinker = GetSingleByCondition(DRINKER_TABLE, array("Guid" => $obj->Guid));
                     if ($drinker instanceof Drinker) {
-                        $groupRela = GetSingleByCondition(DRINKERCYCLESDRINKERSRELATION_TABLE, array("DrinkerCycleId" => $group->Id));
-                        $newRela = new DrinkerCyclesDrinkersRelation();
-                        $newRela->DrinkerId = $drinker->Id;
-                        $newRela->DrinkerCycleId = $group->Id;
-                        $newRela->IsAuthenticated = $groupRela == null;
-                        return ReturnBoolean(Insert(DRINKERCYCLESDRINKERSRELATION_TABLE, $newRela));
+                        $presGroupRelation = GetSingleByCondition(DRINKERCYCLESDRINKERSRELATION_TABLE, array("DrinkerCycleId" => $group->Id, "DrinkerId" => $drinker->Id));
+                        if ($presGroupRelation  == null) {
+                            $groupRela = GetSingleByCondition(DRINKERCYCLESDRINKERSRELATION_TABLE, array("DrinkerCycleId" => $group->Id));
+
+                            $newRela = new DrinkerCyclesDrinkersRelation();
+                            $newRela->DrinkerId = $drinker->Id;
+                            $newRela->DrinkerCycleId = $group->Id;
+                            $newRela->IsAuthenticated = $groupRela == null;
+                            return ReturnBoolean(Insert(DRINKERCYCLESDRINKERSRELATION_TABLE, $newRela));
+                        }
+                        return ReturnBoolean(true);
                     } else {
                         return ReturnNotFound($obj->Guid, "Drinker");
                     }

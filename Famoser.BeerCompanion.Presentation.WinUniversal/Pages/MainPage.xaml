@@ -7,10 +7,47 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mainPage="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.MainPage"
     mc:Ignorable="d"
-    DataContext="{Binding MainPageViewModel, Source={ StaticResource Locator}}">
+    DataContext="{Binding MainPageViewModel, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <mainPage:BeerCounter DataContext="{Binding}" />
-        <mainPage:FirstTimeWizard VerticalAlignment="Top" Margin="10" Visibility="{Binding UserInformation.FirstTime, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <Pivot>
+            <PivotItem Header="zähler">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <mainPage:BeerCounter DataContext="{Binding }" Margin="0,20,0,40" />
+                    <ScrollViewer Grid.Row="1">
+                        <mainPage:LastBeers DataContext="{Binding UserInformation.SortedBeers}" />
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="gruppen">
+                <Grid>
+                    <ScrollViewer>
+                        <StackPanel>
+                            <Button>
+                                <Button.Content>
+                                    <SymbolIcon Symbol="Add" />
+                                </Button.Content>
+                                <Button.Flyout>
+                                    <Flyout>
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource HeaderText}" Text="Gruppe hinzufügen" />
+                                            <TextBlock Text="Gib den Namen der Gruppe ein" Style="{StaticResource DescriptionText}" />
+                                            <TextBox PlaceholderText="Gruppe" Text="{Binding NewGroupName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxText}" />
+                                            <TextBlock Text="{Binding NewGroupNameMessage}" Style="{StaticResource DescriptionText}" FontStyle="Italic" />
+                                            <Button Content="Hinzufügen" HorizontalAlignment="Center" Command="{Binding AddGroupCommand}" />
+                                        </StackPanel>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                            <mainPage:GroupOverView DataContext="{Binding DrinkerCycle}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

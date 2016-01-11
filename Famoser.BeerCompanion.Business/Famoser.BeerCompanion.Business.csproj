@@ -45,6 +45,7 @@
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\Drinker.cs" />
     <Compile Include="Models\DrinkerCycle.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Save\CycleSaveModel.cs" />
     <Compile Include="Models\UserInformations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

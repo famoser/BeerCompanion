@@ -14,11 +14,14 @@ namespace Famoser.BeerCompanion.Business.Converter
     {
         public DrinkerCycle Convert(DrinkerCycleEntity entity)
         {
-            return new DrinkerCycle { Name = entity.Name, Guid = entity.Guid };
+            return new DrinkerCycle { Name = entity.Name, Guid = entity.Guid, IsAuthenticated = entity.IsAuthenticated };
         }
 
         public List<DrinkerCycle> Convert(List<DrinkerCycleEntity> entities)
         {
+            if (entities == null)
+                return new List<DrinkerCycle>();
+
             var res = new List<DrinkerCycle>();
             foreach (var drinkerCycleEntity in entities)
             {
@@ -34,13 +37,16 @@ namespace Famoser.BeerCompanion.Business.Converter
                 Color = entity.Color,
                 TotalBeers = entity.TotalBeers,
                 LastBeer = entity.LastBeerTime,
-                AuthDrinkerCycles = entity.AuthDrinkerCycles,
-                NonAuthDrinkerCycles = entity.NonAuthDrinkerCycles
+                AuthDrinkerCycleGuids = entity.AuthDrinkerCycles,
+                NonAuthDrinkerCycleGuids = entity.NonAuthDrinkerCycles
             };
         }
 
         public List<Drinker> Convert(List<DrinkerEntity> entities)
         {
+            if (entities == null)
+                return new List<Drinker>();
+
             var res = new List<Drinker>();
             foreach (var drinkerEntity in entities)
             {

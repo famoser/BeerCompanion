@@ -31,5 +31,7 @@ namespace Famoser.BeerCompanion.Business.Services
         Task<bool> SetCachedData(string data);
         Task<bool> SetUserInformations(string info);
         Task<bool> SetUserBeers(string info);
+
+        Task<bool> ResetApplication();
     }
 }

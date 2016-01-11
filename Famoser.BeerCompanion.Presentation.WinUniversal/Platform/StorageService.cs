@@ -46,6 +46,7 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
             return null;
         }
 
+
         private async Task<string> ReadAsset(string filename)
         {
             try
@@ -96,8 +97,6 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
             return false;
         }
 
-
-
         public Task<string> GetCachedData()
         {
             return ReadCache("data.json");
@@ -133,6 +132,31 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
         public Task<bool> SetUserBeers(string info)
         {
             return SaveToCache("beers.json", info);
+        }
+
+        public async Task<bool> ResetApplication()
+        {
+            try
+            {
+                var allfiles = await ApplicationData.Current.LocalFolder.GetFilesAsync();
+                foreach (var storageFile in allfiles)
+                {
+                    await storageFile.DeleteAsync();
+                }
+
+                allfiles = await ApplicationData.Current.RoamingFolder.GetFilesAsync();
+                foreach (var storageFile in allfiles)
+                {
+                    await storageFile.DeleteAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Instance.LogException(ex, this);
+            }
+            return false;
         }
     }
 }

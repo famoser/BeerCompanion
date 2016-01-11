@@ -30,7 +30,9 @@
                 <ResourceDictionary x:Key="Default">
                     <SolidColorBrush x:Key="TextForegroundThemeBrush" Color="#434343" />
                     <SolidColorBrush x:Key="TextBackgroundThemeBrush" Color="#ffffff" />
+                    <SolidColorBrush x:Key="TextPalettonForeground" Color="#ffffff" />
                     <SolidColorBrush x:Key="AkzentForegroundThemeBrush" Color="#FBB117" />
+                    <SolidColorBrush x:Key="AkzentBackgroundThemeBrush" Color="#FBF417" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
             <SolidColorBrush x:Key="PivotHeaderForegroundSelectedBrush" Color="#FFFFFF" />
@@ -52,6 +54,52 @@
                 <Setter Property="FontFamily" Value="SegoeUI" />
                 <Setter Property="FontWeight" Value="Normal" />
                 <Setter Property="Margin" Value="0,5,0,5" />
+            </Style>
+
+            <Style x:Key="DescriptionRichText" TargetType="RichTextBlock">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Foreground" Value="{ThemeResource TextForegroundThemeBrush}" />
+                <Setter Property="FontFamily" Value="SegoeUI" />
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="Margin" Value="0,5,0,5" />
+            </Style>
+
+            <Style x:Key="TextBoxText" TargetType="TextBox">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Foreground" Value="{ThemeResource TextForegroundThemeBrush}" />
+                <Setter Property="FontFamily" Value="SegoeUI" />
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="Margin" Value="0,5,0,5" />
+            </Style>
+
+            <Style x:Key="StatisticBigNumber" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="60" />
+                <Setter Property="Foreground" Value="{ThemeResource TextForegroundThemeBrush}" />
+                <Setter Property="FontFamily" Value="SegoeUI" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="Margin" Value="0,5,0,5" />
+            </Style>
+
+            <Style x:Key="StatisticUnitShort" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="25" />
+                <Setter Property="Foreground" Value="{ThemeResource TextForegroundThemeBrush}" />
+                <Setter Property="FontFamily" Value="SegoeUI" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+            <Style x:Key="StatisticUnitLong" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="Foreground" Value="{ThemeResource TextForegroundThemeBrush}" />
+                <Setter Property="FontFamily" Value="SegoeUI" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+            <Style x:Key="StatisticDivider" TargetType="Border">
+                <Setter Property="BorderThickness" Value="1,0,0,0" />
+                <Setter Property="BorderBrush" Value="{ThemeResource TextForegroundThemeBrush}" />
+                <Setter Property="Margin" Value="10" />
             </Style>
 
 

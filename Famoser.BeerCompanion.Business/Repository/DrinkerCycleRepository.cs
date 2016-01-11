@@ -39,8 +39,12 @@ namespace Famoser.BeerCompanion.Business.Repository
 
                 if (!string.IsNullOrEmpty(str))
                 {
-                    var obj = JsonConvert.DeserializeObject<CycleSaveModel>(str);
-                    return ConstructBusinessModel(obj.Drinkers.ToList(), obj.DrinkerCycles.ToList());
+                    var usrInfo = await SimpleIoc.Default.GetInstance<ISettingsRepository>().GetUserInformations();
+                    if (usrInfo != null)
+                    {
+                        var obj = JsonConvert.DeserializeObject<CycleSaveModel>(str);
+                        return ConstructBusinessModel(obj.Drinkers.ToList(), obj.DrinkerCycles.ToList(), usrInfo);
+                    }
                 }
             }
             catch (Exception ex)
@@ -56,28 +60,28 @@ namespace Famoser.BeerCompanion.Business.Repository
             {
                 new DrinkerCycle()
                 {
-                    AuthBeerDrinkers = new ObservableCollection<Drinker>()
+                    AuthBeerDrinkers = new ObservableCollection<Person>()
                     {
                         new Drinker() {Name = "Markus", LastBeer = DateTime.Now,TotalBeers = 12},
                         new Drinker() {Name = "Felix", LastBeer = DateTime.Now,TotalBeers = 42},
                         new Drinker() {Name = "Bastian", LastBeer = DateTime.Now,TotalBeers = 11},
                         new Drinker() {Name = "Alex", LastBeer = DateTime.Now,TotalBeers = 9}
                     },
-                    NonAuthBeerDrinkers = new ObservableCollection<Drinker>()
+                    NonAuthBeerDrinkers = new ObservableCollection<Person>()
                     {
                         new Drinker() {Name = "Dr gruusigi neui", LastBeer = DateTime.Now,TotalBeers = 2},
                     },
                 },
                 new DrinkerCycle()
                 {
-                    AuthBeerDrinkers = new ObservableCollection<Drinker>()
+                    AuthBeerDrinkers = new ObservableCollection<Person>()
                     {
                         new Drinker() {Name = "Bastian", LastBeer = DateTime.Now,TotalBeers = 31},
                         new Drinker() {Name = "Selina", LastBeer = DateTime.Now,TotalBeers = 2},
                         new Drinker() {Name = "Gertrude", LastBeer = DateTime.Now,TotalBeers = 8},
                         new Drinker() {Name = "Mr. D", LastBeer = DateTime.Now,TotalBeers = 51}
                     },
-                    NonAuthBeerDrinkers = new ObservableCollection<Drinker>()
+                    NonAuthBeerDrinkers = new ObservableCollection<Person>()
                     {
                         new Drinker() {Name = "Dr gruusigi neui 1", LastBeer = DateTime.Now,TotalBeers = 2},
                         new Drinker() {Name = "Dr gruusigi neui 2", LastBeer = DateTime.Now,TotalBeers = 2},
@@ -90,14 +94,20 @@ namespace Famoser.BeerCompanion.Business.Repository
             {
                 foreach (var beerDrinker in drinkerCycle.AuthBeerDrinkers)
                 {
-                    beerDrinker.DrinkerCycles = new ObservableCollection<DrinkerCycle>()
-                    {
-                        drinkerCycle
-                    };
+                    if (beerDrinker.AuthDrinkerCycles == null)
+                        beerDrinker.AuthDrinkerCycles = new ObservableCollection<DrinkerCycle>();
+                    beerDrinker.AuthDrinkerCycles.Add(drinkerCycle);
+                }
+
+                foreach (var nonAuthBeerDrinker in drinkerCycle.NonAuthBeerDrinkers)
+                {
+                    if (nonAuthBeerDrinker.NonAuthDrinkerCycles == null)
+                        nonAuthBeerDrinker.NonAuthDrinkerCycles = new ObservableCollection<DrinkerCycle>();
+                    nonAuthBeerDrinker.NonAuthDrinkerCycles.Add(drinkerCycle);
                 }
             }
 
-            //reference some both
+            //reference some in both groups
             obs[0].AuthBeerDrinkers.Add(obs[1].AuthBeerDrinkers[0]);
             obs[0].AuthBeerDrinkers.Add(obs[1].AuthBeerDrinkers[2]);
             return obs;
@@ -113,8 +123,8 @@ namespace Famoser.BeerCompanion.Business.Repository
                     var drinkerResponse = await DataService.Instance.GetDrinkerCycle(usrInfo.Guid);
                     var drinkerCycles = ResponseConverter.Instance.Convert(drinkerResponse.DrinkerCycles);
                     var drinkers = ResponseConverter.Instance.Convert(drinkerResponse.Drinkers);
-
-                    return ConstructBusinessModel(drinkers, drinkerCycles);
+                    
+                    return ConstructBusinessModel(drinkers, drinkerCycles, usrInfo);
                 }
             }
             catch (Exception ex)
@@ -125,20 +135,27 @@ namespace Famoser.BeerCompanion.Business.Repository
         }
 
         private ObservableCollection<DrinkerCycle> ConstructBusinessModel(List<Drinker> drinkers,
-            List<DrinkerCycle> drinkerCycles)
+            List<DrinkerCycle> drinkerCycles, UserInformations infos)
         {
             foreach (var drinker in drinkers)
             {
-                foreach (var authDrinkerCycle in drinker.AuthDrinkerCycles)
+                foreach (var authDrinkerCycle in drinker.AuthDrinkerCycleGuids)
                 {
                     var authCircle = drinkerCycles.FirstOrDefault(ds => ds.Guid == authDrinkerCycle);
                     authCircle?.AuthBeerDrinkers.Add(drinker);
                 }
-                foreach (var nonAuthDrinkerCycle in drinker.NonAuthDrinkerCycles)
+                foreach (var nonAuthDrinkerCycle in drinker.NonAuthDrinkerCycleGuids)
                 {
                     var nonAuthCircle = drinkerCycles.FirstOrDefault(ds => ds.Guid == nonAuthDrinkerCycle);
                     nonAuthCircle?.NonAuthBeerDrinkers.Add(drinker);
                 }
+            }
+            foreach (var drinkerCycle in drinkerCycles)
+            {
+                if (drinkerCycle.IsAuthenticated)
+                    drinkerCycle.AuthBeerDrinkers.Add(infos);
+                else
+                    drinkerCycle.NonAuthBeerDrinkers.Add(infos);
             }
             return new ObservableCollection<DrinkerCycle>(drinkerCycles);
         }
@@ -153,12 +170,20 @@ namespace Famoser.BeerCompanion.Business.Repository
                     foreach (var authBeerDrinker in drinkerCycle.AuthBeerDrinkers)
                     {
                         if (!drinkers.Contains(authBeerDrinker))
-                            drinkers.Add(authBeerDrinker);
+                        {
+                            var drinker = authBeerDrinker as Drinker;
+                            if (drinker != null)
+                                drinkers.Add(drinker);
+                        }
                     }
                     foreach (var nonAuthBeerDrinker in drinkerCycle.NonAuthBeerDrinkers)
                     {
                         if (!drinkers.Contains(nonAuthBeerDrinker))
-                            drinkers.Add(nonAuthBeerDrinker);
+                        {
+                            var drinker = nonAuthBeerDrinker as Drinker;
+                            if (drinker != null)
+                                drinkers.Add(drinker);
+                        }
                     }
                 }
                 var sm = new CycleSaveModel()
@@ -206,7 +231,9 @@ namespace Famoser.BeerCompanion.Business.Repository
         {
             try
             {
-                return (await _dataService.PostDrinkerCycle(RequestConverter.Instance.ConvertToDrinkerCycleRequest(userGuid, actionName,name, authGuid))).IsSuccessfull;
+                var res = await _dataService.PostDrinkerCycle(RequestConverter.Instance.ConvertToDrinkerCycleRequest(userGuid,
+                            actionName, name, authGuid));
+                return res.Response && res.IsSuccessfull;
             }
             catch (Exception ex)
             {

@@ -1,8 +1,13 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:generic="using:Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Generic">
+    xmlns:generic="using:Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Generic"
+    xmlns:format="using:Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Format">
     
     <generic:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <generic:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter" />
     <generic:HexToSolidColorConverter x:Key="HexToSolidColorConverter" />
+
+    <format:FormatDateTime x:Key="FormatDateTime" />
+    <format:FormatDouble x:Key="FormatDouble" />
 </ResourceDictionary>

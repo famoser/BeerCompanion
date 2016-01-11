@@ -112,7 +112,9 @@ namespace Famoser.BeerCompanion.Business.Repository
                     new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now},
                 },
                 Guid = Guid.NewGuid(),
-                Name = "Florian"
+                Name = "Florian",
+                FirstTime = false,
+                Color = "e3a4dd"
             };
         }
     }

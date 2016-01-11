@@ -101,9 +101,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\Format\FormatDateTime.cs" />
+    <Compile Include="Converter\Format\FormatDouble.cs" />
+    <Compile Include="Converter\Generic\BooleanToOpacityConverter.cs" />
     <Compile Include="Converter\Generic\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\Generic\HexToSolidColorConverter.cs" />
     <Compile Include="Converter\MainPage\BeerCounter\CounterConverter.cs" />
+    <Compile Include="Pages\DrinkerCyclePage.xaml.cs">
+      <DependentUpon>DrinkerCyclePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -112,13 +118,25 @@
     <Compile Include="Platform\InteractionService.cs" />
     <Compile Include="Platform\StorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\DrinkerCyclePage\Drinkers.xaml.cs">
+      <DependentUpon>Drinkers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DrinkerCyclePage\Statistics.xaml.cs">
+      <DependentUpon>Statistics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\MainPage\BeerCounter.xaml.cs">
       <DependentUpon>BeerCounter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\MainPage\FirstTimeWizard.xaml.cs">
+    <Compile Include="UserControls\MainPage\GroupOverView.xaml.cs">
+      <DependentUpon>GroupOverView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MainPage\LastBeers.xaml.cs">
+      <DependentUpon>LastBeers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\WizardPage\FirstTimeWizard.xaml.cs">
       <DependentUpon>FirstTimeWizard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\MainPage\UserSettings.xaml.cs">
+    <Compile Include="UserControls\WizardPage\UserSettings.xaml.cs">
       <DependentUpon>UserSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -149,19 +167,43 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Pages\DrinkerCyclePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\WizardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DrinkerCyclePage\Drinkers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DrinkerCyclePage\Statistics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MainPage\BeerCounter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\MainPage\FirstTimeWizard.xaml">
+    <Page Include="UserControls\MainPage\GroupOverView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\MainPage\UserSettings.xaml">
+    <Page Include="UserControls\MainPage\LastBeers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\WizardPage\FirstTimeWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\WizardPage\UserSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

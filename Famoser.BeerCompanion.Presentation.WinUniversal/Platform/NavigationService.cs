@@ -15,6 +15,8 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
             var navigationService = new NavigationService();
 
             navigationService.Configure(PageKeys.Main.ToString(), typeof(Pages.MainPage));
+            navigationService.Configure(PageKeys.Wizard.ToString(), typeof(Pages.WizardPage));
+            navigationService.Configure(PageKeys.DrinkerCycle.ToString(), typeof(Pages.DrinkerCyclePage));
 
             return navigationService;
         }

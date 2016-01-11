@@ -36,10 +36,12 @@ namespace Famoser.BeerCompanion.View.ViewModels
             }
 
             SimpleIoc.Default.Register<MainPageViewModel>();
-            SimpleIoc.Default.Register<WizardViewModel>(); 
+            SimpleIoc.Default.Register<WizardViewModel>();
+            SimpleIoc.Default.Register<DrinkerCycleViewModel>(); 
         }
 
         public MainPageViewModel MainPageViewModel => ServiceLocator.Current.GetInstance<MainPageViewModel>();
         public WizardViewModel WizardViewModel => ServiceLocator.Current.GetInstance<WizardViewModel>();
+        public DrinkerCycleViewModel DrinkerCycleViewModel => ServiceLocator.Current.GetInstance<DrinkerCycleViewModel>();
     }
 }

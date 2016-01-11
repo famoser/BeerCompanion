@@ -1,0 +1,35 @@
+﻿<UserControl
+    x:Class="Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.DrinkerCyclePage.Drinkers"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    d:DataContext="{Binding DrinkerCycleViewModel.DrinkerCycle, Source={StaticResource Locator}}">
+
+    <UserControl.Resources>
+        <DataTemplate x:Name="MitgliedTemplate">
+            <Grid Padding="10" Background="{Binding Color, Converter={StaticResource HexToSolidColorConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" Style="{StaticResource DescriptionText}" Foreground="{ThemeResource TextPalettonForeground}" />
+                <TextBlock Grid.Column="1" Text="{Binding GetTotalBeers}" Style="{StaticResource HeaderText}" Foreground="{ThemeResource TextPalettonForeground}" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
+        <ListView ItemTemplate="{StaticResource MitgliedTemplate}" ItemsSource="{Binding AuthBeerDrinkers}" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </Grid>
+</UserControl>

@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,6 +15,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Famoser.BeerCompanion.View.Enums;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Views;
 
 namespace Famoser.BeerCompanion.Presentation.WinUniversal
 {
@@ -79,6 +83,24 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, ev) =>
+            {
+                Frame frameBefore = Window.Current.Content as Frame;
+
+                if (frameBefore != null && frameBefore.CanGoBack)
+                {
+                    frameBefore.GoBack();
+
+                    ev.Handled = true;
+                }
+                else
+                {
+                    //handled in MainPage
+                    //Current.Exit();
+                }
+            };
         }
 
         /// <summary>

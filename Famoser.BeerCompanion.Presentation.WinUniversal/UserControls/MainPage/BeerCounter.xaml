@@ -82,7 +82,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Viewbox Grid.Row="0" Margin="30,0">
-                <TextBlock Foreground="Gold" FontFamily="SegoeUI" FontWeight="Light" Text="{Binding UserInformation.TotalBeers, Converter={StaticResource CounterConverter}}" />
+                <TextBlock Foreground="Gold" FontFamily="SegoeUI" FontWeight="Light" Text="{Binding UserInformation.GetTotalBeers, Converter={StaticResource CounterConverter}}" />
             </Viewbox>
 
             <Grid Grid.Row="1" Width="250">
