@@ -6,7 +6,7 @@
  * Time: 15:14
  */
 
-namespace famoser\beercompanion\webpage\core\loggin;
+namespace famoser\beercompanion\webpage\core\logging;
 
 
 class logitem

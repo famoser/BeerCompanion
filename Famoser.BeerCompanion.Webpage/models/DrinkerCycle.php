@@ -13,4 +13,5 @@ class DrinkerCycle
 {
     public $Id;
     public $Name;
+    public $Guid;
 }

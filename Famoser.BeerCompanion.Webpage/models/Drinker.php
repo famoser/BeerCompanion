@@ -14,6 +14,8 @@ class Drinker
     public $Id;
     public $Guid;
     public $Name;
+    public $Color;
+
     public $LastBeer;
     public $TotalBeers;
 }

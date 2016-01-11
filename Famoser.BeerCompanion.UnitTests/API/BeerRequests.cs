@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Famoser.BeerCompanion.Data;
+using Famoser.BeerCompanion.Data.Entities;
+using Famoser.BeerCompanion.Data.Entities.Communication;
+using Famoser.BeerCompanion.Data.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Famoser.BeerCompanion.UnitTests.API
@@ -11,15 +15,93 @@ namespace Famoser.BeerCompanion.UnitTests.API
     public class BeerRequests
     {
         [TestMethod]
-        public async Task RemoveRequest()
+        public void DoLiveCycle()
         {
-            
-        }
+            Task.Run(async () =>
+            {
+                //arrange
+                await ApiTestHelper.CreateTestUser(ApiTestHelper.TestUserGuid);
+                var ds = new DataService();
+                var beer1 = new BeerEntity()
+                {
+                    Guid = Guid.NewGuid(),
+                    DrinkTime = DateTime.Now
+                };
+                var beer2 = new BeerEntity()
+                {
+                    Guid = Guid.NewGuid(),
+                    DrinkTime = DateTime.Now
+                };
+                var beer3 = new BeerEntity()
+                {
+                    Guid = Guid.NewGuid(),
+                    DrinkTime = DateTime.Now
+                };
 
-        [TestMethod]
-        public async Task AddRequest()
-        {
-            
+                var add = new BeerRequest(PossibleActions.Add, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+                        beer1, beer2, beer3
+                    }
+                };
+                var remove1 = new BeerRequest(PossibleActions.Remove, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+                        beer1, beer3
+                    }
+                };
+                var remove2 = new BeerRequest(PossibleActions.Remove, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+                        beer2
+                    }
+                };
+
+                //act
+                //check if 0 beers
+                var beers = await ds.GetBeers(ApiTestHelper.TestUserGuid);
+                ApiAssertHelper.CheckBaseResponse(beers);
+                Assert.IsTrue(beers.Beers == null || !beers.Beers.Any());
+
+                //add beers;
+                var res = await ds.PostBeer(add);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
+                //check if 3 beers
+                beers = await ds.GetBeers(ApiTestHelper.TestUserGuid);
+                ApiAssertHelper.CheckBaseResponse(beers);
+                Assert.IsTrue(beers.Beers != null && beers.Beers.Count == 3);
+
+                //remove 2 beers;
+                res = await ds.PostBeer(remove1);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
+                //check if 1 beer, check Date
+                beers = await ds.GetBeers(ApiTestHelper.TestUserGuid);
+                ApiAssertHelper.CheckBaseResponse(beers);
+                Assert.IsTrue(beers.Beers != null && beers.Beers.Count == 1);
+                Assert.IsTrue(beers.Beers[0].Guid == beer2.Guid);
+                Assert.IsTrue(beers.Beers[0].DrinkTime - beer2.DrinkTime < TimeSpan.FromSeconds(1));
+
+                //remove 2 invalid beers;
+                res = await ds.PostBeer(remove1);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
+                //remove 1 beer left;
+                res = await ds.PostBeer(remove2);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
+                //check if 0 beers
+                beers = await ds.GetBeers(ApiTestHelper.TestUserGuid);
+                ApiAssertHelper.CheckBaseResponse(beers);
+                Assert.IsTrue(beers.Beers == null || !beers.Beers.Any());
+                
+                //clean
+                await ApiTestHelper.DeleteTestUser(ApiTestHelper.TestUserGuid);
+            }).GetAwaiter().GetResult();
         }
     }
 }

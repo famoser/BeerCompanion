@@ -7,6 +7,8 @@ namespace Famoser.BeerCompanion.Data.Services
 {
     public interface IDataService
     {
+        Task<bool> ApiOnline();
+
         Task<DrinkerCycleResponse> GetDrinkerCycle(Guid ownId);
         Task<BooleanResponse> PostDrinkerCycle(DrinkerCycleRequest request);
 

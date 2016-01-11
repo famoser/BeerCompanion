@@ -8,11 +8,12 @@
 
 namespace famoser\beercompanion\webpage\core\phpcore;
 
+use famoser\beercompanion\webpage\controllers\ApiController;
 use famoser\beercompanion\webpage\controllers\BeerController;
 use famoser\beercompanion\webpage\controllers\CycleController;
 use famoser\beercompanion\webpage\controllers\DrinkerController;
 use function famoser\beercompanion\webpage\core\fileshelper\include_all_files_in_dir;
-use famoser\beercompanion\webpage\core\loggin\logger;
+use famoser\beercompanion\webpage\core\logging\logger;
 
 function hi_framework()
 {
@@ -64,6 +65,8 @@ function get_controller($params)
             return new BeerController();
         else if ($params[0] == "drinkers")
             return new DrinkerController();
+        else if ($params[0] == "api")
+            return new ApiController();
     }
     return null;
 }

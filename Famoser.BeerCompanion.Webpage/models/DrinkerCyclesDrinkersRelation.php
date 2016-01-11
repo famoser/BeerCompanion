@@ -9,7 +9,7 @@
 namespace famoser\beercompanion\webpage\models;
 
 
-class DrinkerCycleDrinkerRelation
+class DrinkerCyclesDrinkersRelation
 {
     public $Id;
     public $DrinkerId;

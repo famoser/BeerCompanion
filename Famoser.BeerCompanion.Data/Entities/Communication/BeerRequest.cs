@@ -1,12 +1,13 @@
 ﻿using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Famoser.BeerCompanion.Data.Entities.Communication.Base;
 using Famoser.BeerCompanion.Data.Enums;
 
 namespace Famoser.BeerCompanion.Data.Entities.Communication
 {
-    //object created from memory, not sure if still in use
+    [DataContract]
     public class BeerRequest : BaseRequest
     {
         public BeerRequest(PossibleActions action, Guid guid) : base(action, guid)
@@ -14,6 +15,7 @@ namespace Famoser.BeerCompanion.Data.Entities.Communication
 
         }
 
+        [DataMember]
         public List<BeerEntity> Beers { get; set; }
     }
 }

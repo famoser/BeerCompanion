@@ -16,59 +16,62 @@ namespace Famoser.BeerCompanion.UnitTests.API
     [TestClass]
     public class DrinkerRequests
     {
-        private static Guid _testGuid = Guid.NewGuid();
         [TestMethod]
-        public async Task UpdateRequest()
+        public void DoLiveCycle()
         {
-            //arrange
-            var usrInfo = new UserInformationEntity()
+            Task.Run(async () =>
             {
-                Color = "AF56EB",
-                Name = "TestUser"
-            };
-            var updateDrinkRequest = new DrinkerRequest(PossibleActions.Update, _testGuid)
-            {
-                UserInformations = usrInfo
-            };
-            var existDrinkRequest = new DrinkerRequest(PossibleActions.Exists, _testGuid)
-            {
-                UserInformations = usrInfo
-            };
-            var removeDrinkRequest = new DrinkerRequest(PossibleActions.Remove, _testGuid)
-            {
-                UserInformations = usrInfo
-            };
-            var ds = new DataService();
+                //arrange
+                var usrInfo = new UserInformationEntity()
+                {
+                    Color = "AF56EB",
+                    Name = "TestUser"
+                };
+                var updateDrinkRequest = new DrinkerRequest(PossibleActions.Update, ApiTestHelper.TestUserGuid)
+                {
+                    UserInformations = usrInfo
+                };
+                var existDrinkRequest = new DrinkerRequest(PossibleActions.Exists, ApiTestHelper.TestUserGuid)
+                {
+                    UserInformations = usrInfo
+                };
+                var removeDrinkRequest = new DrinkerRequest(PossibleActions.Remove, ApiTestHelper.TestUserGuid)
+                {
+                    UserInformations = usrInfo
+                };
+                var ds = new DataService();
 
-            //act
-            //check if already exists;
-            var res = await ds.PostDrinker(existDrinkRequest);
-            ApiAssertHelper.CheckBooleanResponseForFalse(res);
+                //act
+                //check if already exists;
+                var res = await ds.PostDrinker(existDrinkRequest);
+                ApiAssertHelper.CheckBooleanResponseForFalse(res);
 
-            //add
-            res = await ds.PostDrinker(updateDrinkRequest);
-            ApiAssertHelper.CheckBooleanResponse(res);
+                //add
+                res = await ds.PostDrinker(updateDrinkRequest);
+                ApiAssertHelper.CheckBooleanResponse(res);
 
-            //check for existence
-            var drinker = await ds.GetDrinker(_testGuid);
-            CheckGetDrinkerResponse(drinker, updateDrinkRequest);
+                //check for existence
+                var drinker = await ds.GetDrinker(ApiTestHelper.TestUserGuid);
+                CheckGetDrinkerResponse(drinker, updateDrinkRequest);
 
-            //update
-            updateDrinkRequest.UserInformations.Name = "NewName";
-            updateDrinkRequest.UserInformations.Color = "NewColor";
-            res = await ds.PostDrinker(updateDrinkRequest);
-            ApiAssertHelper.CheckBooleanResponse(res);
+                //update
+                updateDrinkRequest.UserInformations.Name = "NewName";
+                updateDrinkRequest.UserInformations.Color = "NewColor";
+                res = await ds.PostDrinker(updateDrinkRequest);
+                ApiAssertHelper.CheckBooleanResponse(res);
 
-            //check for updated values
-            drinker = await ds.GetDrinker(_testGuid);
-            CheckGetDrinkerResponse(drinker, updateDrinkRequest);
+                //check for updated values
+                drinker = await ds.GetDrinker(ApiTestHelper.TestUserGuid);
+                CheckGetDrinkerResponse(drinker, updateDrinkRequest);
 
-            //delete drinker again
-            res = await ds.PostDrinker(removeDrinkRequest);
-            ApiAssertHelper.CheckBooleanResponse(res);
-            drinker = await ds.GetDrinker(_testGuid);
-            ApiAssertHelper.CheckBaseResponse(drinker);
-            Assert.IsNull(drinker.Drinker);
+                //delete drinker again
+                res = await ds.PostDrinker(removeDrinkRequest);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
+                //ensure Drinker is deleted;
+                res = await ds.PostDrinker(existDrinkRequest);
+                ApiAssertHelper.CheckBooleanResponseForFalse(res);
+            }).GetAwaiter().GetResult();
         }
 
         private void CheckGetDrinkerResponse(DrinkerResponse resp, DrinkerRequest requ)
@@ -77,13 +80,6 @@ namespace Famoser.BeerCompanion.UnitTests.API
             Assert.IsNotNull(resp.Drinker);
             Assert.IsTrue(resp.Drinker.Name == requ.UserInformations.Name);
             Assert.IsTrue(resp.Drinker.Color == requ.UserInformations.Color);
-        }
-
-        [TestMethod]
-        public async Task RemoveRequest()
-        {
-            //check also for clean database
-
         }
     }
 }

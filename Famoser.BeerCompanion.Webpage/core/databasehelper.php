@@ -65,6 +65,7 @@ function Insert($table, $obj)
 {
     $db = GetDatabaseConnection();
     $excludedArray = array();
+    $excludedArray[] = "Id";
     $params = PrepareGenericArray($obj);
     $stmt = $db->prepare('INSERT INTO ' . $table . ' ' . ConstructMiddleSQL("insert", $params, $excludedArray));
     return $stmt->execute($params);
@@ -74,7 +75,7 @@ function InsertAll(array $obj)
 {
     $res = true;
     foreach ($obj as $item) {
-        $table = get_class($obj);
+        $table = GetTabelByModel($item);
         $res &= Insert($table, $item);
     }
     return $res;
@@ -84,7 +85,7 @@ function Delete($table, $obj)
 {
     $db = GetDatabaseConnection();
     $stmt = $db->prepare('DELETE FROM ' . $table . '  WHERE Id = :Id');
-    $db->setAttribute(":Id", $obj->Id);
+    $stmt->bindParam(":Id", $obj->Id);
     return $stmt->execute();
 }
 
@@ -92,7 +93,7 @@ function DeleteAll(array $obj)
 {
     $res = true;
     foreach ($obj as $item) {
-        $table = get_class($obj);
+        $table = GetTabelByModel($item);
         $res &= Delete($table, $item);
     }
     return $res;
@@ -118,7 +119,15 @@ function Update($table, $arr)
 
 function GetModelByTable($table)
 {
-    return substr($table, 0, -1);
+    return "famoser\\beercompanion\\webpage\\models\\" .substr($table, 0, -1);
+}
+
+function GetTabelByModel($obj)
+{
+    $clas = get_class($obj);
+    $arr = explode("\\",$clas);
+    $clas = $arr[count($arr) - 1];
+    return $clas . "s";
 }
 
 function ConstructConditionSQL($params)
@@ -168,26 +177,9 @@ function PrepareGenericArray($params)
         $properties = get_object_vars($params);
         $params = array();
         foreach ($properties as $key => $val) {
-            if ($val != null && !is_object($val) && $key != "Id")
+            if ($val !== null && !is_object($val))
                 $params[$key] = $val;
         }
     }
     return $params;
-}
-
-
-function ConvertToDateTime($input)
-{
-    if ($input == null || $input == "")
-        return null;
-    return date(DATETIME_FORMAT_DATABASE, strtotime($input));
-}
-
-function ConvertToPasswordHash($passwd)
-{
-    $options = [
-        'cost' => 12,
-    ];
-    $hash = password_hash($passwd, PASSWORD_BCRYPT, $options);
-    return $hash;
 }

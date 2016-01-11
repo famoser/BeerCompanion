@@ -26,9 +26,12 @@ namespace Famoser.BeerCompanion.Business.Converter
             return coll;
         }
 
-        public DrinkerCycleRequest ConvertToDrinkerCycleRequest(Guid userGuid, PossibleActions actionName, string name)
+        public DrinkerCycleRequest ConvertToDrinkerCycleRequest(Guid userGuid, PossibleActions actionName, string name, Guid? authGuid = null)
         {
-            return new DrinkerCycleRequest(actionName,userGuid) { Name = name };
+            var res =  new DrinkerCycleRequest(actionName,userGuid) { Name = name };
+            if (authGuid.HasValue)
+                res.AuthGuid = authGuid.Value;
+            return res;
         }
 
         public DrinkerRequest ConvertToDrinkerRequest(Guid userGuid, PossibleActions actionName, UserInformations ui)

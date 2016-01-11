@@ -35,7 +35,7 @@ namespace Famoser.BeerCompanion.Data.Entities.Communication.Base
                     return "authenticate";
                 if (PossibleAction == PossibleActions.Deautheticate)
                     return "deauthenticate";
-                LogHelper.Instance.Log(LogLevel.WtfAreYouDoingError, this, "Unknown Possible Action used! Retard.");
+                LogHelper.Instance.Log(LogLevel.WtfAreYouDoingError, this, "Unknown Possible Action used!");
                 return "";
             }
         }

@@ -18,6 +18,12 @@ namespace Famoser.BeerCompanion.Data
     public class DataService : SingletonBase<DataService>, IDataService
     {
         private const string ApiUrl = "http://api.beercompanion.famoser.ch/";
+        public async Task<bool> ApiOnline()
+        {
+            var str = await DownloadString(new Uri(ApiUrl + "/api"));
+            return str.IsSuccessfull && str.Response == "Online";
+        }
+
         public async Task<DrinkerCycleResponse> GetDrinkerCycle(Guid ownId)
         {
             var resp = await DownloadString(new Uri(ApiUrl + "cycles/" + ownId));
@@ -78,12 +84,6 @@ namespace Famoser.BeerCompanion.Data
             return Post(new Uri(ApiUrl + "beers/act"), json);
         }
 
-        public Task<BooleanResponse> PostDrinker(DrinkerRequest request)
-        {
-            var json = JsonConvert.SerializeObject(request);
-            return Post(new Uri(ApiUrl + "drinkers/act"), json);
-        }
-
         public async Task<DrinkerResponse> GetDrinker(Guid ownId)
         {
             var resp = await DownloadString(new Uri(ApiUrl + "drinkers/" + ownId));
@@ -108,6 +108,12 @@ namespace Famoser.BeerCompanion.Data
             };
         }
 
+        public Task<BooleanResponse> PostDrinker(DrinkerRequest request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            return Post(new Uri(ApiUrl + "drinkers/act"), json);
+        }
+
         private async Task<StringReponse> DownloadString(Uri url)
         {
             try
@@ -127,7 +133,7 @@ namespace Famoser.BeerCompanion.Data
                     };
                     if (resp.IsSuccessStatusCode)
                         return res;
-                    res.ErrorMessage = "Request not successfull: Status Code " + resp.StatusCode + " returned";
+                    res.ErrorMessage = "Request not successfull: Status Code " + resp.StatusCode + " returned. Message: "  + res.Response;
                     return res;
                 }
             }
@@ -155,15 +161,25 @@ namespace Famoser.BeerCompanion.Data
                 {
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
 
-                    var res = await client.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
+                    var credentials = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("json", content)
+                    });
+
+                    var res = await client.PostAsync(url, credentials);
                     var respo = await res.Content.ReadAsStringAsync();
-                    if (respo == "1")
+                    if (respo == "true")
                         resp = new BooleanResponse() { Response = true };
                     else
                     {
-                        resp = new BooleanResponse() { ErrorMessage = respo };
-                        LogHelper.Instance.Log(LogLevel.ApiError, this,
-                            "Post failed for url " + url + " with json " + content + " Reponse recieved: " + respo);
+                        if (respo == "false")
+                            resp = new BooleanResponse() {Response = false};
+                        else
+                        {
+                            resp = new BooleanResponse() {ErrorMessage = respo};
+                            LogHelper.Instance.Log(LogLevel.ApiError, this,
+                                "Post failed for url " + url + " with json " + content + " Reponse recieved: " + respo);
+                        }
                     }
                 }
             }

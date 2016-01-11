@@ -7,7 +7,7 @@
  */
 
 use famoser\beercompanion\webpage\core\interfaces\iController;
-use famoser\beercompanion\webpage\core\loggin\logger;
+use famoser\beercompanion\webpage\core\logging\logger;
 use function famoser\beercompanion\webpage\core\phpcore\bye_framework;
 use function famoser\beercompanion\webpage\core\phpcore\formatParams;
 use function famoser\beercompanion\webpage\core\phpcore\get_controller;

@@ -192,21 +192,21 @@ namespace Famoser.BeerCompanion.Business.Repository
             return MakeRequest(name, onwGuid,PossibleActions.Remove);
         }
 
-        public Task<bool> AuthenticateUser(string name, Guid userGuid)
+        public Task<bool> AuthenticateUser(string name, Guid userGuid, Guid authGuid)
         {
-            return MakeRequest(name, userGuid, PossibleActions.Autheticate);
+            return MakeRequest(name, userGuid, PossibleActions.Autheticate, authGuid);
         }
 
-        public Task<bool> DeAuthenticateUser(string name, Guid userGuid)
+        public Task<bool> DeAuthenticateUser(string name, Guid userGuid, Guid deAuthGuid)
         {
-            return MakeRequest(name, userGuid,PossibleActions.Deautheticate);
+            return MakeRequest(name, userGuid,PossibleActions.Deautheticate, deAuthGuid);
         }
 
-        private async Task<bool> MakeRequest(string name, Guid userGuid, PossibleActions actionName)
+        private async Task<bool> MakeRequest(string name, Guid userGuid, PossibleActions actionName, Guid? authGuid = null)
         {
             try
             {
-                return (await _dataService.PostDrinkerCycle(RequestConverter.Instance.ConvertToDrinkerCycleRequest(userGuid, actionName,name))).IsSuccessfull;
+                return (await _dataService.PostDrinkerCycle(RequestConverter.Instance.ConvertToDrinkerCycleRequest(userGuid, actionName,name, authGuid))).IsSuccessfull;
             }
             catch (Exception ex)
             {

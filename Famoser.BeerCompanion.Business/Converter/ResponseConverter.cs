@@ -33,7 +33,7 @@ namespace Famoser.BeerCompanion.Business.Converter
                 Name = entity.Name,
                 Color = entity.Color,
                 TotalBeers = entity.TotalBeers,
-                LastBeer = entity.LastBeer,
+                LastBeer = entity.LastBeerTime,
                 AuthDrinkerCycles = entity.AuthDrinkerCycles,
                 NonAuthDrinkerCycles = entity.NonAuthDrinkerCycles
             };

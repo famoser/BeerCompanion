@@ -3,15 +3,13 @@
  * Created by PhpStorm.
  * User: Florian Moser
  * Date: 09.01.2016
- * Time: 16:03
+ * Time: 15:03
  */
 
 namespace famoser\beercompanion\webpage\models\communication;
 
 
-class DrinkerCycleCommunication
+class BeerResponse
 {
-    public $Name;
-    public $Guid;
-    public $Action;
+    public $Beers = array();
 }
