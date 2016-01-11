@@ -39,15 +39,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataService.cs" />
-    <Compile Include="Entities\BeerCollectionEntity.cs" />
     <Compile Include="Entities\BeerEntity.cs" />
-    <Compile Include="Entities\BeerRemoveEntity.cs" />
-    <Compile Include="Entities\DrinkerCommunication.cs" />
-    <Compile Include="Entities\DrinkerCycleCommunication.cs" />
+    <Compile Include="Entities\Communication\BeerRequest.cs" />
+    <Compile Include="Entities\Communication\BeerResponse.cs" />
+    <Compile Include="Entities\Communication\DrinkerCycleRequest.cs" />
+    <Compile Include="Entities\Communication\DrinkerRequest.cs" />
     <Compile Include="Entities\DrinkerEntity.cs" />
     <Compile Include="Entities\DrinkerCycleEntity.cs" />
-    <Compile Include="Entities\ResponseCollectionEntity.cs" />
+    <Compile Include="Entities\Communication\DrinkerCycleResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Famoser.BeerCompanion.Common\Famoser.BeerCompanion.Common.csproj">
@@ -55,6 +56,7 @@
       <Name>Famoser.BeerCompanion.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

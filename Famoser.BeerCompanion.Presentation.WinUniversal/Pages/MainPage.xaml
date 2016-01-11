@@ -5,10 +5,12 @@
     xmlns:local="using:Famoser.BeerCompanion.Presentation.WinUniversal"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mainPage="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.MainPage"
     mc:Ignorable="d"
-    d:DataContext="{Binding MainPageViewModel, Source={ StaticResource Locator}}">
+    DataContext="{Binding MainPageViewModel, Source={ StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Style="{StaticResource Counter}" Text="{Binding UserInformation.TotalBeers}"></TextBlock>
+        <mainPage:BeerCounter DataContext="{Binding}" />
+        <mainPage:FirstTimeWizard VerticalAlignment="Top" Margin="10" Visibility="{Binding UserInformation.FirstTime, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>
 </Page>

@@ -20,6 +20,11 @@
         /// <summary>
         /// something which does not allow the application to run as expected
         /// </summary>
-        FatalError = 3
+        FatalError = 3,
+
+        /// <summary>
+        /// Api failed, on same status like FatalError
+        /// </summary>
+        ApiError = 4,
     }
 }

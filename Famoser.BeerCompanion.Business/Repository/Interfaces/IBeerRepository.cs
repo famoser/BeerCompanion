@@ -10,6 +10,6 @@ namespace Famoser.BeerCompanion.Business.Repository.Interfaces
 {
     public interface IBeerRepository
     {
-        Task<ObservableCollection<Beer>> SyncBeers();
+        Task<ObservableCollection<Beer>> SyncBeers(ObservableCollection<Beer> beers, Guid userGuid);
     }
 }

@@ -10,7 +10,8 @@ namespace Famoser.BeerCompanion.Business.Repository.Interfaces
     public interface ISettingsRepository
     {
         Task<UserInformations> GetUserInformations();
-        Task<bool> SaveUserInformations(UserInformations beers, bool updateOnline);
+        Task<bool> SaveUserInformations(UserInformations uinfo);
+        Task<bool> SyncUserInformations(UserInformations uinfo);
 
         UserInformations GetSampleUserInformations();
     }

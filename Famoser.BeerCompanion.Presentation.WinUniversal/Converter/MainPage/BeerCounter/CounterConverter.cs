@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
-namespace Famoser.BeerCompanion.Presentation.WinUniversal.Converter
+namespace Famoser.BeerCompanion.Presentation.WinUniversal.Converter.MainPage.BeerCounter
 {
     public class CounterConverter : IValueConverter
     {

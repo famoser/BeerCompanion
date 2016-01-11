@@ -1,0 +1,95 @@
+﻿<UserControl
+    x:Class="Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.MainPage.BeerCounter"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.MainPage"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:beerCounter="using:Famoser.BeerCompanion.Presentation.WinUniversal.Converter.MainPage.BeerCounter"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
+    d:DataContext="{Binding MainPageViewModel, Source={StaticResource Locator}}">
+    <UserControl.Resources>
+        <Style x:Key="AddBeerButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Width="200">
+                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="100" />
+                            <Ellipse Name="Ellipse" StrokeThickness="1" Fill="Transparent" Opacity="1" Height="200" Width="200"/>
+                            <SymbolIcon Name="SymbolIcon" Symbol="Add" Foreground="Gray" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver" />
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Ellipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Gold"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="SymbolIcon">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RemoveBeerButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Width="40" Height="40">
+                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="100" />
+                            <Ellipse Name="Ellipse" Grid.Row="0" StrokeThickness="1" Fill="Transparent" Height="40" Width="40"/>
+                            <SymbolIcon Name="SymbolIcon" Symbol="Remove" Foreground="Gray" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver" />
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Ellipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Gold"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="SymbolIcon">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <beerCounter:CounterConverter x:Name="CounterConverter" />
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150" />
+                <RowDefinition Height="200" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" Margin="30,0">
+                <TextBlock Foreground="Gold" FontFamily="SegoeUI" FontWeight="Light" Text="{Binding UserInformation.TotalBeers, Converter={StaticResource CounterConverter}}" />
+            </Viewbox>
+
+            <Grid Grid.Row="1" Width="250">
+                <Button HorizontalAlignment="Center" Command="{Binding AddBeerCommand}" Style="{StaticResource AddBeerButton}" />
+                <Button HorizontalAlignment="Right" Command="{Binding RemoveBeerCommand}" VerticalAlignment="Bottom" Style="{StaticResource RemoveBeerButton}" />
+            </Grid>
+        </Grid>
+
+    </Grid>
+</UserControl>

@@ -92,19 +92,35 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Configuration\ColorsJson.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converter\CounterConverter.cs" />
+    <Compile Include="Converter\Generic\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converter\Generic\HexToSolidColorConverter.cs" />
+    <Compile Include="Converter\MainPage\BeerCounter\CounterConverter.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Platform\Mock\MockNavigationService.cs" />
     <Compile Include="Platform\NavigationService.cs" />
+    <Compile Include="Platform\InteractionService.cs" />
     <Compile Include="Platform\StorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\MainPage\BeerCounter.xaml.cs">
+      <DependentUpon>BeerCounter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MainPage\FirstTimeWizard.xaml.cs">
+      <DependentUpon>FirstTimeWizard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MainPage\UserSettings.xaml.cs">
+      <DependentUpon>UserSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +152,18 @@
     <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MainPage\BeerCounter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MainPage\FirstTimeWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MainPage\UserSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

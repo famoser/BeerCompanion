@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Famoser.BeerCompanion.Common.Services
+namespace Famoser.BeerCompanion.Business.Enums
 {
-    public interface IPermissionService
+    public enum AssetFileKeys
     {
-        Task<bool> CanUseInternet();
+        ColorsJson = 0
     }
 }

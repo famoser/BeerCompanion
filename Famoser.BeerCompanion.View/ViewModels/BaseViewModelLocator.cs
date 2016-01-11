@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Famoser.BeerCompanion.Business.Repository;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
-using Famoser.BeerCompanion.Common.Services;
 using Famoser.BeerCompanion.Data;
+using Famoser.BeerCompanion.Data.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
@@ -21,6 +21,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
 
             SimpleIoc.Default.Register<IBeerRepository, BeerRepository>();
             SimpleIoc.Default.Register<ISettingsRepository, SettingsRepository>();
+            SimpleIoc.Default.Register<IDrinkerCycleRepository, DrinkerCycleRepository>();
 
 
             SimpleIoc.Default.Register<IDataService, DataService>();
@@ -35,8 +36,10 @@ namespace Famoser.BeerCompanion.View.ViewModels
             }
 
             SimpleIoc.Default.Register<MainPageViewModel>();
+            SimpleIoc.Default.Register<WizardViewModel>(); 
         }
 
         public MainPageViewModel MainPageViewModel => ServiceLocator.Current.GetInstance<MainPageViewModel>();
+        public WizardViewModel WizardViewModel => ServiceLocator.Current.GetInstance<WizardViewModel>();
     }
 }

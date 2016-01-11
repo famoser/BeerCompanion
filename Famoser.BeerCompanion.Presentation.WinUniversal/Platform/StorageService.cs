@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Famoser.BeerCompanion.Business.Enums;
+using Famoser.BeerCompanion.Business.Services;
 using Famoser.BeerCompanion.Common.Framework.Logging;
-using Famoser.BeerCompanion.Common.Services;
 
 namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
 {
@@ -44,11 +45,26 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
             }
             return null;
         }
+
+        private async Task<string> ReadAsset(string filename)
+        {
+            try
+            {
+                StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Configuration/" + filename));
+                return await FileIO.ReadTextAsync(file);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Instance.Log(LogLevel.Error, this, "ReadAsset failed for " + filename, ex);
+            }
+            return null;
+        }
+
         private async Task<bool> SaveToCache(string filename, string content)
         {
             try
             {
-                StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename,CreationCollisionOption.ReplaceExisting);
+                StorageFile localFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
                 if (localFile != null)
                 {
                     await FileIO.WriteTextAsync(localFile, content);
@@ -80,6 +96,8 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
             return false;
         }
 
+
+
         public Task<string> GetCachedData()
         {
             return ReadCache("data.json");
@@ -93,6 +111,13 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
         public Task<string> GetUserBeers()
         {
             return ReadCache("beers.json");
+        }
+
+        public Task<string> GetAssetFile(AssetFileKeys fileKey)
+        {
+            if (fileKey == AssetFileKeys.ColorsJson)
+                return ReadAsset("ColorsJson.json");
+            return null;
         }
 
         public Task<bool> SetCachedData(string data)

@@ -1,0 +1,82 @@
+﻿[
+  {
+    "ColorValue": "F44336",
+    "ColorName": "Red"
+  },
+  {
+    "ColorValue": "E91E63",
+    "ColorName": "Pink"
+  },
+  {
+    "ColorValue": "9C27B0",
+    "ColorName": "Purple"
+  },
+  {
+    "ColorValue": "673AB7",
+    "ColorName": "Deep Purple"
+  },
+  {
+    "ColorValue": "3F51B5",
+    "ColorName": "Indigo"
+  },
+  {
+    "ColorValue": "2196F3",
+    "ColorName": "Blue"
+  },
+  {
+    "ColorValue": "03A9F4",
+    "ColorName": "Light Blue"
+  },
+  {
+    "ColorValue": "00BCD4",
+    "ColorName": "Cyan"
+  },
+  {
+    "ColorValue": "009688",
+    "ColorName": "Teal"
+  },
+  {
+    "ColorValue": "4CAF50",
+    "ColorName": "Green"
+  },
+  {
+    "ColorValue": "8BC34A",
+    "ColorName": "Light Green"
+  },
+  {
+    "ColorValue": "CDDC39",
+    "ColorName": "Lime"
+  },
+  {
+    "ColorValue": "FFEB3B",
+    "ColorName": "Yellow"
+  },
+  {
+    "ColorValue": "FFC107",
+    "ColorName": "Amber"
+  },
+  {
+    "ColorValue": "FF9800",
+    "ColorName": "Orange"
+  },
+  {
+    "ColorValue": "FF5722",
+    "ColorName": "Deep Orange"
+  },
+  {
+    "ColorValue": "795548",
+    "ColorName": "Brown"
+  },
+  {
+    "ColorValue": "9E9E9E",
+    "ColorName": "Grey"
+  },
+  {
+    "ColorValue": "607D8B",
+    "ColorName": "Blue Grey"
+  },
+  {
+    "ColorValue": "000000",
+    "ColorName": "Black"
+  }
+]

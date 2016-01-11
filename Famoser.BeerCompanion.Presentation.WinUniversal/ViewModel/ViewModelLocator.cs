@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Famoser.BeerCompanion.Common.Services;
+using Famoser.BeerCompanion.Business.Services;
 using Famoser.BeerCompanion.Presentation.WinUniversal.Platform;
+using Famoser.BeerCompanion.Presentation.WinUniversal.Platform.Mock;
 using Famoser.BeerCompanion.View.ViewModels;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
@@ -29,16 +30,16 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.ViewModel
             // Create design time view services and models
             SimpleIoc.Default.Register<IStorageService, StorageService>();
             SimpleIoc.Default.Register<IDialogService, DialogService>();
-
-            var navigationService = NavigationHelper.CreateNavigationService();
-            SimpleIoc.Default.Register(() => navigationService);
+            SimpleIoc.Default.Register<IInteractionService, InteractionService>();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-
-            }
+                SimpleIoc.Default.Register<INavigationService, MockNavigationService>();}
             else
             {
+
+                var navigationService = NavigationHelper.CreateNavigationService();
+                SimpleIoc.Default.Register(() => navigationService);
             }
         }
     }

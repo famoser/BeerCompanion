@@ -7,44 +7,62 @@ using System.Text;
 using System.Threading.Tasks;
 using Famoser.BeerCompanion.Common.Framework.Logging;
 using Famoser.BeerCompanion.Common.Framework.Singleton;
-using Famoser.BeerCompanion.Common.Services;
 using Famoser.BeerCompanion.Data.Entities;
+using Famoser.BeerCompanion.Data.Entities.Communication;
+using Famoser.BeerCompanion.Data.Services;
+using Newtonsoft.Json;
 
 namespace Famoser.BeerCompanion.Data
 {
     public class DataService : SingletonBase<DataService>, IDataService
     {
         private const string ApiUrl = "http://api.beercompanion.famoser.ch/";
-        public Task<string> GetDrinkerCycle(Guid ownId)
+        public async Task<DrinkerCycleResponse> GetDrinkerCycle(Guid ownId)
         {
-            return DownloadString(new Uri(ApiUrl + "cycles/" + ownId));
+            var resp = await DownloadString(new Uri(ApiUrl + "cycles/" + ownId));
+            try
+            {
+                return JsonConvert.DeserializeObject<DrinkerCycleResponse>(resp);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Instance.Log(LogLevel.ApiError, this, "GetBeers failed with response: " + resp, ex);
+            }
+            return null;
         }
 
-        public Task<bool> PostDrinkerCycle(string json)
+        public Task<bool> PostDrinkerCycle(DrinkerCycleRequest request)
         {
+            var json = JsonConvert.SerializeObject(request);
             return Post(new Uri(ApiUrl + "cycles/act"), json);
         }
 
-        public Task<string> GetBeers(Guid ownId)
+        public async Task<BeerResponse> GetBeers(Guid ownId)
         {
-            return DownloadString(new Uri(ApiUrl + "beers/" + ownId));
+            var resp = await DownloadString(new Uri(ApiUrl + "beers/" + ownId));
+            try
+            {
+                return JsonConvert.DeserializeObject<BeerResponse>(resp);
+            }
+            catch (Exception ex)
+            { 
+                LogHelper.Instance.Log(LogLevel.ApiError, this,"GetBeers failed with response: " + resp, ex);
+            }
+            return null;
         }
 
-        public Task<bool> PostBeers(string json)
+        public Task<bool> PostBeers(BeerRequest request)
         {
-            return Post(new Uri(ApiUrl + "beers/add"), json);
+            var json = JsonConvert.SerializeObject(request);
+            return Post(new Uri(ApiUrl + "beers/act"), json);
         }
 
-        public Task<bool> DeleteBeers(string json)
+        public Task<bool> UpdateDrinker(DrinkerRequest request)
         {
+            var json = JsonConvert.SerializeObject(request);
             return Delete(new Uri(ApiUrl + "beers/delete"), json);
         }
-
-        public Task<bool> UpdateDrinker(string json)
-        {
-            return Post(new Uri(ApiUrl + "drinkers/update"), json);
-        }
-
+        
         private async Task<string> DownloadString(Uri url)
         {
             try
@@ -82,7 +100,10 @@ namespace Famoser.BeerCompanion.Data
                     client.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
 
                     var res = await client.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
-                    return res.IsSuccessStatusCode;
+                    var respo = await res.Content.ReadAsStringAsync();
+                    if (respo == "1")
+                        return true;
+                    LogHelper.Instance.Log(LogLevel.ApiError, this, "Post failed for url " + url + " with json " + content + " Reponse recieved: " + respo);
                 }
             }
             catch (Exception ex)

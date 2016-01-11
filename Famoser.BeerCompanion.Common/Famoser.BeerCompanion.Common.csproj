@@ -44,9 +44,6 @@
     <Compile Include="Framework\Singleton\SingletonBase.cs" />
     <Compile Include="Framework\Singleton\SingletonManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IDataService.cs" />
-    <Compile Include="Services\IPermissionService.cs" />
-    <Compile Include="Services\IStorageService.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

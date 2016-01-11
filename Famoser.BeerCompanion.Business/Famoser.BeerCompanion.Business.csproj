@@ -38,10 +38,14 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converter\EntityConverter.cs" />
+    <Compile Include="Converter\RequestConverter.cs" />
+    <Compile Include="Converter\ResponseConverter.cs" />
+    <Compile Include="Enums\AssetFileKeys.cs" />
+    <Compile Include="Enums\Messages.cs" />
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\Drinker.cs" />
     <Compile Include="Models\DrinkerCycle.cs" />
+    <Compile Include="Models\Save\CycleSaveModel.cs" />
     <Compile Include="Models\UserInformations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BeerRepository.cs" />
@@ -50,6 +54,8 @@
     <Compile Include="Repository\Interfaces\IDrinkerCycleRepository.cs" />
     <Compile Include="Repository\Interfaces\ISettingsRepository.cs" />
     <Compile Include="Repository\SettingsRepository.cs" />
+    <Compile Include="Services\IInteractionService.cs" />
+    <Compile Include="Services\IStorageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Famoser.BeerCompanion.Common\Famoser.BeerCompanion.Common.csproj">
