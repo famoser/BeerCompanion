@@ -13,6 +13,8 @@ namespace Famoser.BeerCompanion.View.Enums
         LoadingBeers,
         LoadingCycles,
         AuthenticatingUser,
-        AddingSelfToGroup
+        AddingSelfToGroup,
+        RemovingSelfFromGroup,
+        LoadingSettings
     }
 }

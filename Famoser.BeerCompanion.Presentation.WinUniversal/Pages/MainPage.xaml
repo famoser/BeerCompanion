@@ -27,8 +27,16 @@
             <PivotItem Header="gruppen">
                 <Grid>
                     <ScrollViewer>
-                        <StackPanel>
-                            <Button>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Row="0" Grid.Column="1">
                                 <Button.Content>
                                     <SymbolIcon Symbol="Add" />
                                 </Button.Content>
@@ -44,11 +52,19 @@
                                     </Flyout>
                                 </Button.Flyout>
                             </Button>
-                            <mainPage:GroupOverView DataContext="{Binding DrinkerCycles}"/>
-                        </StackPanel>
+                            <TextBlock Grid.Row="0" TextWrapping="Wrap" Grid.Column="0" Style="{StaticResource DescriptionText}" Text="Füge Gruppen hinzu, um dich mit Anderen zu messen!" />
+                            <mainPage:GroupOverView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" DataContext="{Binding DrinkerCycles}"/>
+                        </Grid>
                     </ScrollViewer>
                 </Grid>
             </PivotItem>
         </Pivot>
     </Grid>
+    
+    <Page.BottomAppBar>
+       <CommandBar Opacity="0.8" ClosedDisplayMode="Minimal">
+            <AppBarButton Label="neu laden" Icon="Refresh" Command="{Binding RefreshCommand}" />
+            <AppBarButton Label="einstellen" Icon="Setting" Command="{Binding OpenSettingsCommand}"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

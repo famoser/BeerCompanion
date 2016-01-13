@@ -41,6 +41,9 @@ namespace Famoser.BeerCompanion.View.ViewModels
             _removeBeer = new RelayCommand(RemoveBeer, () => CanRemoveBeer);
             _addGroup = new RelayCommand(AddGroup, () => CanAddGroup);
 
+            _refreshCommand = new RelayCommand(Refresh, () => CanRefresh);
+            _openSettingsCommand = new RelayCommand(OpenSettings);
+
             Messenger.Default.Register<Messages>(this, EvaluateMessages);
 
             if (IsInDesignMode)
@@ -62,9 +65,13 @@ namespace Famoser.BeerCompanion.View.ViewModels
 
         //enable for debug purposes
         private bool _doReset = false;
+        private bool _isInitializing;
         private async void Initialize()
         {
             _progressService.ShowProgress(ProgressKeys.InitializingApplication);
+            _isInitializing = true;
+            _refreshCommand.RaiseCanExecuteChanged();
+
             if (_doReset)
             {
                 await ResetHelper.Instance.ResetApplication();
@@ -82,10 +89,13 @@ namespace Famoser.BeerCompanion.View.ViewModels
                     await RefreshCycles();
                 }
             }
+
+            _isInitializing = false;
+            _refreshCommand.RaiseCanExecuteChanged();
             _progressService.HideProgress(ProgressKeys.InitializingApplication);
         }
 
-        private async Task RefreshCycles()
+        public async Task RefreshCycles()
         {
             _progressService.ShowProgress(ProgressKeys.LoadingCycles);
             if (await _interactionService.CanUseInternet())
@@ -137,11 +147,11 @@ namespace Famoser.BeerCompanion.View.ViewModels
             }
         }
         
-        public ObservableCollection<Beer> SortedBeers => UserInformation?.Beers != null ? new ObservableCollection<Beer>(UserInformation.Beers.Where(b => !b.DeletePending).OrderByDescending(b => b.DrinkTime)) : new ObservableCollection<Beer>();
+		public ObservableCollection<Beer> SortedBeers { get { return UserInformation != null  && UserInformation.Beers != null ? new ObservableCollection<Beer> (UserInformation.Beers.Where (b => !b.DeletePending).OrderByDescending (b => b.DrinkTime)) : new ObservableCollection<Beer> (); } }
 
         #region Commands
         private readonly RelayCommand _addBeer;
-        public ICommand AddBeerCommand => _addBeer;
+        public ICommand AddBeerCommand { get { return _addBeer; } }
 
         private async void AddBeer()
         {
@@ -156,9 +166,18 @@ namespace Famoser.BeerCompanion.View.ViewModels
         }
 
         private readonly RelayCommand _removeBeer;
-        public ICommand RemoveBeerCommand => _removeBeer;
+		public ICommand RemoveBeerCommand { get { return _removeBeer; } }
 
-        private bool CanRemoveBeer => UserInformation?.Beers != null && UserInformation.Beers.Any(b => !b.DeletePending);
+		public bool CanRemoveBeer 
+		{ 
+			get 
+			{ 
+				if (UserInformation != null && UserInformation.Beers != null) {
+					return UserInformation.Beers.Any (b => !b.DeletePending);
+				}
+				return false;
+			} 
+		}
 
         private async void RemoveBeer()
         {
@@ -170,6 +189,24 @@ namespace Famoser.BeerCompanion.View.ViewModels
 
                 await SaveBeers();
             }
+        }
+
+        private readonly RelayCommand _refreshCommand;
+        public ICommand RefreshCommand { get { return _refreshCommand; } }
+
+        public bool CanRefresh { get { return !_isInitializing; } }
+
+        private void Refresh()
+        {
+            Initialize();
+        }
+
+        private readonly RelayCommand _openSettingsCommand;
+        public ICommand OpenSettingsCommand { get { return _openSettingsCommand; } }
+
+        private void OpenSettings()
+        {
+            _navigationService.NavigateTo(PageKeys.Settings.ToString());
         }
 
         private string _newGroupName;
@@ -225,11 +262,11 @@ namespace Famoser.BeerCompanion.View.ViewModels
             }
         }
 
-        private readonly RelayCommand _addGroup;
-        public ICommand AddGroupCommand => _addGroup;
+		private readonly RelayCommand _addGroup;
+		public ICommand AddGroupCommand { get { return _addGroup; } }
 
         private bool _canAddNewGroupBlock;
-        private bool CanAddGroup => !string.IsNullOrEmpty(NewGroupName) && !_isAddingGroup && !_canAddNewGroupBlock;
+		private bool CanAddGroup { get { return !string.IsNullOrEmpty (NewGroupName) && !_isAddingGroup && !_canAddNewGroupBlock; } }
 
         private bool _isAddingGroup;
         private async void AddGroup()
@@ -248,8 +285,11 @@ namespace Famoser.BeerCompanion.View.ViewModels
 
         public void NavigateToCycle(DrinkerCycle cycle)
         {
-            _navigationService.NavigateTo(PageKeys.DrinkerCycle.ToString());
-            Messenger.Default.Send(cycle, Messages.Select);
+            if (cycle.IsAuthenticated)
+            {
+                _navigationService.NavigateTo(PageKeys.DrinkerCycle.ToString());
+                Messenger.Default.Send(cycle, Messages.Select);
+            }
         }
     }
 }

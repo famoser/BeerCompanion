@@ -19,12 +19,14 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="{Binding Name}" Grid.ColumnSpan="2" Style="{StaticResource HeaderText}" Foreground="{ThemeResource TextBackgroundThemeBrush}" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource DescriptionText}" Foreground="White">
+
+
+                <TextBlock Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="0" Grid.Row="1" Style="{StaticResource DescriptionText}" Foreground="White">
                     <Run Text="{Binding GetLastDrinker.GetLastBeer, Converter={StaticResource FormatDateTime}}" />
                     <Run Text="- Letztes Bier von" />
                     <Run Text="{Binding GetLastDrinker.Name}" />
                 </TextBlock>
-
+                <TextBlock Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverted}" Grid.Row="1" Style="{StaticResource DescriptionText}" Foreground="White" FontStyle="Italic" Text="noch nicht verifiziert" />
 
             </Grid>
         </DataTemplate>

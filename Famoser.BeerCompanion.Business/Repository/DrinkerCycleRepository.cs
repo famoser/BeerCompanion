@@ -74,6 +74,7 @@ namespace Famoser.BeerCompanion.Business.Repository
                     {
                         new Drinker() {Name = "Dr gruusigi neui", LastBeer = DateTime.Now,TotalBeers = 2, Color = "3f4251"},
                     },
+                    IsAuthenticated = true
                 },
                 new DrinkerCycle()
                 {
@@ -90,7 +91,13 @@ namespace Famoser.BeerCompanion.Business.Repository
                         new Drinker() {Name = "Dr gruusigi neui 1", LastBeer = DateTime.Now,TotalBeers = 2, Color = "3f425a"},
                         new Drinker() {Name = "Dr gruusigi neui 2", LastBeer = DateTime.Now,TotalBeers = 2, Color = "3f425a"},
                     },
+                    IsAuthenticated = true
                 },
+                new DrinkerCycle()
+                {
+                    Name = "Not auth",
+                    IsAuthenticated = false
+                }
             };
 
             //close circle
@@ -146,12 +153,14 @@ namespace Famoser.BeerCompanion.Business.Repository
                 foreach (var authDrinkerCycle in drinker.AuthDrinkerCycleGuids)
                 {
                     var authCircle = drinkerCycles.FirstOrDefault(ds => ds.Guid == authDrinkerCycle);
-                    authCircle?.AuthBeerDrinkers.Add(drinker);
+					if (authCircle != null)
+                    	authCircle.AuthBeerDrinkers.Add(drinker);
                 }
                 foreach (var nonAuthDrinkerCycle in drinker.NonAuthDrinkerCycleGuids)
                 {
-                    var nonAuthCircle = drinkerCycles.FirstOrDefault(ds => ds.Guid == nonAuthDrinkerCycle);
-                    nonAuthCircle?.NonAuthBeerDrinkers.Add(drinker);
+					var nonAuthCircle = drinkerCycles.FirstOrDefault(ds => ds.Guid == nonAuthDrinkerCycle);
+					if (nonAuthCircle != null)
+                    	nonAuthCircle.NonAuthBeerDrinkers.Add(drinker);
                 }
             }
             foreach (var drinkerCycle in drinkerCycles)
@@ -238,7 +247,7 @@ namespace Famoser.BeerCompanion.Business.Repository
         public async Task<bool> RemoveUser(string name, Guid deAuthGuid)
         {
             var ui = await _settingsRepository.GetUserInformations();
-            return await MakeRequest(name, ui.Guid, PossibleActions.Remove, deAuthGuid);
+            return await MakeRequest(name, ui.Guid, PossibleActions.RemoveForeign, deAuthGuid);
         }
 
         private async Task<bool> MakeRequest(string name, Guid userGuid, PossibleActions actionName, Guid? authGuid = null)

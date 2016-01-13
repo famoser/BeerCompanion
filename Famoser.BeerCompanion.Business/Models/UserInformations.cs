@@ -31,7 +31,13 @@ namespace Famoser.BeerCompanion.Business.Models
 
         public override DateTime? GetLastBeer
         {
-            get { return Beers.LastOrDefault()?.DrinkTime; }
+            get 
+			{ 
+				var lastbeer = Beers.LastOrDefault ();
+				if (lastbeer != null)
+					return lastbeer.DrinkTime;
+				return null; 
+			}
         }
 
         private ObservableCollection<Beer> _beers;

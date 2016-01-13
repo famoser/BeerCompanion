@@ -1,7 +1,7 @@
 /*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:Famoser.BeerCompanion.Presentation.Droid"
+      <vm:ViewModelLocator xmlns:vm="clr-namespace:Famoser.BeerCompanion.View"
                            x:Key="Locator" />
   </Application.Resources>
   
@@ -12,21 +12,17 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using Famoser.BeerCompanion.Business.Services;
-using Famoser.BeerCompanion.Presentation.Droid.Platform.Mock;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 
-namespace Famoser.BeerCompanion.Presentation.Droid.ViewModel
+namespace Famoser.BeerCompanion.View.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the
     /// application and provides an entry point for the bindings.
     /// </summary>
-    public class ViewModelLocator : ViewModelBase
-
+    public class ViewModelLocator
     {
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
@@ -35,23 +31,28 @@ namespace Famoser.BeerCompanion.Presentation.Droid.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            // Create design time view services and models
-            SimpleIoc.Default.Register<IStorageService, StorageService>();
-            SimpleIoc.Default.Register<IDialogService, DialogService>();
-            SimpleIoc.Default.Register<IInteractionService, InteractionService>();
+            ////if (ViewModelBase.IsInDesignModeStatic)
+            ////{
+            ////    // Create design time view services and models
+            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
+            ////}
+            ////else
+            ////{
+            ////    // Create run time view services and models
+            ////    SimpleIoc.Default.Register<IDataService, DataService>();
+            ////}
 
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<INavigationService, MockNavigationService>();
-            }
-            else
-            {
-
-                var navigationService = NavigationHelper.CreateNavigationService();
-                SimpleIoc.Default.Register(() => navigationService);
-            }
+            SimpleIoc.Default.Register<MainViewModel>();
         }
 
+        public MainViewModel Main
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+        
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

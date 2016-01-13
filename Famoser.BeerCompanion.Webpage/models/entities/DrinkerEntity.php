@@ -16,7 +16,7 @@ class DrinkerEntity extends Drinker
     public function __construct(Drinker $drinker)
     {
         //$this->Id = $drinker->Id; Id censored
-        //$this->Guid = $drinker->Guid; Guid censored
+        $this->Guid = $drinker->Guid;
         $this->Name = $drinker->Name;
         $this->Color = $drinker->Color;
         $this->LastBeer = $drinker->LastBeer;

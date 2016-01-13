@@ -10,34 +10,35 @@ namespace Famoser.BeerCompanion.Data.Entities.Communication.Base
     {
         public BaseRequest(PossibleActions action, Guid guid)
         {
-            PossibleAction = action;
-            Guid = guid;
+			_possibleAction = action;
+			_guid = guid;
         }
 
-        private PossibleActions PossibleAction { get; }
+		private PossibleActions _possibleAction;
+		private Guid _guid;
 
         [DataMember]
-        public Guid Guid { get; }
+		public Guid Guid { get { return _guid; } }
         [DataMember]
         public string Action
         {
             get
             {
-                if (PossibleAction == PossibleActions.Add)
+				if (_possibleAction == PossibleActions.Add)
                     return "add";
-                if (PossibleAction == PossibleActions.Exists)
+				if (_possibleAction == PossibleActions.Exists)
                     return "exists";
-                if (PossibleAction == PossibleActions.Remove)
+				if (_possibleAction == PossibleActions.Remove)
                     return "remove";
-                if (PossibleAction == PossibleActions.Update)
+				if (_possibleAction == PossibleActions.Update)
                     return "update";
-                if (PossibleAction == PossibleActions.Autheticate)
+				if (_possibleAction == PossibleActions.Autheticate)
                     return "authenticate";
-                if (PossibleAction == PossibleActions.Deautheticate)
+				if (_possibleAction == PossibleActions.Deautheticate)
                     return "deauthenticate";
-                if (PossibleAction == PossibleActions.Sync)
+				if (_possibleAction == PossibleActions.Sync)
                     return "sync";
-                if (PossibleAction == PossibleActions.RemoveForeign)
+				if (_possibleAction == PossibleActions.RemoveForeign)
                     return "removeforeign";
                 LogHelper.Instance.Log(LogLevel.WtfAreYouDoingError, this, "Unknown Possible Action used!");
                 return "";

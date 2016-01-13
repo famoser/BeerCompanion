@@ -21,4 +21,9 @@
             </PivotItem>
         </Pivot>
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar Opacity="0.8" ClosedDisplayMode="Minimal">
+            <AppBarButton Label="Gruppe verlassen" Icon="Remove" Command="{Binding LeaveGroupCommand}" />
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

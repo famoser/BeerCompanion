@@ -40,7 +40,7 @@ class CycleController implements iController
                     $drinker = GetSingleByCondition(DRINKER_TABLE, array("Guid" => $obj->Guid));
                     if ($drinker instanceof Drinker) {
                         $presGroupRelation = GetSingleByCondition(DRINKERCYCLESDRINKERSRELATION_TABLE, array("DrinkerCycleId" => $group->Id, "DrinkerId" => $drinker->Id));
-                        if ($presGroupRelation  == null) {
+                        if ($presGroupRelation == null) {
                             $groupRela = GetSingleByCondition(DRINKERCYCLESDRINKERSRELATION_TABLE, array("DrinkerCycleId" => $group->Id));
 
                             $newRela = new DrinkerCyclesDrinkersRelation();
@@ -97,7 +97,7 @@ class CycleController implements iController
                     } else {
                         return ReturnNotFound($obj->Guid, "Drinker");
                     }
-                }else if ($obj->Action == "removeforeign") {
+                } else if ($obj->Action == "removeforeign") {
                     $drinker = GetSingleByCondition(DRINKER_TABLE, array("Guid" => $obj->Guid));
                     if ($drinker instanceof Drinker) {
                         $groupRela = GetSingleByCondition(DRINKERCYCLESDRINKERSRELATION_TABLE, array("DrinkerCycleId" => $group->Id, "DrinkerId" => $drinker->Id));
@@ -163,7 +163,9 @@ class CycleController implements iController
                                 $cyclesEnt[] = $cycl;
                             } else {
                                 $cycles[] = $cycle;
-                                $cyclesEnt[] = new DrinkerCycleEntity($cycle);
+                                $cycl = new DrinkerCycleEntity($cycle);
+                                $cycl->IsAuthenticated = false;
+                                $cyclesEnt[] = $cycl;
                             }
                         }
                     }

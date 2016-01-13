@@ -12,7 +12,9 @@ using Famoser.BeerCompanion.View.Enums;
 using Famoser.BeerCompanion.View.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 
 namespace Famoser.BeerCompanion.View.ViewModels
 {
@@ -20,15 +22,18 @@ namespace Famoser.BeerCompanion.View.ViewModels
     {
         private readonly IDrinkerCycleRepository _drinkerCycleRepository;
         private readonly IProgressService _progressService;
+        private readonly INavigationService _navigationService;
 
-        public DrinkerCycleViewModel(IDrinkerCycleRepository drinkerCycleRepository, IProgressService progressService)
+        public DrinkerCycleViewModel(IDrinkerCycleRepository drinkerCycleRepository, IProgressService progressService, INavigationService navigationService)
         {
             _drinkerCycleRepository = drinkerCycleRepository;
             _progressService = progressService;
+            _navigationService = navigationService;
 
             _authDrinker = new RelayCommand<Person>(AuthDrinker, CanAuthenticateDrinker);
             _removeDrinker = new RelayCommand<Person>(RemoveDrinker, CanRemoveDrinker);
-            
+
+            _leaveGroupCommand = new RelayCommand(LeaveGroup);
 
             if (IsInDesignMode)
             {
@@ -66,7 +71,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
         #region Commands
 
         private readonly RelayCommand<Person> _authDrinker;
-        public ICommand AuthDrinkerCommand => _authDrinker;
+		public ICommand AuthDrinkerCommand { get { return _authDrinker; } }
 
         private bool CanAuthenticateDrinker(Person person)
         {
@@ -95,7 +100,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
         }
 
         private readonly RelayCommand<Person> _removeDrinker;
-        public ICommand RemoveDrinkerCommand => _removeDrinker;
+        public ICommand RemoveDrinkerCommand { get { return _removeDrinker; } }
 
         private bool CanRemoveDrinker(Person person)
         {
@@ -117,10 +122,29 @@ namespace Famoser.BeerCompanion.View.ViewModels
                     DrinkerCycle.NonAuthBeerDrinkers.Remove(person);
 
                 await _drinkerCycleRepository.RemoveUser(DrinkerCycle.Name, person.Guid);
+                await SimpleIoc.Default.GetInstance<MainViewModel>().RefreshCycles();
+
+                RaisePropertyChanged(() => SortedPersons);
+                RaisePropertyChanged(() => DrinkerCycle);
             }
 
             _progressService.HideProgress(ProgressKeys.InDebugMode);
         }
         #endregion
+
+
+        private readonly RelayCommand _leaveGroupCommand;
+        public ICommand LeaveGroupCommand { get { return _leaveGroupCommand; } }
+
+        private async void LeaveGroup()
+        {
+            _progressService.ShowProgress(ProgressKeys.RemovingSelfFromGroup);
+            
+            await _drinkerCycleRepository.RemoveSelf(DrinkerCycle.Name);
+            await SimpleIoc.Default.GetInstance<MainViewModel>().RefreshCycles();
+            _navigationService.GoBack();
+
+            _progressService.HideProgress(ProgressKeys.RemovingSelfFromGroup);
+        }
     }
 }

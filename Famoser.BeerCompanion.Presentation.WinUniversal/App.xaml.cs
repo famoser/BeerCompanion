@@ -84,21 +84,19 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal
             // Ensure the current window is active
             Window.Current.Activate();
 
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, ev) =>
             {
-                Frame frameBefore = Window.Current.Content as Frame;
+                Frame frame = Window.Current.Content as Frame;
 
-                if (frameBefore != null && frameBefore.CanGoBack)
+                if (frame != null && frame.CanGoBack)
                 {
-                    frameBefore.GoBack();
-
+                    var ns = SimpleIoc.Default.GetInstance<INavigationService>();
+                    ns.GoBack();
                     ev.Handled = true;
                 }
                 else
                 {
-                    //handled in MainPage
-                    //Current.Exit();
+                    Current.Exit();
                 }
             };
         }

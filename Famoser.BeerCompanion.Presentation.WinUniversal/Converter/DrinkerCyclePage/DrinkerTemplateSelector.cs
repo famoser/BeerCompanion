@@ -15,13 +15,16 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Converter.DrinkerCycle
     {
         public DataTemplate AuthTemplate { get; set; }
         public DataTemplate NonAuthTemplate { get; set; }
+        public DataTemplate OwnMitgliedTemplate { get; set; }
 
         public DrinkerCycle DrinkerCycle => SimpleIoc.Default.GetInstance<DrinkerCycleViewModel>().DrinkerCycle;
 
         protected override DataTemplate SelectTemplateCore(object item)
         {
-            var type = item as Person;
-            if (item != null && DrinkerCycle?.AuthBeerDrinkers != null && DrinkerCycle.AuthBeerDrinkers.Any(a => a == type))
+            var type = item as Drinker;
+            if (type == null)
+                return OwnMitgliedTemplate;
+            if (DrinkerCycle?.AuthBeerDrinkers != null && DrinkerCycle.AuthBeerDrinkers.Any(a => a == type))
                 return AuthTemplate;
             return NonAuthTemplate;
         }

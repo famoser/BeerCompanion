@@ -108,6 +108,7 @@ class BeerController implements iController
         $db = GetDatabaseConnection();
         $pdo = $db->prepare("SELECT DrinkTime FROM Beers WHERE DrinkerId=:Id ORDER BY DrinkTime DESC LIMIT 1");
         $pdo->bindParam(":Id", $drinker->Id);
+        $pdo->execute();
         $drinker->LastBeer = $pdo->fetch(PDO::FETCH_NUM)[0];
 
         return Update("Drinkers", $drinker);
@@ -118,6 +119,8 @@ class BeerController implements iController
         $db = GetDatabaseConnection();
         $pdo = $db->prepare("SELECT COUNT(*) FROM Beers WHERE DrinkerId=:Id");
         $pdo->bindParam(":Id", $drinker->Id);
+        $pdo->execute();
+
         return $pdo->fetch(PDO::FETCH_NUM)[0];
     }
 }

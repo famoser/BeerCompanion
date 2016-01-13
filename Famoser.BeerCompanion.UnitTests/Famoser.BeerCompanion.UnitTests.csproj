@@ -60,6 +60,8 @@
     <Compile Include="API\DrinkerCycleRequests.cs" />
     <Compile Include="API\DrinkerRequests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestCases\GroupBehaviour.cs" />
+    <Compile Include="TestCases\ITestCase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Famoser.BeerCompanion.Business\Famoser.BeerCompanion.Business.csproj">

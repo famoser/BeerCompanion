@@ -102,10 +102,10 @@ namespace Famoser.BeerCompanion.View.ViewModels
             set { Set(ref _colors, value); }
         }
 
-        private readonly RelayCommand _exitWizard;
-        public ICommand ExitWizardCommand => _exitWizard;
+		private readonly RelayCommand _exitWizard;
+		public ICommand ExitWizardCommand { get { return _exitWizard; } }
 
-        private bool CanExitWizard => SelectedColor != null && !string.IsNullOrEmpty(Name) && !_isExiting;
+		private bool CanExitWizard { get { return SelectedColor != null && !string.IsNullOrEmpty (Name) && !_isExiting; } }
 
         private bool _isExiting;
         private async void ExitWizard()

@@ -11,6 +11,7 @@ namespace Famoser.BeerCompanion.View.Enums
         Main,
         Wizard,
         DrinkerCycle,
+        Settings
 
     }
 }

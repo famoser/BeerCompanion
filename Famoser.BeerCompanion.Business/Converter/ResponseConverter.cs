@@ -34,6 +34,7 @@ namespace Famoser.BeerCompanion.Business.Converter
         {
             return new Drinker()
             {
+                Guid = entity.Guid,
                 Name = entity.Name,
                 Color = entity.Color,
                 TotalBeers = entity.TotalBeers,

@@ -107,6 +107,7 @@
     <Compile Include="Converter\Format\FormatInt.cs" />
     <Compile Include="Converter\Format\FormatDouble.cs" />
     <Compile Include="Converter\Generic\BooleanToOpacityConverter.cs" />
+    <Compile Include="Converter\Generic\ReferenceToVisibilityConverter.cs" />
     <Compile Include="Converter\Generic\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\Generic\HexToSolidColorConverter.cs" />
     <Compile Include="Converter\MainPage\BeerCounter\CounterConverter.cs" />
@@ -116,8 +117,12 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Platform\CustomNavigationService.cs" />
     <Compile Include="Platform\Mock\MockNavigationService.cs" />
-    <Compile Include="Platform\NavigationService.cs" />
+    <Compile Include="Platform\NavigationHelper.cs" />
     <Compile Include="Platform\InteractionService.cs" />
     <Compile Include="Platform\StorageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,6 +185,10 @@
     <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\WizardPage.xaml">
       <SubType>Designer</SubType>

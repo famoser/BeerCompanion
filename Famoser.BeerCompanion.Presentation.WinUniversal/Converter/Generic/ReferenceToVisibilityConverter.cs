@@ -8,14 +8,14 @@ using Windows.UI.Xaml.Data;
 
 namespace Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Generic
 {
-    public class BooleanToVisibilityConverter : IValueConverter
+    public class ReferenceToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var bo = (bool)value;
+            var isnull = value != null;
             if (parameter as string == "inverted")
-                bo = !bo;
-            if (bo)
+                isnull = !isnull;
+            if (isnull)
                 return Visibility.Visible;
             return Visibility.Collapsed;
         }

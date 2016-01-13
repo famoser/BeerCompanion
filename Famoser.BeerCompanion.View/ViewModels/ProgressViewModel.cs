@@ -36,9 +36,12 @@ namespace Famoser.BeerCompanion.View.ViewModels
         {
             get
             {
-                return _progress.Where(e => e.Value)
-                .Select(e => (KeyValuePair<ProgressKeys, bool>?)e)
-                .FirstOrDefault()?.Key;
+				var res = _progress.Where (e => e.Value)
+                .Select (e => (KeyValuePair<ProgressKeys, bool>?)e)
+					.FirstOrDefault();
+				if (res != null && res.HasValue)
+					return res.Value.Key;
+				return null;
             }
         }
     }
