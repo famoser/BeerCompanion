@@ -12,7 +12,7 @@ namespace Famoser.BeerCompanion.View.Services
 {
     public class ProgressService : IProgressService
     {
-        private ProgressViewModel _viewModel;
+        private readonly ProgressViewModel _viewModel;
         public ProgressService()
         {
             _viewModel = SimpleIoc.Default.GetInstance<ProgressViewModel>();

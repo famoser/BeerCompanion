@@ -19,10 +19,11 @@ namespace Famoser.BeerCompanion.Business.Repository.Interfaces
         
         //communication
         Task<bool> DoesExists(string name);
-        Task<bool> AddSelf(string name, Guid onwGuid);
-        Task<bool> RemoveSelf(string name, Guid onwGuid);
+        Task<bool> AddSelf(string name);
+        Task<bool> RemoveSelf(string name);
 
-        Task<bool> AuthenticateUser(string name, Guid userGuid, Guid authGuid);
-        Task<bool> DeAuthenticateUser(string name, Guid userGuid, Guid deAuthGuid);
+        Task<bool> AuthenticateUser(string name, Guid authGuid);
+        Task<bool> DeAuthenticateUser(string name, Guid deAuthGuid);
+        Task<bool> RemoveUser(string name, Guid deAuthGuid);
     }
 }

@@ -47,7 +47,7 @@
     <Compile Include="Utils\StateHelper.cs" />
     <Compile Include="ViewModels\BaseViewModelLocator.cs" />
     <Compile Include="ViewModels\DrinkerCycleViewModel.cs" />
-    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ProgressViewModel.cs" />
     <Compile Include="ViewModels\WizardViewModel.cs" />
   </ItemGroup>

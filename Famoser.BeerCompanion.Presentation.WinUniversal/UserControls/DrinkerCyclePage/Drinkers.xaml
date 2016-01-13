@@ -4,30 +4,84 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:drinkerCyclePage="using:Famoser.BeerCompanion.Presentation.WinUniversal.Converter.DrinkerCyclePage"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    d:DataContext="{Binding DrinkerCycleViewModel.DrinkerCycle, Source={StaticResource Locator}}">
+    d:DataContext="{Binding DrinkerCycleViewModel, Source={StaticResource Locator}}">
 
     <UserControl.Resources>
-        <DataTemplate x:Name="MitgliedTemplate">
+        <DataTemplate x:Name="AuthMitgliedTemplate">
             <Grid Padding="10" Background="{Binding Color, Converter={StaticResource HexToSolidColorConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}" Style="{StaticResource HeaderText}" Foreground="{ThemeResource TextPalettonForeground}" />
+                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding GetTotalBeers}" Style="{StaticResource HeaderText}" Foreground="{ThemeResource TextPalettonForeground}" />
+                <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource DescriptionText}" Foreground="{ThemeResource TextPalettonForeground}">
+                    <Run Text="Letztes Bier:" />
+                    <Run Text="{Binding GetLastBeer, Converter={StaticResource FormatDateTime}}" />
+                </TextBlock>
+                <Rectangle Margin="0,0,-11,-10" Grid.Row="1" Grid.Column="1" Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Button Margin="10,0,-2,-10" Padding="5,10" Grid.Row="1" Grid.Column="1" Background="Transparent" Foreground="{ThemeResource DisApprooveRed}" >
+                    <Button.Content>
+                        <SymbolIcon Symbol="Clear" />
+                    </Button.Content>
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel Padding="10">
+                                <TextBlock Style="{StaticResource DescriptionText}">
+                                    <Run Text="Wollen Sie" />
+                                    <Run Text="{Binding Name}" />
+                                    <Run Text="wirklich aus der Gruppe entfernen?" />
+                                </TextBlock>
+                                <Button Content="Bestätigen" Command="{Binding RemoveDrinkerCommand}" CommandParameter="{Binding }" />
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Name="NonAuthMitgliedTemplate">
+            <Grid Background="{Binding Color, Converter={StaticResource HexToSolidColorConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Name}" Style="{StaticResource DescriptionText}" Foreground="{ThemeResource TextPalettonForeground}" />
-                <TextBlock Grid.Column="1" Text="{Binding GetTotalBeers}" Style="{StaticResource HeaderText}" Foreground="{ThemeResource TextPalettonForeground}" />
+                <TextBlock Padding="10" Grid.Column="0" Style="{StaticResource HeaderText}" Foreground="{ThemeResource TextPalettonForeground}">
+                    <Run Text="{Binding Name}" />
+                    <Run Text="(neu)" />
+                </TextBlock>
+
+                <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Button Margin="10,0,10,0" Padding="5,10" Grid.Column="1" Background="Transparent" Foreground="{ThemeResource ApprooveGreen}" Command="{Binding AuthDrinkerCommand}" CommandParameter="{Binding }" >
+                    <Button.Content>
+                        <SymbolIcon Symbol="Accept" />
+                    </Button.Content>
+                </Button>
+                <Button Margin="10,0,10,0" Padding="5,10" Grid.Column="2" Background="Transparent" Foreground="{ThemeResource DisApprooveRed}" Command="{Binding RemoveDrinkerCommand}" CommandParameter="{Binding }" >
+                    <Button.Content>
+                        <SymbolIcon Symbol="Clear" />
+                    </Button.Content>
+                </Button>
             </Grid>
         </DataTemplate>
+        <drinkerCyclePage:DrinkerTemplateSelector x:Key="DrinkerTemplateSelector" AuthTemplate="{StaticResource AuthMitgliedTemplate}" NonAuthTemplate="{StaticResource NonAuthMitgliedTemplate}" />
     </UserControl.Resources>
-    
+
     <Grid>
-        <ListView ItemTemplate="{StaticResource MitgliedTemplate}" ItemsSource="{Binding AuthBeerDrinkers}" >
+        <ListView SelectionMode="None" ItemTemplateSelector="{StaticResource DrinkerTemplateSelector}" ItemsSource="{Binding SortedPersons}" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0" />
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

@@ -102,6 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\Collection\CountItemsConverter.cs" />
+    <Compile Include="Converter\DrinkerCyclePage\DrinkerTemplateSelector.cs" />
     <Compile Include="Converter\Format\FormatDateTime.cs" />
     <Compile Include="Converter\Format\FormatInt.cs" />
     <Compile Include="Converter\Format\FormatDouble.cs" />
@@ -235,9 +236,7 @@
       <Name>Famoser.BeerCompanion.View</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Converter\DrinkerCyclePage\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

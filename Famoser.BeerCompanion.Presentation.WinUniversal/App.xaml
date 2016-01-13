@@ -31,8 +31,9 @@
                     <SolidColorBrush x:Key="TextForegroundThemeBrush" Color="#434343" />
                     <SolidColorBrush x:Key="TextBackgroundThemeBrush" Color="#ffffff" />
                     <SolidColorBrush x:Key="TextPalettonForeground" Color="#ffffff" />
-                    <SolidColorBrush x:Key="AkzentForegroundThemeBrush" Color="#FBB117" />
-                    <SolidColorBrush x:Key="AkzentBackgroundThemeBrush" Color="#FBF417" />
+                    <SolidColorBrush x:Key="AkzentBackgroundThemeBrush" Color="Gold" />
+                    <SolidColorBrush x:Key="ApprooveGreen" Color="#4CAF50" />
+                    <SolidColorBrush x:Key="DisApprooveRed" Color="#F44336" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
             <SolidColorBrush x:Key="PivotHeaderForegroundSelectedBrush" Color="#FFFFFF" />
@@ -49,11 +50,11 @@
             </Style>
 
             <Style x:Key="DescriptionText" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontSize" Value="16" />
                 <Setter Property="Foreground" Value="{ThemeResource TextForegroundThemeBrush}" />
                 <Setter Property="FontFamily" Value="SegoeUI" />
-                <Setter Property="FontWeight" Value="Normal" />
-                <Setter Property="Margin" Value="0,5,0,5" />
+                <Setter Property="FontWeight" Value="SemiLight" />
+                <Setter Property="Margin" Value="0,0,0,5" />
             </Style>
 
             <Style x:Key="DescriptionRichText" TargetType="RichTextBlock">

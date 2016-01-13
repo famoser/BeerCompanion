@@ -19,7 +19,7 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Generic
                     System.Convert.ToByte(hex.Substring(0, 2), 16),
                     System.Convert.ToByte(hex.Substring(2, 2), 16),
                     System.Convert.ToByte(hex.Substring(4, 2), 16)));
-            return new SolidColorBrush(Colors.Transparent);
+            return new SolidColorBrush(Colors.LightGray);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

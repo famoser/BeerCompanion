@@ -14,10 +14,10 @@
         <common:ProgressView VerticalAlignment="Top" />
         <Pivot>
             <PivotItem Header="Statistik">
-                <drinkerCyclePage:Statistics DataContext="{Binding }" />
+                <drinkerCyclePage:Statistics DataContext="{Binding DrinkerCycle}" />
             </PivotItem>
             <PivotItem Header="Mitglieder">
-                <drinkerCyclePage:Drinkers DataContext="{Binding DrinkerCycle}" />
+                <drinkerCyclePage:Drinkers DataContext="{Binding }" />
             </PivotItem>
         </Pivot>
     </Grid>

@@ -31,7 +31,7 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.MainPage
         private void ListViewBase_OnItemClick(object sender, ItemClickEventArgs e)
         {
             var cycle = e.ClickedItem as DrinkerCycle;
-            var vm = SimpleIoc.Default.GetInstance<MainPageViewModel>();
+            var vm = SimpleIoc.Default.GetInstance<MainViewModel>();
             vm.NavigateToCycle(cycle);
         }
     }

@@ -19,7 +19,7 @@ using GalaSoft.MvvmLight.Views;
 
 namespace Famoser.BeerCompanion.View.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         private readonly IBeerRepository _beerRepository;
         private readonly ISettingsRepository _settingsRepository;
@@ -28,7 +28,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IProgressService _progressService;
 
-        public MainPageViewModel(ISettingsRepository settingsRepository, IBeerRepository beerRepository, IInteractionService interactionService, IDrinkerCycleRepository drinkerCycleRepository, INavigationService navigationService, IProgressService progressService)
+        public MainViewModel(ISettingsRepository settingsRepository, IBeerRepository beerRepository, IInteractionService interactionService, IDrinkerCycleRepository drinkerCycleRepository, INavigationService navigationService, IProgressService progressService)
         {
             _settingsRepository = settingsRepository;
             _beerRepository = beerRepository;
@@ -137,7 +137,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
             }
         }
         
-        public ObservableCollection<Beer> SortedBeers => new ObservableCollection<Beer>(UserInformation.Beers.Where(b => !b.DeletePending).OrderByDescending(b => b.DrinkTime));
+        public ObservableCollection<Beer> SortedBeers => UserInformation?.Beers != null ? new ObservableCollection<Beer>(UserInformation.Beers.Where(b => !b.DeletePending).OrderByDescending(b => b.DrinkTime)) : new ObservableCollection<Beer>();
 
         #region Commands
         private readonly RelayCommand _addBeer;
@@ -237,7 +237,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
             _isAddingGroup = true;
             _addGroup.RaiseCanExecuteChanged();
 
-            await _drinkerCycleRepository.AddSelf(NewGroupName, UserInformation.Guid);
+            await _drinkerCycleRepository.AddSelf(NewGroupName);
             await RefreshCycles();
 
             NewGroupName = "";

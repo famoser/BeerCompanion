@@ -16,7 +16,7 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Format
             if (parameter != null && !int.TryParse((string) parameter, out decim))
                 decim = 2;
 
-            return Math.Round(dub, decim);
+            return Math.Round(dub, decim).ToString("00.00");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

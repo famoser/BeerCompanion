@@ -97,6 +97,34 @@ class CycleController implements iController
                     } else {
                         return ReturnNotFound($obj->Guid, "Drinker");
                     }
+                }else if ($obj->Action == "removeforeign") {
+                    $drinker = GetSingleByCondition(DRINKER_TABLE, array("Guid" => $obj->Guid));
+                    if ($drinker instanceof Drinker) {
+                        $groupRela = GetSingleByCondition(DRINKERCYCLESDRINKERSRELATION_TABLE, array("DrinkerCycleId" => $group->Id, "DrinkerId" => $drinker->Id));
+                        if ($groupRela instanceof DrinkerCyclesDrinkersRelation) {
+                            //can change others status
+                            if ($groupRela->IsAuthenticated) {
+                                $otherDrinker = GetSingleByCondition(DRINKER_TABLE, array("Guid" => $obj->AuthGuid));
+                                if ($otherDrinker instanceof Drinker) {
+                                    $otherGroupRela = GetSingleByCondition(DRINKERCYCLESDRINKERSRELATION_TABLE, array("DrinkerCycleId" => $group->Id, "DrinkerId" => $otherDrinker->Id));
+                                    if ($otherGroupRela instanceof DrinkerCyclesDrinkersRelation) {
+                                        return ReturnBoolean(Delete(DRINKERCYCLESDRINKERSRELATION_TABLE, $otherGroupRela));
+                                    } else {
+                                        return RelationNotFound($group->Id, $otherDrinker->Id, DRINKERCYCLESDRINKERSRELATION_TABLE);
+                                    }
+                                } else {
+                                    return ReturnNotFound($obj->AuthGuid, "Drinker");
+                                }
+                            } else {
+                                //not authenticated
+                                return ReturnBoolean(false);
+                            }
+                        } else {
+                            return RelationNotFound($group->Id, $drinker->Id, DRINKERCYCLESDRINKERSRELATION_TABLE);
+                        }
+                    } else {
+                        return ReturnNotFound($obj->Guid, "Drinker");
+                    }
                 } else {
                     return ReturnError(LINK_INVALID);
                 }

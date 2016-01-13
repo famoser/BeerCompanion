@@ -9,28 +9,44 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    d:DataContext="{Binding MainPageViewModel, Source={StaticResource Locator}}">
+    d:DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
     <UserControl.Resources>
         <Style x:Key="AddBeerButton" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Grid Width="200">
-                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="100" />
-                            <Ellipse Name="Ellipse" StrokeThickness="1" Fill="Transparent" Opacity="1" Height="200" Width="200"/>
-                            <SymbolIcon Name="SymbolIcon" Symbol="Add" Foreground="Gray" />
+                        <Grid Width="120">
+                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="120" />
+                            <Ellipse Name="Ellipse" StrokeThickness="1" Fill="{ThemeResource AkzentBackgroundThemeBrush}" Opacity="0" Height="120" Width="120"/>
+                            <Rectangle Name="Rectangle1" Width="1.5" Height="80" Fill="Gray"  >
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform CenterX="0" CenterY="40" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                            <Rectangle Name="Rectangle2" Width="80" Height="1.5" Fill="Gray" >
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform CenterX="40" CenterY="0" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal"/>
                                     <VisualState x:Name="PointerOver" />
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Ellipse">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Gold"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="SymbolIcon">
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Rectangle1">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
                                             </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Rectangle2">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)" Storyboard.TargetName="Rectangle1" From="0" To="90" Duration="0:0:0.2" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)" Storyboard.TargetName="Rectangle2" From="0" To="90" Duration="0:0:0.2" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.CenterX)" Storyboard.TargetName="Rectangle2" From="40" To="60" Duration="0:0:0.2" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.CenterY)" Storyboard.TargetName="Rectangle1" From="40" To="60" Duration="0:0:0.2" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Ellipse" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Rectangle1" Storyboard.TargetProperty="Height" From="80" To="120" Duration="0:0:0.2"/>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Rectangle2" Storyboard.TargetProperty="Width" From="80" To="120" Duration="0:0:0.2"/>
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -46,20 +62,25 @@
                     <ControlTemplate TargetType="Button">
                         <Grid Width="40" Height="40">
                             <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="100" />
-                            <Ellipse Name="Ellipse" Grid.Row="0" StrokeThickness="1" Fill="Transparent" Height="40" Width="40"/>
-                            <SymbolIcon Name="SymbolIcon" Symbol="Remove" Foreground="Gray" />
+                            <Ellipse Name="Ellipse" StrokeThickness="1" Fill="{ThemeResource AkzentBackgroundThemeBrush}" Opacity="0" Height="40" Width="40"/>
+                            <Rectangle Name="Rectangle" Width="20" Height="1.5" Fill="Gray" >
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform CenterX="10" CenterY="0" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal"/>
                                     <VisualState x:Name="PointerOver" />
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Ellipse">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Gold"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="SymbolIcon">
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="Rectangle">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
                                             </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)" Storyboard.TargetName="Rectangle" From="0" To="180" Duration="0:0:0.2" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.CenterX)" Storyboard.TargetName="Rectangle" From="10" To="20" Duration="0:0:0.2" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Ellipse" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Rectangle" Storyboard.TargetProperty="Width" From="20" To="40" Duration="0:0:0.2"/>
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -69,25 +90,22 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <beerCounter:CounterConverter x:Name="CounterConverter" />
-
     </UserControl.Resources>
 
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="150" />
-                <RowDefinition Height="200" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Viewbox Grid.Row="0" Margin="30,0">
-                <TextBlock Foreground="Gold" FontFamily="SegoeUI" FontWeight="Light" Text="{Binding SortedBeers, Converter={StaticResource CountItemsConverter}, ConverterParameter=4}" />
+            <Viewbox Grid.Row="0" Margin="0,-10">
+                <TextBlock Foreground="{ThemeResource AkzentBackgroundThemeBrush}" FontFamily="SegoeUI" FontWeight="Light" Text="{Binding SortedBeers, Converter={StaticResource CountItemsConverter}, ConverterParameter=4}" />
             </Viewbox>
 
-            <Grid Grid.Row="1" Width="250">
-                <Button HorizontalAlignment="Center" Command="{Binding AddBeerCommand}" Style="{StaticResource AddBeerButton}" />
-                <Button HorizontalAlignment="Right" Command="{Binding RemoveBeerCommand}" VerticalAlignment="Bottom" Style="{StaticResource RemoveBeerButton}" />
+            <Grid Grid.Row="1" Width="180">
+                <Button HorizontalAlignment="Left" Command="{Binding AddBeerCommand}" Style="{StaticResource AddBeerButton}" />
+                <Button HorizontalAlignment="Right" Command="{Binding RemoveBeerCommand}" VerticalAlignment="Center" Style="{StaticResource RemoveBeerButton}" />
             </Grid>
         </Grid>
 

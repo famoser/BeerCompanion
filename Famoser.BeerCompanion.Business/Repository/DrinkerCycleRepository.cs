@@ -24,11 +24,13 @@ namespace Famoser.BeerCompanion.Business.Repository
     {
         private IStorageService _storageService;
         private IDataService _dataService;
+        private ISettingsRepository _settingsRepository;
 
-        public DrinkerCycleRepository(IDataService dataService, IStorageService storageService)
+        public DrinkerCycleRepository(IDataService dataService, IStorageService storageService, ISettingsRepository settingsRepository)
         {
             _dataService = dataService;
             _storageService = storageService;
+            _settingsRepository = settingsRepository;
         }
 
         public async Task<ObservableCollection<DrinkerCycle>> GetSavedCycles()
@@ -60,31 +62,33 @@ namespace Famoser.BeerCompanion.Business.Repository
             {
                 new DrinkerCycle()
                 {
+                    Name = "Cycle 1",
                     AuthBeerDrinkers = new ObservableCollection<Person>()
                     {
-                        new Drinker() {Name = "Markus", LastBeer = DateTime.Now,TotalBeers = 12},
-                        new Drinker() {Name = "Felix", LastBeer = DateTime.Now,TotalBeers = 42},
-                        new Drinker() {Name = "Bastian", LastBeer = DateTime.Now,TotalBeers = 11},
-                        new Drinker() {Name = "Alex", LastBeer = DateTime.Now,TotalBeers = 9}
+                        new Drinker() {Name = "Markus", LastBeer = DateTime.Now,TotalBeers = 12, Color = "9f425a"},
+                        new Drinker() {Name = "Felix", LastBeer = DateTime.Now,TotalBeers = 42, Color = "3f1a5a"},
+                        new Drinker() {Name = "Bastian", LastBeer = DateTime.Now,TotalBeers = 11, Color = "31425a"},
+                        new Drinker() {Name = "Alex", LastBeer = DateTime.Now,TotalBeers = 9, Color = "3f42fa"}
                     },
                     NonAuthBeerDrinkers = new ObservableCollection<Person>()
                     {
-                        new Drinker() {Name = "Dr gruusigi neui", LastBeer = DateTime.Now,TotalBeers = 2},
+                        new Drinker() {Name = "Dr gruusigi neui", LastBeer = DateTime.Now,TotalBeers = 2, Color = "3f4251"},
                     },
                 },
                 new DrinkerCycle()
                 {
+                    Name = "Cycle 2",
                     AuthBeerDrinkers = new ObservableCollection<Person>()
                     {
-                        new Drinker() {Name = "Bastian", LastBeer = DateTime.Now,TotalBeers = 31},
-                        new Drinker() {Name = "Selina", LastBeer = DateTime.Now,TotalBeers = 2},
-                        new Drinker() {Name = "Gertrude", LastBeer = DateTime.Now,TotalBeers = 8},
-                        new Drinker() {Name = "Mr. D", LastBeer = DateTime.Now,TotalBeers = 51}
+                        new Drinker() {Name = "Bastian", LastBeer = DateTime.Now,TotalBeers = 31, Color = "32425a"},
+                        new Drinker() {Name = "Selina", LastBeer = DateTime.Now,TotalBeers = 2, Color = "3f425a"},
+                        new Drinker() {Name = "Gertrude", LastBeer = DateTime.Now,TotalBeers = 8, Color = "3f425a"},
+                        new Drinker() {Name = "Mr. D", LastBeer = DateTime.Now,TotalBeers = 51, Color = "3f425a"}
                     },
                     NonAuthBeerDrinkers = new ObservableCollection<Person>()
                     {
-                        new Drinker() {Name = "Dr gruusigi neui 1", LastBeer = DateTime.Now,TotalBeers = 2},
-                        new Drinker() {Name = "Dr gruusigi neui 2", LastBeer = DateTime.Now,TotalBeers = 2},
+                        new Drinker() {Name = "Dr gruusigi neui 1", LastBeer = DateTime.Now,TotalBeers = 2, Color = "3f425a"},
+                        new Drinker() {Name = "Dr gruusigi neui 2", LastBeer = DateTime.Now,TotalBeers = 2, Color = "3f425a"},
                     },
                 },
             };
@@ -207,24 +211,34 @@ namespace Famoser.BeerCompanion.Business.Repository
             return MakeRequest(name, Guid.Empty, PossibleActions.Exists);
         }
 
-        public Task<bool> AddSelf(string name, Guid onwGuid)
+        public async Task<bool> AddSelf(string name)
         {
-            return MakeRequest(name, onwGuid, PossibleActions.Add);
+            var ui = await _settingsRepository.GetUserInformations();
+            return await MakeRequest(name, ui.Guid, PossibleActions.Add);
         }
 
-        public Task<bool> RemoveSelf(string name, Guid onwGuid)
+        public async Task<bool> RemoveSelf(string name)
         {
-            return MakeRequest(name, onwGuid,PossibleActions.Remove);
+            var ui = await _settingsRepository.GetUserInformations();
+            return await MakeRequest(name, ui.Guid, PossibleActions.Remove);
         }
 
-        public Task<bool> AuthenticateUser(string name, Guid userGuid, Guid authGuid)
+        public async Task<bool> AuthenticateUser(string name, Guid authGuid)
         {
-            return MakeRequest(name, userGuid, PossibleActions.Autheticate, authGuid);
+            var ui = await _settingsRepository.GetUserInformations();
+            return await MakeRequest(name, ui.Guid, PossibleActions.Autheticate, authGuid);
         }
 
-        public Task<bool> DeAuthenticateUser(string name, Guid userGuid, Guid deAuthGuid)
+        public async Task<bool> DeAuthenticateUser(string name, Guid deAuthGuid)
         {
-            return MakeRequest(name, userGuid,PossibleActions.Deautheticate, deAuthGuid);
+            var ui = await _settingsRepository.GetUserInformations();
+            return await MakeRequest(name, ui.Guid, PossibleActions.Deautheticate, deAuthGuid);
+        }
+
+        public async Task<bool> RemoveUser(string name, Guid deAuthGuid)
+        {
+            var ui = await _settingsRepository.GetUserInformations();
+            return await MakeRequest(name, ui.Guid, PossibleActions.Remove, deAuthGuid);
         }
 
         private async Task<bool> MakeRequest(string name, Guid userGuid, PossibleActions actionName, Guid? authGuid = null)

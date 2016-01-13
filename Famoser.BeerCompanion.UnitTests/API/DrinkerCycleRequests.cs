@@ -26,6 +26,7 @@ namespace Famoser.BeerCompanion.UnitTests.API
                 var add1 = new DrinkerCycleRequest(PossibleActions.Add, ApiTestHelper.TestUserGuid) { Name = ApiTestHelper.TestCycleGuid.ToString() };
                 var remove1 = new DrinkerCycleRequest(PossibleActions.Remove, ApiTestHelper.TestUserGuid) { Name = ApiTestHelper.TestCycleGuid.ToString() };
                 var add2 = new DrinkerCycleRequest(PossibleActions.Add, ApiTestHelper.TestUserGuid2) { Name = ApiTestHelper.TestCycleGuid.ToString() };
+                var removeForeign2 = new DrinkerCycleRequest(PossibleActions.RemoveForeign, ApiTestHelper.TestUserGuid) { Name = ApiTestHelper.TestCycleGuid.ToString(), AuthGuid = ApiTestHelper.TestUserGuid2 };
                 var remove2 = new DrinkerCycleRequest(PossibleActions.Remove, ApiTestHelper.TestUserGuid2) { Name = ApiTestHelper.TestCycleGuid.ToString() };
                 var auth2 = new DrinkerCycleRequest(PossibleActions.Autheticate, ApiTestHelper.TestUserGuid) { Name = ApiTestHelper.TestCycleGuid.ToString(), AuthGuid = ApiTestHelper.TestUserGuid2 };
                 var invalidAuth2 = new DrinkerCycleRequest(PossibleActions.Autheticate, ApiTestHelper.TestUserGuid2) { Name = ApiTestHelper.TestCycleGuid.ToString(), AuthGuid = ApiTestHelper.TestUserGuid2 };
@@ -73,6 +74,20 @@ namespace Famoser.BeerCompanion.UnitTests.API
                 cycles = await ds.GetDrinkerCycle(ApiTestHelper.TestUserGuid);
                 CheckForAuthenticated(cycles);
                 
+                //removeforeign 2
+                res = await ds.PostDrinkerCycle(removeForeign2);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
+                //check if 2 is removed
+                cycles = await ds.GetDrinkerCycle(ApiTestHelper.TestUserGuid);
+                CheckForEmptyCycle(cycles);
+
+                //add 2 again & authenticate
+                res = await ds.PostDrinkerCycle(add2);
+                ApiAssertHelper.CheckBooleanResponse(res);
+                res = await ds.PostDrinkerCycle(auth2);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
                 //valid deauthenticate 2
                 res = await ds.PostDrinkerCycle(deauth2);
                 ApiAssertHelper.CheckBooleanResponse(res);

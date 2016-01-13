@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Famoser.BeerCompanion.Business.Enums;
 using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
+using Famoser.BeerCompanion.View.Enums;
+using Famoser.BeerCompanion.View.Services;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace Famoser.BeerCompanion.View.ViewModels
@@ -14,10 +19,17 @@ namespace Famoser.BeerCompanion.View.ViewModels
     public class DrinkerCycleViewModel : ViewModelBase
     {
         private readonly IDrinkerCycleRepository _drinkerCycleRepository;
+        private readonly IProgressService _progressService;
 
-        public DrinkerCycleViewModel(IDrinkerCycleRepository drinkerCycleRepository)
+        public DrinkerCycleViewModel(IDrinkerCycleRepository drinkerCycleRepository, IProgressService progressService)
         {
             _drinkerCycleRepository = drinkerCycleRepository;
+            _progressService = progressService;
+
+            _authDrinker = new RelayCommand<Person>(AuthDrinker, CanAuthenticateDrinker);
+            _removeDrinker = new RelayCommand<Person>(RemoveDrinker, CanRemoveDrinker);
+            
+
             if (IsInDesignMode)
             {
                 DrinkerCycle = _drinkerCycleRepository.GetSampleCycles()[1];
@@ -31,19 +43,84 @@ namespace Famoser.BeerCompanion.View.ViewModels
         }
 
         private DrinkerCycle _drinkerCycles;
+
         public DrinkerCycle DrinkerCycle
         {
             get { return _drinkerCycles; }
             set { Set(ref _drinkerCycles, value); }
         }
-
         
-        public int GetTotalBeers => DrinkerCycle.AuthBeerDrinkers.Sum(a => a.GetTotalBeers);
+        public ObservableCollection<Person> SortedPersons
+        {
+            get
+            {
+                var first = new ObservableCollection<Person>(DrinkerCycle.NonAuthBeerDrinkers.OrderBy(p => p.Name));
+                foreach (var authBeerDrinker in DrinkerCycle.AuthBeerDrinkers.OrderBy(p => p.Name))
+                {
+                    first.Add(authBeerDrinker);
+                }
+                return first;
+            }
+        }
 
-        public int GetTotalPersons => DrinkerCycle.AuthBeerDrinkers.Count;
+        #region Commands
 
-        public double GetBeersPerPerson => (double)GetTotalBeers / GetTotalPersons;
+        private readonly RelayCommand<Person> _authDrinker;
+        public ICommand AuthDrinkerCommand => _authDrinker;
 
-        public Person GetLastDrinker => DrinkerCycle.AuthBeerDrinkers.OrderByDescending(a => a.GetLastBeer ?? DateTime.MinValue).FirstOrDefault();
+        private bool CanAuthenticateDrinker(Person person)
+        {
+            var drink = person as Drinker;
+            if (drink != null && drink.NonAuthDrinkerCycleGuids.Contains(DrinkerCycle.Guid))
+                return true;
+            return false;
+        }
+
+        private async void AuthDrinker(Person person)
+        {
+            _progressService.ShowProgress(ProgressKeys.InDebugMode);
+            var drink = person as Drinker;
+            if (drink != null && drink.NonAuthDrinkerCycleGuids.Contains(DrinkerCycle.Guid))
+            {
+                drink.NonAuthDrinkerCycleGuids.Remove(DrinkerCycle.Guid);
+                drink.AuthDrinkerCycleGuids.Add(DrinkerCycle.Guid);
+                DrinkerCycle.AuthBeerDrinkers.Add(drink);
+                DrinkerCycle.NonAuthBeerDrinkers.Remove(drink);
+
+                RaisePropertyChanged(() => SortedPersons);
+                await _drinkerCycleRepository.AuthenticateUser(DrinkerCycle.Name, drink.Guid);
+            }
+
+            _progressService.HideProgress(ProgressKeys.InDebugMode);
+        }
+
+        private readonly RelayCommand<Person> _removeDrinker;
+        public ICommand RemoveDrinkerCommand => _removeDrinker;
+
+        private bool CanRemoveDrinker(Person person)
+        {
+            var drink = person as Drinker;
+            if (drink != null)
+                return true;
+            return false;
+        }
+
+        private async void RemoveDrinker(Person person)
+        {
+            _progressService.ShowProgress(ProgressKeys.InDebugMode);
+            var drink = person as Drinker;
+            if (drink != null)
+            {
+                if (DrinkerCycle.AuthBeerDrinkers.Contains(person))
+                    DrinkerCycle.AuthBeerDrinkers.Remove(person);
+                else if (DrinkerCycle.NonAuthBeerDrinkers.Contains(person))
+                    DrinkerCycle.NonAuthBeerDrinkers.Remove(person);
+
+                await _drinkerCycleRepository.RemoveUser(DrinkerCycle.Name, person.Guid);
+            }
+
+            _progressService.HideProgress(ProgressKeys.InDebugMode);
+        }
+        #endregion
     }
 }
