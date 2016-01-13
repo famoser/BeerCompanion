@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:generic="using:Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Generic"
-    xmlns:format="using:Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Format">
+    xmlns:format="using:Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Format"
+    xmlns:collection="using:Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Collection">
     
     <generic:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <generic:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter" />
@@ -10,4 +11,8 @@
 
     <format:FormatDateTime x:Key="FormatDateTime" />
     <format:FormatDouble x:Key="FormatDouble" />
+
+    <collection:CountItemsConverter x:Key="CountItemsConverter"/>
+
+    <format:FormatInt x:Key="FormatInt" />
 </ResourceDictionary>

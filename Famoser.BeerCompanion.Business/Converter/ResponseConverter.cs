@@ -29,6 +29,7 @@ namespace Famoser.BeerCompanion.Business.Converter
             }
             return res;
         }
+
         public Drinker Convert(DrinkerEntity entity)
         {
             return new Drinker()
@@ -42,12 +43,34 @@ namespace Famoser.BeerCompanion.Business.Converter
             };
         }
 
+        public Beer Convert(BeerEntity entity)
+        {
+            return new Beer()
+            {
+                DrinkTime = entity.DrinkTime,
+                Guid = entity.Guid
+            };
+        }
+
         public List<Drinker> Convert(List<DrinkerEntity> entities)
         {
             if (entities == null)
                 return new List<Drinker>();
 
             var res = new List<Drinker>();
+            foreach (var drinkerEntity in entities)
+            {
+                res.Add(Convert(drinkerEntity));
+            }
+            return res;
+        }
+
+        public List<Beer> Convert(List<BeerEntity> entities)
+        {
+            if (entities == null)
+                return new List<Beer>();
+
+            var res = new List<Beer>();
             foreach (var drinkerEntity in entities)
             {
                 res.Add(Convert(drinkerEntity));

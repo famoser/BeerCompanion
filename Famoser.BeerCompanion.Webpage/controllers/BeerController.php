@@ -52,6 +52,20 @@ class BeerController implements iController
                             }
                         }
                         return ReturnBoolean(InsertAll($newBeers) && $this->refreshDrinkerProperties($drinker));
+                    }else if ($obj->Action == "sync") {
+                        $beercount = $this->countExistingBeers($drinker);
+                        if ($beercount !== $obj->ExpectedCount)
+                            return ReturnBoolean(false);
+
+
+                        $beers = GetAllByCondition("Beers", array("DrinkerId" => $drinker->Id), "DrinkTime DESC", " LIMIT " . count($obj->Beers));
+                        for ($i = 0; $i < count($beers); $i++)
+                        {
+                            if ($beers[$i]->Guid != $obj->Beers[$i]->Guid)
+                                return ReturnBoolean(false);
+                        }
+
+                        return ReturnBoolean(true);
                     } else {
                         return ReturnError(LINK_INVALID);
                     }
@@ -60,7 +74,20 @@ class BeerController implements iController
             } else if (ValidateGuid($param[0])) {
                 $drinker = GetByGuid("Drinker", $param[0]);
                 if ($drinker != null && $drinker instanceof Drinker) {
-                    $beers = GetAllByCondition("Beers", array("DrinkerId" => $drinker->Id));
+                    /*
+                    $limit = 0;
+                    if (count($param) > 1 && is_numeric($param[1])) {
+                        $beerCount = $this->countExistingBeers($drinker);
+                        if ($beerCount > $param[1]) {
+                            $limit = $beerCount - $param[0];
+                        }
+                    }
+                    $limitstring = " LIMIT " . $limit;
+                    if ($limit == 0)
+                        $limitstring = "";
+                    */
+
+                    $beers = GetAllByCondition("Beers", array("DrinkerId" => $drinker->Id), " DrinkTime DESC ");
                     $resp = new BeerResponse();
                     foreach ($beers as $beer) {
                         $resp->Beers[] = new BeerEntity($beer);
@@ -76,15 +103,21 @@ class BeerController implements iController
 
     private function refreshDrinkerProperties(Drinker $drinker)
     {
-        $db = GetDatabaseConnection();
-        $pdo = $db->prepare("SELECT COUNT(*) FROM Beers WHERE DrinkerId=:Id");
-        $pdo->bindParam(":Id", $drinker->Id);
-        $drinker->TotalBeers = $pdo->fetch(PDO::FETCH_NUM)[0];
+        $drinker->TotalBeers = $this->countExistingBeers($drinker);
 
+        $db = GetDatabaseConnection();
         $pdo = $db->prepare("SELECT DrinkTime FROM Beers WHERE DrinkerId=:Id ORDER BY DrinkTime DESC LIMIT 1");
         $pdo->bindParam(":Id", $drinker->Id);
         $drinker->LastBeer = $pdo->fetch(PDO::FETCH_NUM)[0];
 
         return Update("Drinkers", $drinker);
+    }
+
+    private function countExistingBeers(Drinker $drinker)
+    {
+        $db = GetDatabaseConnection();
+        $pdo = $db->prepare("SELECT COUNT(*) FROM Beers WHERE DrinkerId=:Id");
+        $pdo->bindParam(":Id", $drinker->Id);
+        return $pdo->fetch(PDO::FETCH_NUM)[0];
     }
 }

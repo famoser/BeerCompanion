@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    d:DataContext="{Binding MainPageViewModel.UserInformation.Beers, Source={StaticResource Locator}}">
+    d:DataContext="{Binding MainPageViewModel.SortedBeers, Source={StaticResource Locator}}">
 
     <UserControl.Resources>
         <DataTemplate x:Key="BeerTemplate" >

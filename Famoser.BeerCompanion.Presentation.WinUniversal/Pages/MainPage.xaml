@@ -6,10 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mainPage="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.MainPage"
+    xmlns:common="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.Common"
     mc:Ignorable="d"
     DataContext="{Binding MainPageViewModel, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <common:ProgressView VerticalAlignment="Top" />
         <Pivot>
             <PivotItem Header="zähler">
                 <Grid>
@@ -19,7 +21,7 @@
                     </Grid.RowDefinitions>
                     <mainPage:BeerCounter DataContext="{Binding }" Margin="0,20,0,40" />
                     <ScrollViewer Grid.Row="1">
-                        <mainPage:LastBeers DataContext="{Binding UserInformation.SortedBeers}" />
+                        <mainPage:LastBeers DataContext="{Binding SortedBeers}" />
                     </ScrollViewer>
                 </Grid>
             </PivotItem>
@@ -43,7 +45,7 @@
                                     </Flyout>
                                 </Button.Flyout>
                             </Button>
-                            <mainPage:GroupOverView DataContext="{Binding DrinkerCycle}"/>
+                            <mainPage:GroupOverView DataContext="{Binding DrinkerCycles}"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

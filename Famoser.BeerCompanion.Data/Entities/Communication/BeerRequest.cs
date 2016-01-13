@@ -11,11 +11,12 @@ namespace Famoser.BeerCompanion.Data.Entities.Communication
     public class BeerRequest : BaseRequest
     {
         public BeerRequest(PossibleActions action, Guid guid) : base(action, guid)
-        {
-
-        }
+        { }
 
         [DataMember]
         public List<BeerEntity> Beers { get; set; }
+
+        [DataMember]
+        public int ExpectedCount { get; set; }
     }
 }

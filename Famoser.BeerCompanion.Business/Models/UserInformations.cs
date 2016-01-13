@@ -33,27 +33,8 @@ namespace Famoser.BeerCompanion.Business.Models
             get { return _beers; }
             set
             {
-                var oldbeer = _beers;
-                if (Set(ref _beers, value))
-                {
-                    RaisePropertyChanged(() => SortedBeers);
-
-                    if (_beers != null)
-                        _beers.CollectionChanged += BeersOnCollectionChanged;
-
-                    if (oldbeer != null)
-                        oldbeer.CollectionChanged -= BeersOnCollectionChanged;
-                }
+                Set(ref _beers, value);
             }
-        }
-        
-        public ObservableCollection<Beer> SortedBeers => new ObservableCollection<Beer>(Beers.Where(b => !b.DeletePending).OrderByDescending(b => b.DrinkTime));
-
-        private void BeersOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            RaisePropertyChanged(() => GetTotalBeers);
-            RaisePropertyChanged(() => GetLastBeer);
-            RaisePropertyChanged(() => SortedBeers);
         }
     }
 }

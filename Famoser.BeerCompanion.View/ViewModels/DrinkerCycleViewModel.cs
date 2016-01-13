@@ -37,5 +37,13 @@ namespace Famoser.BeerCompanion.View.ViewModels
             set { Set(ref _drinkerCycles, value); }
         }
 
+        
+        public int GetTotalBeers => DrinkerCycle.AuthBeerDrinkers.Sum(a => a.GetTotalBeers);
+
+        public int GetTotalPersons => DrinkerCycle.AuthBeerDrinkers.Count;
+
+        public double GetBeersPerPerson => (double)GetTotalBeers / GetTotalPersons;
+
+        public Person GetLastDrinker => DrinkerCycle.AuthBeerDrinkers.OrderByDescending(a => a.GetLastBeer ?? DateTime.MinValue).FirstOrDefault();
     }
 }

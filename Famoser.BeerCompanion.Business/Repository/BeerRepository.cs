@@ -18,7 +18,7 @@ namespace Famoser.BeerCompanion.Business.Repository
 {
     public class BeerRepository : IBeerRepository
     {
-        private IDataService _dataService;
+        private readonly IDataService _dataService;
 
         public BeerRepository(IDataService dataService)
         {
@@ -30,7 +30,7 @@ namespace Famoser.BeerCompanion.Business.Repository
             try
             {
                 //remove deleted & not posted
-                var remove = beers.Where(b => b.DeletePending && !b.Posted);
+                var remove = beers.Where(b => b.DeletePending && !b.Posted).ToList();
                 foreach (var beer in remove)
                 {
                     beers.Remove(beer);
@@ -64,6 +64,25 @@ namespace Famoser.BeerCompanion.Business.Repository
                     }
                 }
 
+                var orderedBeers = beers.OrderByDescending(b => b.DrinkTime);
+                var sync = RequestConverter.Instance.ConvertToBeerRequest(userGuid, PossibleActions.Sync, orderedBeers.Take(20).ToList(), orderedBeers.Count());
+                var newbeers = await _dataService.PostBeer(sync);
+                if (newbeers.IsSuccessfull)
+                {
+                    if (!newbeers.Response)
+                    {
+                        var allBeers = await _dataService.GetBeers(userGuid);
+                        if (newbeers.IsSuccessfull)
+                        {
+                            var syncbeers = new ObservableCollection<Beer>(ResponseConverter.Instance.Convert(allBeers.Beers));
+                            foreach (var newbeer in syncbeers)
+                            {
+                                newbeer.Posted = true;
+                            }
+                            return syncbeers;
+                        }
+                    }
+                }
                 return beers;
             }
             catch (Exception ex)

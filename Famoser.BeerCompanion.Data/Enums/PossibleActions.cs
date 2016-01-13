@@ -13,6 +13,7 @@ namespace Famoser.BeerCompanion.Data.Enums
         Remove,
         Exists,
         Autheticate,
-        Deautheticate
+        Deautheticate,
+        Sync,
     }
 }

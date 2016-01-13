@@ -6,13 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:drinkerCyclePage="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.DrinkerCyclePage"
+    xmlns:common="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.Common"
     mc:Ignorable="d"
     DataContext="{Binding DrinkerCycleViewModel, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <common:ProgressView VerticalAlignment="Top" />
         <Pivot>
             <PivotItem Header="Statistik">
-                <drinkerCyclePage:Statistics DataContext="{Binding DrinkerCycle}" />
+                <drinkerCyclePage:Statistics DataContext="{Binding }" />
             </PivotItem>
             <PivotItem Header="Mitglieder">
                 <drinkerCyclePage:Drinkers DataContext="{Binding DrinkerCycle}" />

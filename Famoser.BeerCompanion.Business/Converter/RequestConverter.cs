@@ -13,11 +13,12 @@ namespace Famoser.BeerCompanion.Business.Converter
 {
     public class RequestConverter : SingletonBase<RequestConverter>
     {
-        public BeerRequest ConvertToBeerRequest(Guid userId, PossibleActions actionName, List<Beer> beers)
+        public BeerRequest ConvertToBeerRequest(Guid userId, PossibleActions actionName, List<Beer> beers, int expCount = 0)
         {
             var coll = new BeerRequest(actionName, userId)
             {
-                Beers = new List<BeerEntity>()
+                Beers = new List<BeerEntity>(),
+                ExpectedCount = expCount
             };
             foreach (var beer in beers)
             {

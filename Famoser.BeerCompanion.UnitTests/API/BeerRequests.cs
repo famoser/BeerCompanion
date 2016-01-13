@@ -25,12 +25,12 @@ namespace Famoser.BeerCompanion.UnitTests.API
                 var beer1 = new BeerEntity()
                 {
                     Guid = Guid.NewGuid(),
-                    DrinkTime = DateTime.Now
+                    DrinkTime = DateTime.Now - TimeSpan.FromDays(2)
                 };
                 var beer2 = new BeerEntity()
                 {
                     Guid = Guid.NewGuid(),
-                    DrinkTime = DateTime.Now
+                    DrinkTime = DateTime.Now - TimeSpan.FromDays(1)
                 };
                 var beer3 = new BeerEntity()
                 {
@@ -69,7 +69,7 @@ namespace Famoser.BeerCompanion.UnitTests.API
                 //add beers;
                 var res = await ds.PostBeer(add);
                 ApiAssertHelper.CheckBooleanResponse(res);
-
+                
                 //check if 3 beers
                 beers = await ds.GetBeers(ApiTestHelper.TestUserGuid);
                 ApiAssertHelper.CheckBaseResponse(beers);
@@ -102,6 +102,115 @@ namespace Famoser.BeerCompanion.UnitTests.API
                 //clean
                 await ApiTestHelper.DeleteTestUser(ApiTestHelper.TestUserGuid);
             }).GetAwaiter().GetResult();
+        }
+
+        [TestMethod]
+        public void TestSync()
+        {
+            Task.Run(async () =>
+            {
+                //arrange
+                await ApiTestHelper.CreateTestUser(ApiTestHelper.TestUserGuid);
+                var ds = new DataService();
+                var beer1 = new BeerEntity()
+                {
+                    Guid = Guid.NewGuid(),
+                    DrinkTime = DateTime.Now - TimeSpan.FromDays(2)
+                };
+                var beer2 = new BeerEntity()
+                {
+                    Guid = Guid.NewGuid(),
+                    DrinkTime = DateTime.Now - TimeSpan.FromDays(1)
+                };
+                var beer3 = new BeerEntity()
+                {
+                    Guid = Guid.NewGuid(),
+                    DrinkTime = DateTime.Now
+                };
+                var beer4 = new BeerEntity()
+                {
+                    Guid = Guid.NewGuid(),
+                    DrinkTime = DateTime.Now + TimeSpan.FromDays(1)
+                };
+
+                var add = new BeerRequest(PossibleActions.Add, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+                        beer1, beer2, beer3
+                    }
+                };
+                var remove = new BeerRequest(PossibleActions.Remove, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+                        beer1, beer3, beer2
+                    }
+                };
+
+                var correct1 = new BeerRequest(PossibleActions.Sync, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+                        beer3
+                    }
+                };
+                var correct2 = new BeerRequest(PossibleActions.Sync, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+                        beer3, beer2, beer1
+                    }
+                };
+                var false1 = new BeerRequest(PossibleActions.Sync, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+                        beer1, beer2
+                    }
+                };
+                var false2 = new BeerRequest(PossibleActions.Sync, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+
+                    }
+                };
+                var false3 = new BeerRequest(PossibleActions.Sync, ApiTestHelper.TestUserGuid)
+                {
+                    Beers = new List<BeerEntity>()
+                    {
+                        beer1, beer2,beer4
+                    }
+                };
+                var res = await ds.PostBeer(add);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
+
+                //act
+                res = await ds.PostBeer(correct1);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
+                res = await ds.PostBeer(correct2);
+                ApiAssertHelper.CheckBooleanResponse(res);
+
+                res = await ds.PostBeer(false1);
+                ApiAssertHelper.CheckBooleanResponseForFalse(res);
+
+                res = await ds.PostBeer(false2);
+                ApiAssertHelper.CheckBooleanResponseForFalse(res);
+
+                res = await ds.PostBeer(false3);
+                ApiAssertHelper.CheckBooleanResponseForFalse(res);
+
+                //clean
+                await ds.PostBeer(remove);
+                await ApiTestHelper.DeleteTestUser(ApiTestHelper.TestUserGuid);
+            }).GetAwaiter().GetResult();
+
+
+
+
         }
     }
 }

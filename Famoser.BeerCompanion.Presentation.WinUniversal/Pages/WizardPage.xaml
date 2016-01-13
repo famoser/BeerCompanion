@@ -7,9 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mainPage="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.MainPage"
     xmlns:wizardPage="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.WizardPage"
+    xmlns:common="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.Common"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <common:ProgressView VerticalAlignment="Top" />
         <wizardPage:FirstTimeWizard VerticalAlignment="Top" />
     </Grid>
 </Page>

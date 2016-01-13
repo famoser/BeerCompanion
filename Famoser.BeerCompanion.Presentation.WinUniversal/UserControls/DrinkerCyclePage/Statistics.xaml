@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     d:DesignHeight="800"
     d:DesignWidth="400"
-    d:DataContext="{Binding DrinkerCycleViewModel.DrinkerCycle, Source={StaticResource Locator}}">
+    d:DataContext="{Binding DrinkerCycleViewModel, Source={StaticResource Locator}}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -23,20 +23,39 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding GetTotalPersons, Converter={StaticResource FormatInt}, ConverterParameter=2}" Style="{StaticResource StatisticBigNumber}" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Mitglieder" Style="{StaticResource StatisticUnitLong}" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding GetTotalBeers, Converter={StaticResource FormatInt}, ConverterParameter=4}" Style="{StaticResource StatisticBigNumber}" />
+                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Text="Bier" Style="{StaticResource StatisticUnitLong}" />
+               
+                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource StatisticDivider}" Margin="0,10" />
                 
-                <TextBlock Text="{Binding GetBeersPerPerson, Converter={StaticResource FormatDouble}}" Style="{StaticResource StatisticBigNumber}" />
-                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatisticDivider}" />
-                <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center">
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding GetBeersPerPerson, Converter={StaticResource FormatDouble}}" Style="{StaticResource StatisticBigNumber}" />
+                <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource StatisticDivider}" />
+                <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Center">
                     <TextBlock VerticalAlignment="Bottom" Text="BpP" Style="{StaticResource StatisticUnitShort}" />
                     <TextBlock Text="Beer per Person" Style="{StaticResource StatisticUnitLong}" />
                 </StackPanel>
-                
+
+                <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource StatisticDivider}" Margin="0,10" />
+
+                <RichTextBlock Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="5">
+                    <Paragraph>
+                        <Run Text="{Binding GetLastDrinker.GetLastBeer, Converter={StaticResource FormatDateTime}}" />
+                        <Run Text=": Letztes Bier von " />
+                        <Run Text="{Binding GetLastDrinker.Name}" />
+                    </Paragraph>
+                </RichTextBlock>
             </Grid>
         </Viewbox>
     </Grid>

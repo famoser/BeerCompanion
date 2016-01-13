@@ -10,6 +10,7 @@ using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Business.Services;
 using Famoser.BeerCompanion.View.Enums;
 using Famoser.BeerCompanion.View.Models;
+using Famoser.BeerCompanion.View.Services;
 using Famoser.BeerCompanion.View.Utils;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -20,19 +21,21 @@ namespace Famoser.BeerCompanion.View.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        private IBeerRepository _beerRepository;
-        private ISettingsRepository _settingsRepository;
-        private IDrinkerCycleRepository _drinkerCycleRepository;
-        private IInteractionService _interactionService;
-        private INavigationService _navigationService;
+        private readonly IBeerRepository _beerRepository;
+        private readonly ISettingsRepository _settingsRepository;
+        private readonly IDrinkerCycleRepository _drinkerCycleRepository;
+        private readonly IInteractionService _interactionService;
+        private readonly INavigationService _navigationService;
+        private readonly IProgressService _progressService;
 
-        public MainPageViewModel(ISettingsRepository settingsRepository, IBeerRepository beerRepository, IInteractionService interactionService, IDrinkerCycleRepository drinkerCycleRepository, INavigationService navigationService)
+        public MainPageViewModel(ISettingsRepository settingsRepository, IBeerRepository beerRepository, IInteractionService interactionService, IDrinkerCycleRepository drinkerCycleRepository, INavigationService navigationService, IProgressService progressService)
         {
             _settingsRepository = settingsRepository;
             _beerRepository = beerRepository;
             _interactionService = interactionService;
             _drinkerCycleRepository = drinkerCycleRepository;
             _navigationService = navigationService;
+            _progressService = progressService;
 
             _addBeer = new RelayCommand(AddBeer);
             _removeBeer = new RelayCommand(RemoveBeer, () => CanRemoveBeer);
@@ -42,7 +45,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
 
             if (IsInDesignMode)
             {
-                DrinkerCycle = _drinkerCycleRepository.GetSampleCycles();
+                DrinkerCycles = _drinkerCycleRepository.GetSampleCycles();
                 UserInformation = settingsRepository.GetSampleUserInformations();
             }
             else
@@ -57,62 +60,67 @@ namespace Famoser.BeerCompanion.View.ViewModels
                 Initialize();
         }
 
+        //enable for debug purposes
         private bool _doReset = false;
         private async void Initialize()
         {
+            _progressService.ShowProgress(ProgressKeys.InitializingApplication);
             if (_doReset)
             {
                 await ResetHelper.Instance.ResetApplication();
                 _doReset = false;
             }
 
-            DrinkerCycle = await _drinkerCycleRepository.GetSavedCycles();
+            DrinkerCycles = await _drinkerCycleRepository.GetSavedCycles();
             UserInformation = await _settingsRepository.GetUserInformations();
 
             if (!UserInformation.FirstTime)
             {
                 if (await _interactionService.CanUseInternet())
                 {
-                    var beers = await _beerRepository.SyncBeers(UserInformation.Beers, UserInformation.Guid);
-                    if (beers != null)
-                    {
-                        UserInformation.Beers = beers;
-                        await _settingsRepository.SaveUserInformations(UserInformation);
-                    }
-
+                    await SaveBeers();
                     await RefreshCycles();
                 }
             }
+            _progressService.HideProgress(ProgressKeys.InitializingApplication);
         }
 
         private async Task RefreshCycles()
         {
+            _progressService.ShowProgress(ProgressKeys.LoadingCycles);
             if (await _interactionService.CanUseInternet())
             {
                 var newCylces = await _drinkerCycleRepository.AktualizeCycles();
                 if (newCylces != null)
                 {
-                    DrinkerCycle = newCylces;
-                    await _drinkerCycleRepository.SaveCycles(DrinkerCycle);
+                    DrinkerCycles = newCylces;
+                    RaisePropertyChanged(() => DrinkerCycles);
+
+                    await _drinkerCycleRepository.SaveCycles(DrinkerCycles);
                 }
             }
+            _progressService.HideProgress(ProgressKeys.LoadingCycles);
         }
 
         private async Task SaveBeers()
         {
+            _progressService.ShowProgress(ProgressKeys.LoadingBeers);
             if (await _interactionService.CanUseInternet())
             {
                 var beers = await _beerRepository.SyncBeers(UserInformation.Beers, UserInformation.Guid);
                 if (beers != null)
                 {
                     UserInformation.Beers = beers;
+                    RaisePropertyChanged(() => SortedBeers);
+                    RaisePropertyChanged(() => DrinkerCycles);
                 }
             }
             await _settingsRepository.SaveUserInformations(UserInformation);
+            _progressService.HideProgress(ProgressKeys.LoadingBeers);
         }
 
         private ObservableCollection<DrinkerCycle> _drinkerCycles;
-        public ObservableCollection<DrinkerCycle> DrinkerCycle
+        public ObservableCollection<DrinkerCycle> DrinkerCycles
         {
             get { return _drinkerCycles; }
             set { Set(ref _drinkerCycles, value); }
@@ -128,6 +136,8 @@ namespace Famoser.BeerCompanion.View.ViewModels
                     _removeBeer.RaiseCanExecuteChanged();
             }
         }
+        
+        public ObservableCollection<Beer> SortedBeers => new ObservableCollection<Beer>(UserInformation.Beers.Where(b => !b.DeletePending).OrderByDescending(b => b.DrinkTime));
 
         #region Commands
         private readonly RelayCommand _addBeer;
@@ -194,7 +204,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
                 NewGroupNameMessage = "";
                 _canAddNewGroupBlock = true;
             }
-            else if (DrinkerCycle.Any(d => d.Name == NewGroupName))
+            else if (DrinkerCycles.Any(d => d.Name == NewGroupName))
             {
                 if (_lastProcess == g)
                 {

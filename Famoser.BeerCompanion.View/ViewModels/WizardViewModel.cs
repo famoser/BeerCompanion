@@ -19,9 +19,9 @@ namespace Famoser.BeerCompanion.View.ViewModels
 {
     public class WizardViewModel : ViewModelBase
     {
-        private IInteractionService _interactionService;
-        private ISettingsRepository _settingsRepository;
-        private IStorageService _storageService;
+        private readonly IInteractionService _interactionService;
+        private readonly ISettingsRepository _settingsRepository;
+        private readonly IStorageService _storageService;
 
         public WizardViewModel(IInteractionService interactionService, ISettingsRepository settingsRepository, IStorageService storageService)
         {

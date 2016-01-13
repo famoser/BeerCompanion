@@ -13,10 +13,12 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Converter.Format
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var dt = (DateTime)value;
-            if (dt - DateTime.Today < TimeSpan.FromDays(1))
-                return "Heute um " + dt.ToString("hh:mm");
-            if (dt > DateTime.Now - TimeSpan.FromDays(7))
-                return "Letzter " + dt.ToString("dddd") + " um " + dt.ToString("hh:mm");
+            if (dt - DateTime.Today > TimeSpan.Zero)
+                return "Heute um " + dt.ToString("HH:mm");
+            if (DateTime.Today - dt < TimeSpan.FromDays(1))
+                return "Gestern um " + dt.ToString("HH:mm");
+            if (DateTime.Today - dt < TimeSpan.FromDays(7))
+                return "Letzter " + dt.ToString("dddd") + " um " + dt.ToString("HH:mm");
             return dt.ToString("dddd hh:mm");
         }
 
