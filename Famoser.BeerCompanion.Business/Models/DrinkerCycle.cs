@@ -55,12 +55,24 @@ namespace Famoser.BeerCompanion.Business.Models
         }
 
         //smart properties
-        public int GetTotalBeers => AuthBeerDrinkers.Sum(a => a.GetTotalBeers);
+        public int GetTotalBeers
+        {
+            get { return AuthBeerDrinkers.Sum(a => a.GetTotalBeers); }
+        }
 
-        public int GetTotalPersons => AuthBeerDrinkers.Count;
+        public int GetTotalPersons
+        {
+            get { return AuthBeerDrinkers.Count; }
+        }
 
-        public double GetBeersPerPerson => (double)GetTotalBeers / GetTotalPersons;
+        public double GetBeersPerPerson
+        {
+            get { return (double) GetTotalBeers/GetTotalPersons; }
+        }
 
-        public Person GetLastDrinker => AuthBeerDrinkers.OrderByDescending(a => a.GetLastBeer ?? DateTime.MinValue).FirstOrDefault();
+        public Person GetLastDrinker
+        {
+            get { return AuthBeerDrinkers.OrderByDescending(a => a.GetLastBeer ?? DateTime.MinValue).FirstOrDefault(); }
+        }
     }
 }

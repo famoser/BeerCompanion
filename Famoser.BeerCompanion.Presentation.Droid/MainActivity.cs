@@ -16,6 +16,7 @@ namespace Famoser.BeerCompanion.Presentation.Droid
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            Toast.MakeText(this, "Hello World", ToastLength.Short).Show();
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);

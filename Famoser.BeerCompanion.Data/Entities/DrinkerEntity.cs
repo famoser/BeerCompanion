@@ -11,7 +11,10 @@ namespace Famoser.BeerCompanion.Data.Entities
         public int TotalBeers { get; set; }
         public string LastBeer { private get; set; }
 
-        public DateTime LastBeerTime => DateTime.Parse(LastBeer);
+        public DateTime LastBeerTime
+        {
+            get { return DateTime.Parse(LastBeer); }
+        }
 
         public List<Guid> AuthDrinkerCycles { get; set; }
         public List<Guid> NonAuthDrinkerCycles { get; set; }

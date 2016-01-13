@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("Famoser.BeerCompanion.Presentation.Droid.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("Famoser.BeerCompanion.Presentation.DroidPhone.Resource", IsApplication=true)]
 
-namespace Famoser.BeerCompanion.Presentation.Droid
+namespace Famoser.BeerCompanion.Presentation.DroidPhone
 {
 	
 	
@@ -26,8 +26,6 @@ namespace Famoser.BeerCompanion.Presentation.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::GalaSoft.MvvmLight.Resource.String.ApplicationName = global::Famoser.BeerCompanion.Presentation.Droid.Resource.String.ApplicationName;
-			global::GalaSoft.MvvmLight.Resource.String.Hello = global::Famoser.BeerCompanion.Presentation.Droid.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
@@ -43,27 +41,11 @@ namespace Famoser.BeerCompanion.Presentation.Droid
 			}
 		}
 		
-		public partial class Drawable
-		{
-			
-			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
-			
-			static Drawable()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Drawable()
-			{
-			}
-		}
-		
 		public partial class Id
 		{
 			
 			// aapt resource value: 0x7f050000
-			public const int MyButton = 2131034112;
+			public const int myButton = 2131034112;
 			
 			static Id()
 			{
@@ -91,14 +73,30 @@ namespace Famoser.BeerCompanion.Presentation.Droid
 			}
 		}
 		
+		public partial class Mipmap
+		{
+			
+			// aapt resource value: 0x7f020000
+			public const int Icon = 2130837504;
+			
+			static Mipmap()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Mipmap()
+			{
+			}
+		}
+		
 		public partial class String
 		{
 			
 			// aapt resource value: 0x7f040001
-			public const int ApplicationName = 2130968577;
+			public const int app_name = 2130968577;
 			
 			// aapt resource value: 0x7f040000
-			public const int Hello = 2130968576;
+			public const int hello = 2130968576;
 			
 			static String()
 			{

@@ -24,8 +24,15 @@ namespace Famoser.BeerCompanion.Business.Models
             set { Set(ref _firstName, value); }
         }
 
-        public override int GetTotalBeers => Beers.Count;
-        public override DateTime? GetLastBeer => Beers.LastOrDefault()?.DrinkTime;
+        public override int GetTotalBeers
+        {
+            get { return Beers.Count; }
+        }
+
+        public override DateTime? GetLastBeer
+        {
+            get { return Beers.LastOrDefault()?.DrinkTime; }
+        }
 
         private ObservableCollection<Beer> _beers;
         public ObservableCollection<Beer> Beers

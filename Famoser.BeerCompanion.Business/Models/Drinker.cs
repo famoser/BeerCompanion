@@ -20,8 +20,15 @@ namespace Famoser.BeerCompanion.Business.Models
         [DataMember]
         public DateTime? LastBeer { get; set; }
 
-        public override int GetTotalBeers => TotalBeers;
-        public override DateTime? GetLastBeer => LastBeer;
+        public override int GetTotalBeers
+        {
+            get { return TotalBeers; }
+        }
+
+        public override DateTime? GetLastBeer
+        {
+            get { return LastBeer; }
+        }
 
         [DataMember]
         public List<Guid> AuthDrinkerCycleGuids { get; set; }
