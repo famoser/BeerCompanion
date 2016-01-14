@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Famoser.BeerCompanion.Data;
 using Famoser.BeerCompanion.Data.Entities.Communication;
 using Famoser.BeerCompanion.Data.Enums;
+using Famoser.BeerCompanion.Data.Services;
 using Famoser.BeerCompanion.UnitTests.API;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

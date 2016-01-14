@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Famoser.BeerCompanion.Common.Framework.Logging;
 using Famoser.BeerCompanion.Common.Framework.Singleton;
-using Famoser.BeerCompanion.Data.Entities;
 using Famoser.BeerCompanion.Data.Entities.Communication;
 using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
-using Famoser.BeerCompanion.Data.Services;
 using Newtonsoft.Json;
 
-namespace Famoser.BeerCompanion.Data
+namespace Famoser.BeerCompanion.Data.Services
 {
     public class DataService : SingletonBase<DataService>, IDataService
     {

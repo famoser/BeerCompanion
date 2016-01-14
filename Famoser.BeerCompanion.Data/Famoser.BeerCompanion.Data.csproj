@@ -60,7 +60,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataService.cs" />
+    <Compile Include="Services\DataService.cs" />
     <Compile Include="Entities\BeerEntity.cs" />
     <Compile Include="Entities\Communication\BeerRequest.cs" />
     <Compile Include="Entities\Communication\BeerResponse.cs" />

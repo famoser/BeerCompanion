@@ -10,8 +10,8 @@
     DataContext="{Binding SettingsViewModel, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
-            <wizardPage:UserSettings DataContext="{Binding UserInformation}" />
+        <StackPanel Margin="20">
+            <wizardPage:UserSettings DataContext="{Binding }" />
             <Button Command="{Binding SaveSettingsCommand}" Content="Speichern" />
         </StackPanel>
     </Grid>

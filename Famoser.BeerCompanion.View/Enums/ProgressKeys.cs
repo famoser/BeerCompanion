@@ -10,6 +10,7 @@ namespace Famoser.BeerCompanion.View.Enums
     {
         InDebugMode,
         InitializingApplication,
+        ExitingWizard,
         LoadingBeers,
         LoadingCycles,
         AuthenticatingUser,
