@@ -320,7 +320,7 @@
                                             </Grid>
                                         </PivotPanel>
                                         <ScrollViewer.Background>
-                                            <ImageBrush ImageSource="../Assets/Images/beer-mobile-wallpaper.png" Stretch="UniformToFill" AlignmentY="Bottom" />
+                                            <ImageBrush ImageSource="../Assets/Images/background.jpg" Stretch="UniformToFill" AlignmentY="Bottom" />
                                         </ScrollViewer.Background>
                                     </ScrollViewer>
                                 </Grid>

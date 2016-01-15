@@ -89,6 +89,10 @@ namespace Famoser.BeerCompanion.View.ViewModels
                     await RefreshCycles();
                 }
             }
+            else
+            {
+                _navigationService.NavigateTo(PageKeys.Wizard.ToString());
+            }
 
             _isInitializing = false;
             _refreshCommand.RaiseCanExecuteChanged();

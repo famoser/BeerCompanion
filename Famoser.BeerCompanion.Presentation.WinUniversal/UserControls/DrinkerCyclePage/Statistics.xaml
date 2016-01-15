@@ -83,7 +83,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <TextBlock  TextWrapping="Wrap"  Text="{Binding GetLastDrinker.GetLastBeer, Converter={StaticResource FormatDateTime}, ConverterParameter=short}"  Style="{StaticResource StatisticBigNumber}"/>
-                <TextBlock Grid.Row="1" Text="Beer per Person" Style="{StaticResource StatisticUnitLong}">
+                <TextBlock Grid.Row="1" Style="{StaticResource StatisticUnitLong}">
                     <Run Text="Letztes Bier von" />
                     <Run Text="{Binding GetLastDrinker.Name}" />
                     </TextBlock>

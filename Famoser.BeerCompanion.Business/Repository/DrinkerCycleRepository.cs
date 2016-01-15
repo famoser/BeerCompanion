@@ -62,23 +62,23 @@ namespace Famoser.BeerCompanion.Business.Repository
             {
                 new DrinkerCycle()
                 {
-                    Name = "Cycle 1",
+                    Name = "Hogwarts",
                     AuthBeerDrinkers = new ObservableCollection<Person>()
                     {
-                        new Drinker() {Name = "Markus", LastBeer = DateTime.Now,TotalBeers = 12, Color = "9f425a"},
-                        new Drinker() {Name = "Felix", LastBeer = DateTime.Now,TotalBeers = 42, Color = "3f1a5a"},
-                        new Drinker() {Name = "Bastian", LastBeer = DateTime.Now,TotalBeers = 11, Color = "31425a"},
-                        new Drinker() {Name = "Alex", LastBeer = DateTime.Now,TotalBeers = 9, Color = "3f42fa"}
+                        new Drinker() {Name = "Markus", LastBeer = DateTime.Now,TotalBeers = 12, Color = "673AB7"},
+                        new Drinker() {Name = "Felix", LastBeer = DateTime.Now,TotalBeers = 42, Color = "03A9F4"},
+                        new Drinker() {Name = "Bastian", LastBeer = DateTime.Now,TotalBeers = 11, Color = "F44336"},
+                        new Drinker() {Name = "Alex", LastBeer = DateTime.Now,TotalBeers = 9, Color = "4CAF50"}
                     },
                     NonAuthBeerDrinkers = new ObservableCollection<Person>()
                     {
-                        new Drinker() {Name = "Dr gruusigi neui", LastBeer = DateTime.Now,TotalBeers = 2, Color = "3f4251"},
+                        new Drinker() {Name = "Dr gruusigi neui", LastBeer = DateTime.Now,TotalBeers = 2, Color = "FFC107"},
                     },
                     IsAuthenticated = true
                 },
                 new DrinkerCycle()
                 {
-                    Name = "Cycle 2",
+                    Name = "RC Baden Baden",
                     AuthBeerDrinkers = new ObservableCollection<Person>()
                     {
                         new Drinker() {Name = "Bastian", LastBeer = DateTime.Now,TotalBeers = 31, Color = "32425a"},
@@ -95,7 +95,7 @@ namespace Famoser.BeerCompanion.Business.Repository
                 },
                 new DrinkerCycle()
                 {
-                    Name = "Not auth",
+                    Name = "Illuminati",
                     IsAuthenticated = false
                 }
             };
@@ -107,13 +107,19 @@ namespace Famoser.BeerCompanion.Business.Repository
                 {
                     if (beerDrinker.AuthDrinkerCycles == null)
                         beerDrinker.AuthDrinkerCycles = new ObservableCollection<DrinkerCycle>();
+                    if (beerDrinker.NonAuthDrinkerCycles == null)
+                        beerDrinker.NonAuthDrinkerCycles = new ObservableCollection<DrinkerCycle>();
+
                     beerDrinker.AuthDrinkerCycles.Add(drinkerCycle);
                 }
 
                 foreach (var nonAuthBeerDrinker in drinkerCycle.NonAuthBeerDrinkers)
                 {
+                    if (nonAuthBeerDrinker.AuthDrinkerCycles == null)
+                        nonAuthBeerDrinker.AuthDrinkerCycles = new ObservableCollection<DrinkerCycle>();
                     if (nonAuthBeerDrinker.NonAuthDrinkerCycles == null)
                         nonAuthBeerDrinker.NonAuthDrinkerCycles = new ObservableCollection<DrinkerCycle>();
+
                     nonAuthBeerDrinker.NonAuthDrinkerCycles.Add(drinkerCycle);
                 }
             }

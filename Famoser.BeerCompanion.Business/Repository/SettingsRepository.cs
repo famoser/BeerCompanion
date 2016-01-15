@@ -105,11 +105,11 @@ namespace Famoser.BeerCompanion.Business.Repository
             {
                 Beers = new ObservableCollection<Beer>()
                 {
-                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now},
-                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now},
-                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now},
-                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now},
-                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now},
+                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now - TimeSpan.FromMinutes(670)},
+                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now - TimeSpan.FromMinutes(770)},
+                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now - TimeSpan.FromMinutes(820)},
+                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now - TimeSpan.FromDays(6)},
+                    new Beer() {Guid = Guid.Empty,Posted = true,DrinkTime = DateTime.Now - (TimeSpan.FromDays(6) + TimeSpan.FromMinutes(82))},
                 },
                 Guid = Guid.NewGuid(),
                 Name = "Florian",

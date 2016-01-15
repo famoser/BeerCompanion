@@ -1,0 +1,3 @@
+MainPackage=D:\Sync\Personen\florianmoser\projekte\BeerCompanion\Famoser.BeerCompanion.Presentation.WinUniversal\bin\ARM\Release\Upload\Famoser.BeerCompanion.Presentation.WinUniversal_1.1.3.0_ARM.appx
+SymbolPackage=D:\Sync\Personen\florianmoser\projekte\BeerCompanion\Famoser.BeerCompanion.Presentation.WinUniversal\AppPackages\Famoser.BeerCompanion.Presentation.WinUniversal_1.1.3.0\Famoser.BeerCompanion.Presentation.WinUniversal_1.1.3.0_ARM.appxsym
+ResourcePack=D:\Sync\Personen\florianmoser\projekte\BeerCompanion\Famoser.BeerCompanion.Presentation.WinUniversal\_language-en.appx

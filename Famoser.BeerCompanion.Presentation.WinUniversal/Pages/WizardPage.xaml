@@ -2,13 +2,13 @@
     x:Class="Famoser.BeerCompanion.Presentation.WinUniversal.Pages.WizardPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Famoser.BeerCompanion.Presentation.WinUniversal"
+    xmlns:local="using:Famoser.BeerCompanion.Presentation.WinUniversal.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:mainPage="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.MainPage"
-    xmlns:wizardPage="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.WizardPage"
     xmlns:common="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.Common"
-    mc:Ignorable="d">
+    xmlns:wizardPage="using:Famoser.BeerCompanion.Presentation.WinUniversal.UserControls.WizardPage"
+    mc:Ignorable="d"    
+    DataContext="{Binding WizardViewModel, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <common:ProgressView VerticalAlignment="Top" />

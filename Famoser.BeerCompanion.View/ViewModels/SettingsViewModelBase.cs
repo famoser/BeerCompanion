@@ -19,7 +19,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
         private readonly ISettingsRepository _settingsRepository;
         private readonly IStorageService _storageService;
 
-        public SettingsViewModelBase(ISettingsRepository settingsRepository, IStorageService storageService)
+        protected SettingsViewModelBase(ISettingsRepository settingsRepository, IStorageService storageService)
         {
             _settingsRepository = settingsRepository;
             _storageService = storageService;

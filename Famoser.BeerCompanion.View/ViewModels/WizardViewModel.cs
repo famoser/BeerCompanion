@@ -44,7 +44,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
         private async void InitializeWizard()
         {
             if (UserInfo.FirstTime)
-                UserInfo.Name = await _interactionService.GetPersonalName();
+                Name = await _interactionService.GetPersonalName();
         }
 
 		private readonly RelayCommand _exitWizard;
@@ -61,6 +61,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
 
             UserInfo.Color = SelectedColor.ColorValue;
             UserInfo.Name = Name;
+            UserInfo.FirstTime = false;
             await _settingsRepository.SaveUserInformations(UserInfo);
             await _settingsRepository.SyncUserInformations(UserInfo);
 

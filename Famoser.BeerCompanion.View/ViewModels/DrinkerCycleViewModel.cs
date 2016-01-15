@@ -37,7 +37,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
 
             if (IsInDesignMode)
             {
-                DrinkerCycle = _drinkerCycleRepository.GetSampleCycles()[1];
+                DrinkerCycle = _drinkerCycleRepository.GetSampleCycles()[0];
             }
             Messenger.Default.Register<DrinkerCycle>(this, Messages.Select, SelectDrinkerCycle);
         }
@@ -76,7 +76,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
         private bool CanAuthenticateDrinker(Person person)
         {
             var drink = person as Drinker;
-            if (drink != null && drink.NonAuthDrinkerCycleGuids.Contains(DrinkerCycle.Guid))
+            if (drink != null && drink.NonAuthDrinkerCycleGuids != null && drink.NonAuthDrinkerCycleGuids.Contains(DrinkerCycle.Guid))
                 return true;
             return false;
         }
