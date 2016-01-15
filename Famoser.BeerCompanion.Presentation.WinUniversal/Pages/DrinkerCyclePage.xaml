@@ -13,16 +13,16 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <common:ProgressView VerticalAlignment="Top" />
         <Pivot>
-            <PivotItem Header="Statistik">
-                <drinkerCyclePage:Statistics DataContext="{Binding DrinkerCycle}" />
+            <PivotItem Margin="0" Header="Statistik">
+                <drinkerCyclePage:Statistics Margin="0,10,0,0" DataContext="{Binding DrinkerCycle}" />
             </PivotItem>
-            <PivotItem Header="Mitglieder">
-                <drinkerCyclePage:Drinkers DataContext="{Binding }" />
+            <PivotItem Header="Mitglieder" Margin="0">
+                <drinkerCyclePage:Drinkers Margin="0,10,0,0" DataContext="{Binding }" />
             </PivotItem>
         </Pivot>
     </Grid>
     <Page.BottomAppBar>
-        <CommandBar Opacity="0.8" ClosedDisplayMode="Minimal">
+        <CommandBar Opacity="1" ClosedDisplayMode="Minimal">
             <AppBarButton Label="Gruppe verlassen" Icon="Remove" Command="{Binding LeaveGroupCommand}" />
         </CommandBar>
     </Page.BottomAppBar>

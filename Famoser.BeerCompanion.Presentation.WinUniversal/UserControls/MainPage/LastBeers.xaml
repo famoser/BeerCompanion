@@ -12,17 +12,19 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="BeerTemplate" >
-            <TextBlock TextAlignment="Center" Style="{StaticResource DescriptionText}" Text="{Binding DrinkTime, Converter={StaticResource FormatDateTime}}" />
+            <Grid Background="White" Margin="0,2">
+                <TextBlock TextAlignment="Center" Style="{StaticResource DescriptionText}" Text="{Binding DrinkTime, Converter={StaticResource FormatDateTime}}" />
+            </Grid>
         </DataTemplate>
     </UserControl.Resources>
     
     <Grid>
-        <ListView ItemsSource="{Binding }" ItemTemplate="{StaticResource BeerTemplate}">
+        <ListView SelectionMode="None" IsItemClickEnabled="False" ItemsSource="{Binding }" ItemTemplate="{StaticResource BeerTemplate}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="Padding" Value="0" />
-                    <Setter Property="Margin" Value="0,0,0,-10" />
+                    <Setter Property="Margin" Value="0,0,0,0" />
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

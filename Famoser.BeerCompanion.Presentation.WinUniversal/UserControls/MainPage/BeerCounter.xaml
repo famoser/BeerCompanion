@@ -10,6 +10,7 @@
     d:DesignHeight="400"
     d:DesignWidth="400"
     d:DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
+    
     <UserControl.Resources>
         <Style x:Key="AddBeerButton" TargetType="Button">
             <Setter Property="Template">
@@ -92,22 +93,19 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid>
+        <Grid Background="White" Padding="0,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="100" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Viewbox Grid.Row="0" Margin="0,-10">
+            <RowDefinition Height="130" />
+            <RowDefinition Height="140" />
+        </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" Margin="0,-10,0,0">
                 <TextBlock Foreground="{ThemeResource AkzentBackgroundThemeBrush}" FontFamily="SegoeUI" FontWeight="Light" Text="{Binding SortedBeers, Converter={StaticResource CountItemsConverter}, ConverterParameter=4}" />
             </Viewbox>
 
-            <Grid Grid.Row="1" Width="180">
+            <Grid Grid.Row="1" Width="180" VerticalAlignment="Top" >
                 <Button HorizontalAlignment="Left" Command="{Binding AddBeerCommand}" Style="{StaticResource AddBeerButton}" />
                 <Button HorizontalAlignment="Right" Command="{Binding RemoveBeerCommand}" VerticalAlignment="Center" Style="{StaticResource RemoveBeerButton}" />
             </Grid>
         </Grid>
 
-    </Grid>
 </UserControl>

@@ -13,7 +13,7 @@ namespace Famoser.BeerCompanion.Data.Services
 {
     public class DataService : SingletonBase<DataService>, IDataService
     {
-        private const string ApiUrl = "http://api.beercompanion.famoser.ch/";
+        private const string ApiUrl = "https://api.beercompanion.famoser.ch/";
         public async Task<bool> ApiOnline()
         {
             var str = await DownloadString(new Uri(ApiUrl + "/api"));

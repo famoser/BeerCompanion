@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <DataTemplate x:Name="AuthMitgliedTemplate">
-            <Grid Padding="10" Background="{Binding Color, Converter={StaticResource HexToSolidColorConverter}}">
+            <Grid Background="{Binding Color, Converter={StaticResource HexToSolidColorConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -27,8 +27,8 @@
                     <Run Text="Letztes Bier:" />
                     <Run Text="{Binding GetLastBeer, Converter={StaticResource FormatDateTime}}" />
                 </TextBlock>
-                <Rectangle Margin="0,0,-11,-10" Grid.Row="1" Grid.Column="1" Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                <Button Margin="10,0,-2,-10" Padding="5,10" Grid.Row="1" Grid.Column="1" Background="Transparent" Foreground="{ThemeResource DisApprooveRed}" >
+                <Rectangle Grid.Row="1" Grid.Column="1" Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Button Margin="8,0,2,0" Padding="5,10" Grid.Row="1" Grid.Column="1" Background="Transparent" Foreground="{ThemeResource DisApprooveRed}" >
                     <Button.Content>
                         <SymbolIcon Symbol="Clear" />
                     </Button.Content>
@@ -48,7 +48,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Name="OwnMitgliedTemplate">
-            <Grid Padding="10" Background="{Binding Color, Converter={StaticResource HexToSolidColorConverter}}">
+            <Grid Background="{Binding Color, Converter={StaticResource HexToSolidColorConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -73,7 +73,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Padding="10" Grid.Column="0" Style="{StaticResource HeaderText}" Foreground="{ThemeResource TextPalettonForeground}">
+                <TextBlock Grid.Column="0" Style="{StaticResource HeaderText}" Foreground="{ThemeResource TextPalettonForeground}">
                     <Run Text="{Binding Name}" />
                     <Run Text="(neu)" />
                 </TextBlock>
@@ -95,12 +95,12 @@
     </UserControl.Resources>
 
     <Grid>
-        <ListView SelectionMode="None" ItemTemplateSelector="{StaticResource DrinkerTemplateSelector}" ItemsSource="{Binding SortedPersons}" >
+        <ListView Margin="0,-2" SelectionMode="None" ItemTemplateSelector="{StaticResource DrinkerTemplateSelector}" ItemsSource="{Binding SortedPersons}" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="Padding" Value="0" />
-                    <Setter Property="Margin" Value="0,0,0,5"></Setter>
+                    <Setter Property="Margin" Value="0,2"></Setter>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>

@@ -12,28 +12,28 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="DrinkerCycleTemplate">
-            <Grid Background="{ThemeResource AkzentBackgroundThemeBrush}" Height="100" Margin="0,5" Padding="10,0">
+            <Grid Background="White" Margin="0,2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="{Binding Name}" Grid.ColumnSpan="2" Style="{StaticResource HeaderText}" Foreground="{ThemeResource TextBackgroundThemeBrush}" />
+                <TextBlock Text="{Binding Name}" Grid.ColumnSpan="2" Style="{StaticResource HeaderText}" Foreground="{ThemeResource AkzentBackgroundThemeBrush}" />
 
 
-                <TextBlock Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="0" Grid.Row="1" Style="{StaticResource DescriptionText}" Foreground="White">
+                <TextBlock Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="0" Grid.Row="1" Style="{StaticResource DescriptionText}" Foreground="{ThemeResource AkzentBackgroundThemeBrush}">
                     <Run Text="{Binding GetLastDrinker.GetLastBeer, Converter={StaticResource FormatDateTime}}" />
                     <Run Text="- Letztes Bier von" />
                     <Run Text="{Binding GetLastDrinker.Name}" />
                 </TextBlock>
-                <TextBlock Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverted}" Grid.Row="1" Style="{StaticResource DescriptionText}" Foreground="White" FontStyle="Italic" Text="noch nicht verifiziert" />
+                <TextBlock Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=inverted}" Grid.Row="1" Style="{StaticResource DescriptionText}" Foreground="{ThemeResource AkzentBackgroundThemeBrush}" FontStyle="Italic" Text="noch nicht verifiziert" />
 
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
-        <ListView IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick" Margin="0,5" ItemsSource="{Binding }" ItemTemplate="{StaticResource DrinkerCycleTemplate}" >
+        <ListView IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick" Margin="0,-2" ItemsSource="{Binding }" ItemTemplate="{StaticResource DrinkerCycleTemplate}" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
