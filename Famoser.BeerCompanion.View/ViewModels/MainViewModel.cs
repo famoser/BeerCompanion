@@ -14,6 +14,7 @@ using Famoser.BeerCompanion.View.Services;
 using Famoser.BeerCompanion.View.Utils;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 
@@ -43,6 +44,7 @@ namespace Famoser.BeerCompanion.View.ViewModels
 
             _refreshCommand = new RelayCommand(Refresh, () => CanRefresh);
             _openSettingsCommand = new RelayCommand(OpenSettings);
+            _leaveGroupCommand = new RelayCommand<DrinkerCycle>(LeaveGroup);
 
             Messenger.Default.Register<Messages>(this, EvaluateMessages);
 
@@ -284,6 +286,19 @@ namespace Famoser.BeerCompanion.View.ViewModels
             NewGroupName = "";
             _isAddingGroup = false;
             _addGroup.RaiseCanExecuteChanged();
+        }
+
+        private readonly RelayCommand<DrinkerCycle> _leaveGroupCommand;
+        public ICommand LeaveGroupCommand { get { return _leaveGroupCommand; } }
+
+        private async void LeaveGroup(DrinkerCycle drink)
+        {
+            _progressService.ShowProgress(ProgressKeys.RemovingSelfFromGroup);
+
+            await _drinkerCycleRepository.RemoveSelf(drink.Name);
+            await RefreshCycles();
+
+            _progressService.HideProgress(ProgressKeys.RemovingSelfFromGroup);
         }
         #endregion
 

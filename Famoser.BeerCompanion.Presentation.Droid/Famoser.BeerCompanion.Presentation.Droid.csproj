@@ -139,10 +139,6 @@
       <Project>{AE35E0B1-ADC9-48B5-BDFF-6731EBC1B1B3}</Project>
       <Name>Famoser.BeerCompanion.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Famoser.BeerCompanion.Common\Famoser.BeerCompanion.Common.csproj">
-      <Project>{EE18A429-0C32-4AD4-8C6B-2481420881DD}</Project>
-      <Name>Famoser.BeerCompanion.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Famoser.BeerCompanion.Data\Famoser.BeerCompanion.Data.csproj">
       <Project>{4758A3FE-D654-4068-AC21-B660885ED1FF}</Project>
       <Name>Famoser.BeerCompanion.Data</Name>

@@ -1,8 +1,5 @@
 ﻿{
   "supports": {},
-  "dependencies": {
-    "Newtonsoft.Json": "8.0.2"
-  },
   "frameworks": {
     ".NETPortable,Version=v4.5,Profile=Profile111": {}
   }
