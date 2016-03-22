@@ -48,6 +48,14 @@ namespace Famoser.BeerCompanion.Business.Repository
                         return ConstructBusinessModel(obj.Drinkers.ToList(), obj.DrinkerCycles.ToList(), usrInfo);
                     }
                 }
+                else
+                {
+                    var usrInfo = await SimpleIoc.Default.GetInstance<ISettingsRepository>().GetUserInformations();
+                    if (usrInfo != null)
+                    {
+                        return await AktualizeCycles();
+                    }
+                }
             }
             catch (Exception ex)
             {
