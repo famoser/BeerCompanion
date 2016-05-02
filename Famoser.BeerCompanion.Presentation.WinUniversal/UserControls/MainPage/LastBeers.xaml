@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="BeerTemplate" >
-            <Grid Background="White" Margin="0,2">
+            <Grid Background="White" Margin="0">
                 <TextBlock TextAlignment="Center" Style="{StaticResource DescriptionText}" Text="{Binding DrinkTime, Converter={StaticResource FormatDateTime}}" />
             </Grid>
         </DataTemplate>

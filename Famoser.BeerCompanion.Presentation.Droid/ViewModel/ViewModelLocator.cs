@@ -26,7 +26,6 @@ namespace Famoser.BeerCompanion.Presentation.Droid.ViewModel
     /// application and provides an entry point for the bindings.
     /// </summary>
     public class ViewModelLocator : ViewModelBase
-
     {
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.

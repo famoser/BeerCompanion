@@ -30,6 +30,6 @@ namespace Famoser.BeerCompanion.Presentation.Droid.Platform.Mock
 
         }
 
-        public string CurrentPageKey { get; }
+		public string CurrentPageKey { get; set; }
     }
 }
