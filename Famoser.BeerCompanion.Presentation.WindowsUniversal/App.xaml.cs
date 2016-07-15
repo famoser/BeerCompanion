@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Famoser.BeerCompanion.Presentation.WindowsUniversal.Pages;
+using Famoser.Telemetry.UniversalWindows;
 
 namespace Famoser.BeerCompanion.Presentation.WindowsUniversal
 {
@@ -21,6 +22,8 @@ namespace Famoser.BeerCompanion.Presentation.WindowsUniversal
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            FamoserTelemetry.Initialize("https://api.telemetry.famoser.ch/1.0/submit", "5718d6f1-9005-4aa3-b64c-032878b9e4d5");
         }
 
         /// <summary>

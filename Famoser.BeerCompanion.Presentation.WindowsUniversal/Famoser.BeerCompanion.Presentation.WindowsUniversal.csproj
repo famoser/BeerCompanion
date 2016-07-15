@@ -157,7 +157,9 @@
     <None Include="Famoser.BeerCompanion.Presentation.WindowsUniversal_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Images\background.jpg" />
+    <Content Include="Assets\Images\background.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\logo_color_sqare.png" />
     <Content Include="Assets\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\NewStoreLogo.scale-125.png" />
