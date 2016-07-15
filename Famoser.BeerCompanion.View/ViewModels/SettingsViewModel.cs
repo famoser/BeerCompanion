@@ -1,10 +1,11 @@
 ﻿using System.Windows.Input;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
-using Famoser.BeerCompanion.Business.Services;
 using Famoser.BeerCompanion.View.Enums;
-using Famoser.BeerCompanion.View.Services;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using IProgressService = Famoser.BeerCompanion.View.Services.IProgressService;
+using IStorageService = Famoser.BeerCompanion.Business.Services.IStorageService;
 
 namespace Famoser.BeerCompanion.View.ViewModels
 {
@@ -12,9 +13,9 @@ namespace Famoser.BeerCompanion.View.ViewModels
     {
         private readonly ISettingsRepository _settingsRepository;
         private readonly IProgressService _progressService;
-        private readonly INavigationService _navigationService;
+        private readonly IHistoryNavigationService _navigationService;
 
-        public SettingsViewModel(ISettingsRepository settingsRepository, IProgressService progressService, INavigationService navigationService, IStorageService storageService) :
+        public SettingsViewModel(ISettingsRepository settingsRepository, IProgressService progressService, IHistoryNavigationService navigationService, IStorageService storageService) :
             base(settingsRepository, storageService)
         {
             _settingsRepository = settingsRepository;

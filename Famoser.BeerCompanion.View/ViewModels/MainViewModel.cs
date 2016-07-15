@@ -8,12 +8,13 @@ using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Business.Services;
 using Famoser.BeerCompanion.View.Enums;
-using Famoser.BeerCompanion.View.Services;
 using Famoser.BeerCompanion.View.Utils;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using IProgressService = Famoser.BeerCompanion.View.Services.IProgressService;
 
 namespace Famoser.BeerCompanion.View.ViewModels
 {
@@ -23,10 +24,10 @@ namespace Famoser.BeerCompanion.View.ViewModels
         private readonly ISettingsRepository _settingsRepository;
         private readonly IDrinkerCycleRepository _drinkerCycleRepository;
         private readonly IInteractionService _interactionService;
-        private readonly INavigationService _navigationService;
+        private readonly IHistoryNavigationService _navigationService;
         private readonly IProgressService _progressService;
 
-        public MainViewModel(ISettingsRepository settingsRepository, IBeerRepository beerRepository, IInteractionService interactionService, IDrinkerCycleRepository drinkerCycleRepository, INavigationService navigationService, IProgressService progressService)
+        public MainViewModel(ISettingsRepository settingsRepository, IBeerRepository beerRepository, IInteractionService interactionService, IDrinkerCycleRepository drinkerCycleRepository, IHistoryNavigationService navigationService, IProgressService progressService)
         {
             _settingsRepository = settingsRepository;
             _beerRepository = beerRepository;

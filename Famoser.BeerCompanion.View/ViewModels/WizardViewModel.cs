@@ -3,10 +3,12 @@ using Famoser.BeerCompanion.Business.Enums;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Business.Services;
 using Famoser.BeerCompanion.View.Enums;
-using Famoser.BeerCompanion.View.Services;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using IProgressService = Famoser.BeerCompanion.View.Services.IProgressService;
+using IStorageService = Famoser.BeerCompanion.Business.Services.IStorageService;
 
 namespace Famoser.BeerCompanion.View.ViewModels
 {
@@ -14,10 +16,10 @@ namespace Famoser.BeerCompanion.View.ViewModels
     {
         private readonly IInteractionService _interactionService;
         private readonly ISettingsRepository _settingsRepository;
-        private readonly INavigationService _navigationService;
+        private readonly IHistoryNavigationService _navigationService;
         private readonly IProgressService _progressService;
 
-        public WizardViewModel(IInteractionService interactionService, ISettingsRepository settingsRepository, IStorageService storageService, INavigationService navigationService, IProgressService progressService) : 
+        public WizardViewModel(IInteractionService interactionService, ISettingsRepository settingsRepository, IStorageService storageService, IHistoryNavigationService navigationService, IProgressService progressService) : 
             base(settingsRepository,storageService)
         {
             _interactionService = interactionService;

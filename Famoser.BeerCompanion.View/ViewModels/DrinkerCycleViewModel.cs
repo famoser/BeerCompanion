@@ -5,12 +5,13 @@ using Famoser.BeerCompanion.Business.Enums;
 using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.View.Enums;
-using Famoser.BeerCompanion.View.Services;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using IProgressService = Famoser.BeerCompanion.View.Services.IProgressService;
 
 namespace Famoser.BeerCompanion.View.ViewModels
 {
@@ -18,9 +19,9 @@ namespace Famoser.BeerCompanion.View.ViewModels
     {
         private readonly IDrinkerCycleRepository _drinkerCycleRepository;
         private readonly IProgressService _progressService;
-        private readonly INavigationService _navigationService;
+        private readonly IHistoryNavigationService _navigationService;
 
-        public DrinkerCycleViewModel(IDrinkerCycleRepository drinkerCycleRepository, IProgressService progressService, INavigationService navigationService)
+        public DrinkerCycleViewModel(IDrinkerCycleRepository drinkerCycleRepository, IProgressService progressService, IHistoryNavigationService navigationService)
         {
             _drinkerCycleRepository = drinkerCycleRepository;
             _progressService = progressService;
