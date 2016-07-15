@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Famoser.BeerCompanion.Data.Entities.Communication;
 using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
+using Famoser.FrameworkEssentials.Logging;
+using Famoser.FrameworkEssentials.Singleton;
 using Newtonsoft.Json;
 
 namespace Famoser.BeerCompanion.Data.Services
@@ -29,7 +31,7 @@ namespace Famoser.BeerCompanion.Data.Services
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Instance.Log(LogLevel.ApiError, this, "GetBeers failed with response: " + resp, ex);
+                    LogHelper.Instance.LogException(ex, this);
                     return new DrinkerCycleResponse()
                     {
                         ErrorMessage = "Unserialisation failed for Content " + resp.Response
@@ -59,7 +61,7 @@ namespace Famoser.BeerCompanion.Data.Services
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Instance.Log(LogLevel.ApiError, this, "GetBeers failed with response: " + resp, ex);
+                    LogHelper.Instance.LogException(ex, this);
                     return new BeerResponse()
                     {
                         ErrorMessage = "Unserialisation failed for Content " + resp.Response
@@ -89,7 +91,7 @@ namespace Famoser.BeerCompanion.Data.Services
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Instance.Log(LogLevel.ApiError, this, "GetDrinker failed with response: " + resp.Response, ex);
+                    LogHelper.Instance.LogException(ex, this);
                     return new DrinkerResponse()
                     {
                         ErrorMessage = "Unserialisation failed for Content " + resp.Response
@@ -133,7 +135,7 @@ namespace Famoser.BeerCompanion.Data.Services
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.Log(LogLevel.Error, this, "DownloadStringAsync failed for url " + url, ex);
+                LogHelper.Instance.LogException(ex, this);
                 return new StringReponse()
                 {
                     ErrorMessage = "Request failed for url " + url
@@ -171,15 +173,14 @@ namespace Famoser.BeerCompanion.Data.Services
                         else
                         {
                             resp = new BooleanResponse() {ErrorMessage = respo};
-                            LogHelper.Instance.Log(LogLevel.ApiError, this,
-                                "Post failed for url " + url + " with json " + content + " Reponse recieved: " + respo);
+                            LogHelper.Instance.Log(LogLevel.Error, "Post failed for url " + url + " with json " + content + " Reponse recieved: " + respo, this);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.Log(LogLevel.Error, this, "Post failed for url " + url, ex);
+                LogHelper.Instance.LogException(ex, this);
                 resp = new BooleanResponse() { ErrorMessage = "Post failed for url " + url };
             }
             return resp;

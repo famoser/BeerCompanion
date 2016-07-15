@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Famoser.BeerCompanion.Business.Enums;
 using Famoser.BeerCompanion.Business.Services;
-using Famoser.BeerCompanion.Common.Framework.Logging;
+using Famoser.FrameworkEssentials.Logging;
 
 namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Data.Entities;
+using Famoser.FrameworkEssentials.Singleton;
 
 namespace Famoser.BeerCompanion.Business.Converter
 {

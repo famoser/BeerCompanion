@@ -128,8 +128,6 @@
     <Compile Include="Pages\WizardPage.xaml.cs">
       <DependentUpon>WizardPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Platform\CustomNavigationService.cs" />
-    <Compile Include="Platform\Mock\MockNavigationService.cs" />
     <Compile Include="Platform\NavigationHelper.cs" />
     <Compile Include="Platform\InteractionService.cs" />
     <Compile Include="Platform\StorageService.cs" />
@@ -242,10 +240,6 @@
     <ProjectReference Include="..\Famoser.BeerCompanion.Business\Famoser.BeerCompanion.Business.csproj">
       <Project>{ae35e0b1-adc9-48b5-bdff-6731ebc1b1b3}</Project>
       <Name>Famoser.BeerCompanion.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Famoser.BeerCompanion.Common\Famoser.BeerCompanion.Common.csproj">
-      <Project>{ee18a429-0c32-4ad4-8c6b-2481420881dd}</Project>
-      <Name>Famoser.BeerCompanion.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Famoser.BeerCompanion.Data\Famoser.BeerCompanion.Data.csproj">
       <Project>{4758a3fe-d654-4068-ac21-b660885ed1ff}</Project>

@@ -4,6 +4,7 @@ using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Data.Entities;
 using Famoser.BeerCompanion.Data.Entities.Communication;
 using Famoser.BeerCompanion.Data.Enums;
+using Famoser.FrameworkEssentials.Singleton;
 
 namespace Famoser.BeerCompanion.Business.Converter
 {

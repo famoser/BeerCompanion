@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Famoser.BeerCompanion.Business.Services;
+using Famoser.FrameworkEssentials.Singleton;
 using GalaSoft.MvvmLight.Ioc;
 
 namespace Famoser.BeerCompanion.View.Utils

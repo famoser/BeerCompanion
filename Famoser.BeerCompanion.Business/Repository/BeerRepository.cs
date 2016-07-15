@@ -7,6 +7,7 @@ using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Data.Enums;
 using Famoser.BeerCompanion.Data.Services;
+using Famoser.FrameworkEssentials.Logging;
 
 namespace Famoser.BeerCompanion.Business.Repository
 {

@@ -9,6 +9,7 @@ using Famoser.BeerCompanion.Business.Models.Save;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Data.Enums;
 using Famoser.BeerCompanion.Data.Services;
+using Famoser.FrameworkEssentials.Logging;
 using GalaSoft.MvvmLight.Ioc;
 using Newtonsoft.Json;
 using IStorageService = Famoser.BeerCompanion.Business.Services.IStorageService;

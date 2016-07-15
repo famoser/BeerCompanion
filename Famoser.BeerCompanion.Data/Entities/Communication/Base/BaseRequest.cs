@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using Famoser.BeerCompanion.Data.Enums;
+using Famoser.FrameworkEssentials.Logging;
 
 namespace Famoser.BeerCompanion.Data.Entities.Communication.Base
 {
@@ -39,7 +40,7 @@ namespace Famoser.BeerCompanion.Data.Entities.Communication.Base
                     return "sync";
 				if (_possibleAction == PossibleActions.RemoveForeign)
                     return "removeforeign";
-                LogHelper.Instance.Log(LogLevel.WtfAreYouDoingError, this, "Unknown Possible Action used!");
+                LogHelper.Instance.Log(LogLevel.WtfAreYouDoingError, "Unknown Possible Action used!", this);
                 return "";
             }
         }

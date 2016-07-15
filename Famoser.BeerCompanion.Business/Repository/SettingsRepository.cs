@@ -6,6 +6,7 @@ using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Data.Enums;
 using Famoser.BeerCompanion.Data.Services;
+using Famoser.FrameworkEssentials.Logging;
 using Newtonsoft.Json;
 using IStorageService = Famoser.BeerCompanion.Business.Services.IStorageService;
 
@@ -59,7 +60,7 @@ namespace Famoser.BeerCompanion.Business.Repository
             };
             var str = JsonConvert.SerializeObject(newui);
             if (!await _storageService.SetUserInformations(str))
-                LogHelper.Instance.Log(LogLevel.FatalError, this, "Cannot save User Informations");
+                LogHelper.Instance.Log(LogLevel.FatalError,  "Cannot save User Informations", this);
             return newui;
         }
 

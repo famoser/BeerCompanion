@@ -28,16 +28,9 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.ViewModel
             SimpleIoc.Default.Register<IStorageService, StorageService>();
             SimpleIoc.Default.Register<IDialogService, DialogService>();
             SimpleIoc.Default.Register<IInteractionService, InteractionService>();
-
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<IHistoryNavigationService, MockNavigationService>();}
-            else
-            {
-
+            
                 var navigationService = NavigationHelper.CreateNavigationService();
                 SimpleIoc.Default.Register<IHistoryNavigationService>(() => navigationService);
-            }
         }
     }
 }
