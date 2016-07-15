@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Famoser.BeerCompanion.Business.Models;
-using Famoser.BeerCompanion.Common.Framework.Singleton;
 using Famoser.BeerCompanion.Data.Entities;
 
 namespace Famoser.BeerCompanion.Business.Converter

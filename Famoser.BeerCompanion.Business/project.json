@@ -1,8 +1,9 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "MvvmLightLibs": "5.2.0",
-    "Newtonsoft.Json": "8.0.2"
+    "Famoser.FrameworkEssentials": "2.6.4",
+    "MvvmLightLibs": "5.3.0",
+    "Newtonsoft.Json": "9.0.1"
   },
   "frameworks": {
     ".NETPortable,Version=v4.5,Profile=Profile111": {}

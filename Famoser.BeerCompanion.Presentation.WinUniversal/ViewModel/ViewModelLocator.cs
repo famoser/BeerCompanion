@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Famoser.BeerCompanion.Business.Services;
+﻿using Famoser.BeerCompanion.Business.Services;
 using Famoser.BeerCompanion.Presentation.WinUniversal.Platform;
 using Famoser.BeerCompanion.Presentation.WinUniversal.Platform.Mock;
 using Famoser.BeerCompanion.View.ViewModels;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
+using IStorageService = Famoser.BeerCompanion.Business.Services.IStorageService;
 
 namespace Famoser.BeerCompanion.Presentation.WinUniversal.ViewModel
 {
@@ -34,12 +31,12 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.ViewModel
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                SimpleIoc.Default.Register<INavigationService, MockNavigationService>();}
+                SimpleIoc.Default.Register<IHistoryNavigationService, MockNavigationService>();}
             else
             {
 
                 var navigationService = NavigationHelper.CreateNavigationService();
-                SimpleIoc.Default.Register(() => navigationService);
+                SimpleIoc.Default.Register<IHistoryNavigationService>(() => navigationService);
             }
         }
     }

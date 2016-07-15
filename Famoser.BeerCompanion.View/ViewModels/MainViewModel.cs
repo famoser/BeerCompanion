@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +8,6 @@ using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Business.Services;
 using Famoser.BeerCompanion.View.Enums;
-using Famoser.BeerCompanion.View.Models;
 using Famoser.BeerCompanion.View.Services;
 using Famoser.BeerCompanion.View.Utils;
 using GalaSoft.MvvmLight;

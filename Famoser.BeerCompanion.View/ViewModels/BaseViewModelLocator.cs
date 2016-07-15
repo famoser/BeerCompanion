@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Famoser.BeerCompanion.Business.Repository;
+﻿using Famoser.BeerCompanion.Business.Repository;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
-using Famoser.BeerCompanion.Data;
 using Famoser.BeerCompanion.Data.Services;
 using Famoser.BeerCompanion.View.Services;
 using GalaSoft.MvvmLight;

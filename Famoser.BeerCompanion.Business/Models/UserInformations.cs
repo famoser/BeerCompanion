@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.Serialization;
-using GalaSoft.MvvmLight;
-using Newtonsoft.Json;
 
 namespace Famoser.BeerCompanion.Business.Models
 {

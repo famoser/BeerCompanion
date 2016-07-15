@@ -1,22 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Famoser.BeerCompanion.Business.Enums;
-using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
 using Famoser.BeerCompanion.Business.Services;
 using Famoser.BeerCompanion.View.Enums;
-using Famoser.BeerCompanion.View.Models;
 using Famoser.BeerCompanion.View.Services;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
-using Newtonsoft.Json;
 
 namespace Famoser.BeerCompanion.View.ViewModels
 {

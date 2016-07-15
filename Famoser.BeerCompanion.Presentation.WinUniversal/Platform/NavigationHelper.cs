@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Famoser.BeerCompanion.View.Enums;
+﻿using Famoser.BeerCompanion.View.Enums;
+using Famoser.FrameworkEssentials.Services.Interfaces;
+using Famoser.FrameworkEssentials.UniversalWindows.Platform;
 using GalaSoft.MvvmLight.Views;
 
 namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
 {
     public class NavigationHelper
     {
-        public static INavigationService CreateNavigationService()
+        public static IHistoryNavigationService CreateNavigationService()
         {
-            var navigationService = new CustomNavigationService();
+            var navigationService = new HistoryNavigationService();
 
-            navigationService.Implementation.Configure(PageKeys.Main.ToString(), typeof(Pages.MainPage));
-            navigationService.Implementation.Configure(PageKeys.Wizard.ToString(), typeof(Pages.WizardPage));
-            navigationService.Implementation.Configure(PageKeys.DrinkerCycle.ToString(), typeof(Pages.DrinkerCyclePage));
-            navigationService.Implementation.Configure(PageKeys.Settings.ToString(), typeof(Pages.SettingsPage));
+            navigationService.Configure(PageKeys.Main.ToString(), typeof(Pages.MainPage));
+            navigationService.Configure(PageKeys.Wizard.ToString(), typeof(Pages.WizardPage));
+            navigationService.Configure(PageKeys.DrinkerCycle.ToString(), typeof(Pages.DrinkerCyclePage));
+            navigationService.Configure(PageKeys.Settings.ToString(), typeof(Pages.SettingsPage));
 
             return navigationService;
         }

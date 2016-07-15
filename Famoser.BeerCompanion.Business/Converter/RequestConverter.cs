@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Famoser.BeerCompanion.Business.Models;
-using Famoser.BeerCompanion.Common.Framework.Singleton;
 using Famoser.BeerCompanion.Data.Entities;
 using Famoser.BeerCompanion.Data.Entities.Communication;
 using Famoser.BeerCompanion.Data.Enums;

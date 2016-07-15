@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Famoser.BeerCompanion.Business.Converter;
 using Famoser.BeerCompanion.Business.Models;
 using Famoser.BeerCompanion.Business.Repository.Interfaces;
-using Famoser.BeerCompanion.Common.Framework.Logging;
-using Famoser.BeerCompanion.Data.Entities;
-using Famoser.BeerCompanion.Data.Entities.Communication;
 using Famoser.BeerCompanion.Data.Enums;
 using Famoser.BeerCompanion.Data.Services;
 using Newtonsoft.Json;

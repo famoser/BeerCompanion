@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Popups;
+﻿using System.Threading.Tasks;
 using Famoser.BeerCompanion.Business.Services;
 
+#pragma warning disable 1998
 namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
 {
     public class InteractionService : IInteractionService
     {
-#pragma warning disable 1998
         public async Task<bool> CanUseInternet()
         {
             return true;
@@ -20,6 +15,5 @@ namespace Famoser.BeerCompanion.Presentation.WinUniversal.Platform
         {
             return Windows.Networking.Proximity.PeerFinder.DisplayName;
         }
-#pragma warning restore 1998
     }
 }

@@ -1,13 +1,6 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Famoser.BeerCompanion.Data;
+﻿using System.Threading.Tasks;
 using Famoser.BeerCompanion.Data.Entities;
 using Famoser.BeerCompanion.Data.Entities.Communication;
-using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
 using Famoser.BeerCompanion.Data.Enums;
 using Famoser.BeerCompanion.Data.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

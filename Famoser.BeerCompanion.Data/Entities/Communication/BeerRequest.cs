@@ -1,5 +1,4 @@
-﻿using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Famoser.BeerCompanion.Data.Entities.Communication.Base;

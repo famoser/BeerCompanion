@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Famoser.BeerCompanion.Common.Framework.Logging;
 using Famoser.BeerCompanion.Data.Enums;
 
 namespace Famoser.BeerCompanion.Data.Entities.Communication.Base

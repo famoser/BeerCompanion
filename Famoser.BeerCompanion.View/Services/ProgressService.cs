@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Famoser.BeerCompanion.View.Enums;
+﻿using Famoser.BeerCompanion.View.Enums;
 using Famoser.BeerCompanion.View.ViewModels;
 using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Views;
 
 namespace Famoser.BeerCompanion.View.Services
 {

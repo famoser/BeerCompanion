@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Famoser.BeerCompanion.Common.Framework.Logging;
-using Famoser.BeerCompanion.Common.Framework.Singleton;
 using Famoser.BeerCompanion.Data.Entities.Communication;
 using Famoser.BeerCompanion.Data.Entities.Communication.Generic;
 using Newtonsoft.Json;
