@@ -1,0 +1,16 @@
+﻿<Page
+    x:Class="Famoser.BeerCompanion.Presentation.WindowsUniversal.Pages.WizardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:common="using:Famoser.BeerCompanion.Presentation.WindowsUniversal.UserControls.Common"
+    xmlns:wizardPage="using:Famoser.BeerCompanion.Presentation.WindowsUniversal.UserControls.WizardPage"
+    mc:Ignorable="d"    
+    DataContext="{Binding WizardViewModel, Source={StaticResource Locator}}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <common:ProgressView VerticalAlignment="Top" />
+        <wizardPage:FirstTimeWizard VerticalAlignment="Top" />
+    </Grid>
+</Page>

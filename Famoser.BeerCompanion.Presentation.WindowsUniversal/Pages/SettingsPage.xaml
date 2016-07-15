@@ -1,0 +1,17 @@
+﻿<Page
+    x:Class="Famoser.BeerCompanion.Presentation.WindowsUniversal.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wizardPage="using:Famoser.BeerCompanion.Presentation.WindowsUniversal.UserControls.WizardPage"
+    mc:Ignorable="d"
+    DataContext="{Binding SettingsViewModel, Source={StaticResource Locator}}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Margin="20">
+            <wizardPage:UserSettings DataContext="{Binding }" />
+            <Button Command="{Binding SaveSettingsCommand}" Content="Speichern" />
+        </StackPanel>
+    </Grid>
+</Page>

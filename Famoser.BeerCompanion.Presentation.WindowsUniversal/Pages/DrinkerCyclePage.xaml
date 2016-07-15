@@ -1,0 +1,28 @@
+﻿<Page
+    x:Class="Famoser.BeerCompanion.Presentation.WindowsUniversal.Pages.DrinkerCyclePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:common="using:Famoser.BeerCompanion.Presentation.WindowsUniversal.UserControls.Common"
+    xmlns:drinkerCyclePage="using:Famoser.BeerCompanion.Presentation.WindowsUniversal.UserControls.DrinkerCyclePage"
+    mc:Ignorable="d"
+    DataContext="{Binding DrinkerCycleViewModel, Source={StaticResource Locator}}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <common:ProgressView VerticalAlignment="Top" />
+        <Pivot>
+            <PivotItem Margin="0" Header="Statistik">
+                <drinkerCyclePage:Statistics Margin="0,10,0,0" DataContext="{Binding DrinkerCycle}" />
+            </PivotItem>
+            <PivotItem Header="Mitglieder" Margin="0">
+                <drinkerCyclePage:Drinkers Margin="0,10,0,0" DataContext="{Binding }" />
+            </PivotItem>
+        </Pivot>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar Opacity="1" ClosedDisplayMode="Minimal">
+            <AppBarButton Label="Gruppe verlassen" Icon="Remove" Command="{Binding LeaveGroupCommand}" />
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
