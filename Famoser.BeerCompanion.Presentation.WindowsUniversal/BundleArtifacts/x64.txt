@@ -1,0 +1,2 @@
+MainPackage=D:\Repos\BeerCompanion\Famoser.BeerCompanion.Presentation.WindowsUniversal\bin\x64\Release\Famoser.BeerCompanion.Presentation.WindowsUniversal_1.2.0.0_x64.appx
+SymbolPackage=D:\Repos\BeerCompanion\Famoser.BeerCompanion.Presentation.WindowsUniversal\AppPackages\Famoser.BeerCompanion.Presentation.WindowsUniversal_1.2.0.0_Test\Famoser.BeerCompanion.Presentation.WindowsUniversal_1.2.0.0_x64.appxsym

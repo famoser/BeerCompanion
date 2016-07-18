@@ -23,7 +23,7 @@ namespace Famoser.BeerCompanion.Presentation.WindowsUniversal.Converter.Format
                     return "Gestern" + divider + dt.ToString("HH:mm") + str;
                 if (DateTime.Today - dt < TimeSpan.FromDays(7))
                     return "Letzter " + dt.ToString("dddd") + divider + dt.ToString("HH:mm") + str;
-                return dt.ToString("dddd hh:mm") + str;
+                return dt.ToString("dddd dd.MM.yy hh:mm");
             }
             if (divider == ", ")
                 return "unbekannt";

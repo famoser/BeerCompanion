@@ -1,0 +1,5 @@
+MainPackage=D:\Repos\BeerCompanion\Famoser.BeerCompanion.Presentation.WindowsUniversal\bin\ARM\Release\Upload\Famoser.BeerCompanion.Presentation.WindowsUniversal_1.2.0.0_ARM.appx
+ResourcePack=D:\Repos\BeerCompanion\Famoser.BeerCompanion.Presentation.WindowsUniversal\_scale-100.appx
+ResourcePack=D:\Repos\BeerCompanion\Famoser.BeerCompanion.Presentation.WindowsUniversal\_scale-125.appx
+ResourcePack=D:\Repos\BeerCompanion\Famoser.BeerCompanion.Presentation.WindowsUniversal\_scale-150.appx
+ResourcePack=D:\Repos\BeerCompanion\Famoser.BeerCompanion.Presentation.WindowsUniversal\_scale-400.appx

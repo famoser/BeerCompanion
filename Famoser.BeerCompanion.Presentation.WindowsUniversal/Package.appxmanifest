@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="ebab4db1-ac03-4523-a7c1-e5b1ab08e7d1" Publisher="CN=famoser" Version="1.0.0.0" />
+  <Identity Name="10401FlorianMoser.BeerCompanion" Publisher="CN=11675D3B-05AA-4B24-A422-AD2FB58E21ED" Version="1.2.0.0" />
   <mp:PhoneIdentity PhoneProductId="ebab4db1-ac03-4523-a7c1-e5b1ab08e7d1" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Famoser.BeerCompanion.Presentation.WindowsUniversal</DisplayName>
-    <PublisherDisplayName>famoser</PublisherDisplayName>
+    <DisplayName>BeerCompanion</DisplayName>
+    <PublisherDisplayName>Florian Moser</PublisherDisplayName>
     <Logo>Assets\NewStoreLogo.png</Logo>
   </Properties>
   <Dependencies>
