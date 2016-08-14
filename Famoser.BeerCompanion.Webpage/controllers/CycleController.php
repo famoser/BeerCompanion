@@ -9,7 +9,7 @@
 namespace famoser\beercompanion\webpage\controllers;
 
 
-use famoser\beercompanion\webpage\core\interfaces\iController;
+use famoser\beercompanion\webpage\core\interfaces\IController;
 use function famoser\beercompanion\webpage\core\responsehelper\RelationNotFound;
 use function famoser\beercompanion\webpage\core\responsehelper\ReturnBoolean;
 use function famoser\beercompanion\webpage\core\responsehelper\ReturnCrudError;
@@ -25,7 +25,7 @@ use famoser\beercompanion\webpage\models\DrinkerCyclesDrinkersRelation;
 use famoser\beercompanion\webpage\models\entities\DrinkerCycleEntity;
 use famoser\beercompanion\webpage\models\entities\DrinkerEntity;
 
-class CycleController implements iController
+class CycleController implements IController
 {
     function execute($param, $post)
     {

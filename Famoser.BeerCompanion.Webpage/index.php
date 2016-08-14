@@ -6,7 +6,7 @@
  * Time: 14:43
  */
 
-use famoser\beercompanion\webpage\core\interfaces\iController;
+use famoser\beercompanion\webpage\core\interfaces\IController;
 use famoser\beercompanion\webpage\core\logging\logger;
 use function famoser\beercompanion\webpage\core\phpcore\bye_framework;
 use function famoser\beercompanion\webpage\core\phpcore\formatParams;
@@ -26,7 +26,7 @@ try {
 
     $controller = get_controller($params);
     $params = RemoveFirstEntryInArray($params);
-    if ($controller instanceof iController) {
+    if ($controller instanceof IController) {
         echo $controller->execute($params, $_POST);
     } else {
         echo "Invalid Request";

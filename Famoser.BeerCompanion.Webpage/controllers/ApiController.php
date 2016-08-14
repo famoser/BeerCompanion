@@ -9,9 +9,9 @@
 namespace famoser\beercompanion\webpage\controllers;
 
 
-use famoser\beercompanion\webpage\core\interfaces\iController;
+use famoser\beercompanion\webpage\core\interfaces\IController;
 
-class ApiController implements iController
+class ApiController implements IController
 {
     function execute($param, $post)
     {

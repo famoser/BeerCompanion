@@ -9,7 +9,7 @@
 namespace famoser\beercompanion\webpage\core\interfaces;
 
 
-interface iController
+interface IController
 {
     function execute($param, $post);
 }

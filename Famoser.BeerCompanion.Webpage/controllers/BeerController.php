@@ -9,7 +9,7 @@
 namespace famoser\beercompanion\webpage\controllers;
 
 
-use famoser\beercompanion\webpage\core\interfaces\iController;
+use famoser\beercompanion\webpage\core\interfaces\IController;
 use function famoser\beercompanion\webpage\core\responsehelper\ReturnBoolean;
 use function famoser\beercompanion\webpage\core\responsehelper\ReturnError;
 use function famoser\beercompanion\webpage\core\responsehelper\ReturnNotFound;
@@ -22,7 +22,7 @@ use famoser\beercompanion\webpage\models\Drinker;
 use famoser\beercompanion\webpage\models\entities\BeerEntity;
 use PDO;
 
-class BeerController implements iController
+class BeerController implements IController
 {
     function execute($param, $post)
     {
