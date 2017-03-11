@@ -1,2 +1,2 @@
 # BeerCompanion
-A soon-to-be crossplattform beercounter
+A simple beercounter
